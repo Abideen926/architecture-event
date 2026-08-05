@@ -51,6 +51,7 @@ Project is in first implementation slice. Homepage conversion has started.
 
 - Homepage visual refinement against the bundled prototype
 - Browse events page implementation and structural refactor into event-specific components
+- Submit event page implementation with feature-specific component structure
 
 ## Next Step
 
@@ -71,6 +72,18 @@ Continue the homepage slice:
   - `browse-main-section.tsx`
   - `events-page.tsx`
 - Added initial browse events data set and filters/sidebar/results layout from screenshot reference.
+
+### 2026-08-05 Submit Event Progress
+
+- Added `/submit-event` route.
+- Added feature-specific structure for the submit-event page:
+  - `src/components/submit-event/hero-section.tsx`
+  - `src/components/submit-event/pricing-section.tsx`
+  - `src/components/submit-event/faq-section.tsx`
+  - `src/components/submit-event/submit-event-page.tsx`
+- Added typed page content under `src/lib/submit-event/submit-event-data.ts`.
+- Matched the screenshot-driven layout with two package cards and a FAQ block.
+- Kept the shared site header/footer so active nav state works automatically for `Submit an Event`.
 
 ## Suggested File/Folder Direction
 
