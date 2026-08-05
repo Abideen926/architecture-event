@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   brandSpotlights,
   featuredEvents,
-  heroKeywordSuggestions,
+  heroImage,
   valuePoints,
 } from "@/lib/marketing/home-data";
 import { SiteFooter } from "./site-footer";
@@ -29,9 +29,13 @@ export function HomePage() {
 function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[#1E1E1E]">
+      <img
+        src={heroImage}
+        alt="Modern glass conference building at dusk"
+        className="absolute inset-0 h-full w-full object-cover opacity-[0.85]"
+      />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(176,138,69,0.36),transparent_25%),linear-gradient(120deg,rgba(24,24,24,0.96)_8%,rgba(24,24,24,0.78)_52%,rgba(24,24,24,0.38)_100%)]" />
-      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:72px_72px]" />
-          here should be background image not background color 
+
       <div className="ae-container relative px-20 pb-0 pt-24 lg:min-h-[620px]">
         <div className="max-w-[760px]">
           <h1 className="ae-serif max-w-[12ch] text-balance text-[52px] leading-[0.98] tracking-[-0.02em] text-white md:text-[64px] xl:text-[78px]">
@@ -137,59 +141,69 @@ function HeroSection() {
 
 function BrandSpotlightSection() {
   return (
-    <section className="bg-white pt-36">
-      <div className="ae-container">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-[700px]">
+    <section className="bg-white pt-28">
+      <div className="ae-container max-w-[1366px]">
+        <div className="grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)] lg:items-start">
+          <div className="pt-2">
             <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
               BRAND SPOTLIGHT
             </p>
-            <h2 className="ae-serif mt-4 max-w-[14ch] text-[38px] leading-[1.08] tracking-[-0.02em] text-[#202020] md:text-[46px]">
+            <h2 className="ae-serif mt-5 max-w-[10.8ch] text-[31px] leading-[0.96] tracking-[-0.04em] text-[#202020]">
               Brands shaping the future of the built world.
             </h2>
-            <p className="mt-4 max-w-[46ch] text-[16.5px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-8 max-w-[25ch] text-[11.5px] leading-[1.9] text-[#7E7E7E]">
               Discover innovative products, materials, and systems from leading
               brands in the AEC industry.
             </p>
-          </div>
-          <Link
-            href="/events"
-            className="inline-flex h-[50px] items-center justify-center rounded-xl border border-[#E7E7E7] px-6 text-[14.5px] font-semibold text-[#202020] transition-colors hover:border-[#202020]"
-          >
-            View all brands
-          </Link>
-        </div>
-
-        <div className="mt-10 grid gap-6 xl:grid-cols-3">
-          {brandSpotlights.map((brand) => (
-            <article
-              key={brand.id}
-              className="rounded-[20px] border border-[#E7E7E7] bg-white p-6 shadow-[0_16px_34px_-26px_rgba(20,20,20,0.32)]"
+            <Link
+              href="/events"
+              className="mt-8 inline-flex h-[46px] items-center justify-center rounded-[14px] border border-[#D9D9D9] px-6 text-[13px] font-medium text-[#303030] transition-colors hover:border-[#B08A45] hover:text-[#B08A45]"
             >
-              <div
-                className="flex h-[220px] items-end rounded-[18px] p-6"
-                style={{
-                  background: `linear-gradient(135deg, ${brand.accent} 0%, rgba(30,30,30,0.92) 100%)`,
-                }}
+              View all brands
+              <span className="ml-3 text-[14px]">→</span>
+            </Link>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-3">
+            {brandSpotlights.map((brand) => (
+              <article
+                key={brand.id}
+                className="overflow-hidden rounded-[16px] border border-[#DEDEDE] bg-white shadow-[0_14px_30px_-26px_rgba(20,20,20,0.26)]"
               >
-                <div className="rounded-full border border-white/22 bg-white/10 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-white/88">
-                  {brand.token} {brand.name}
+                <div
+                  className="h-[248px] bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${brand.image})` }}
+                  aria-label={brand.name}
+                />
+                <div className="relative px-6 pb-7 pt-[58px]">
+                  <div className="absolute left-6 top-0 flex h-[94px] w-[104px] -translate-y-[68%] flex-col items-center justify-center rounded-[16px] border border-[#E6DED1] bg-white shadow-[0_10px_22px_-18px_rgba(20,20,20,0.3)]">
+                    <span
+                      className="text-[23px] leading-none"
+                      style={{ color: brand.accent }}
+                    >
+                      {brand.token}
+                    </span>
+                    <span className="mt-3 text-center text-[5.8px] font-semibold tracking-[0.24em] text-[#5B5B5B]">
+                      {brand.name.toUpperCase()}
+                    </span>
+                  </div>
+
+                  <h3 className="text-[16px] font-semibold text-[#202020]">
+                    {brand.name}
+                  </h3>
+                  <p className="mt-3 max-w-[22ch] text-[11px] leading-[1.78] text-[#7B7B7B]">
+                    {brand.headline}
+                  </p>
+                  <Link
+                    href="/events"
+                    className="mt-5 inline-flex items-center text-[11px] font-semibold text-[#B08A45] transition-colors hover:text-[#94733A]"
+                  >
+                    View Spotlight
+                    <span className="ml-2">→</span>
+                  </Link>
                 </div>
-              </div>
-              <h3 className="mt-5 text-[20px] font-semibold leading-[1.35] text-[#202020]">
-                {brand.headline}
-              </h3>
-              <p className="mt-3 text-[15px] leading-[1.75] text-[#6A6A6A]">
-                {brand.summary}
-              </p>
-              <Link
-                href="/events"
-                className="mt-5 inline-flex text-[14.5px] font-semibold text-[#B08A45] transition-colors hover:text-[#94733A]"
-              >
-                View Spotlight
-              </Link>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -199,71 +213,77 @@ function BrandSpotlightSection() {
 function FeaturedEventsSection() {
   return (
     <section className="bg-white py-24">
-      <div className="ae-container">
+      <div className="ae-container max-w-[1260px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-[680px]">
+          <div className="max-w-[320px]">
             <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
               FEATURED EVENTS
             </p>
-            <h2 className="ae-serif mt-4 max-w-[15ch] text-[38px] leading-[1.08] tracking-[-0.02em] text-[#202020] md:text-[46px]">
+            <h2 className="ae-serif mt-3 max-w-[11ch] text-[27px] leading-[1.02] tracking-[-0.03em] text-[#202020] md:text-[30px]">
               Curated events. Meaningful connections.
             </h2>
           </div>
           <Link
             href="/events"
-            className="inline-flex h-[50px] items-center justify-center rounded-xl border border-[#E7E7E7] px-6 text-[14.5px] font-semibold text-[#202020] transition-colors hover:border-[#202020]"
+            className="inline-flex items-center text-[11px] font-medium text-[#B08A45] transition-colors hover:text-[#94733A]"
           >
             View all events
+            <span className="ml-2 text-[12px]">→</span>
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-6 xl:grid-cols-4">
+        <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {featuredEvents.map((event) => (
             <article
               key={event.id}
-              className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] p-6 transition-transform duration-200 hover:-translate-y-1"
+              className="overflow-hidden rounded-[8px] border border-[#DCDCDC] bg-white transition-transform duration-200 hover:-translate-y-1"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-[#E7E7E7] pb-5">
-                <div>
-                  <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
+              <div className="relative h-[124px] border-b border-[#E7E7E7]">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute left-2 top-2 rounded-[6px] bg-[#252525] px-2 py-1.5 text-white shadow-sm">
+                  <p className="text-[7px] font-medium uppercase leading-none tracking-[0.1em]">
                     {event.month}
                   </p>
-                  <p className="mt-1 text-[28px] font-semibold leading-none text-[#202020]">
+                  <p className="mt-1 text-[11px] font-semibold leading-none">
                     {event.day}
                   </p>
-                  <p className="mt-2 text-[12px] font-semibold tracking-[0.1em] text-[#6A6A6A]">
+                  <p className="mt-1 text-[6px] font-medium leading-none text-white/80">
                     2026
                   </p>
                 </div>
+              </div>
+              <div className="p-3.5">
+                <p className="text-[7px] font-semibold tracking-[0.14em] text-[#8D8D8D]">
+                  {event.category}
+                </p>
+                <h3 className="mt-2 text-[13px] font-semibold leading-[1.3] text-[#202020]">
+                  {event.title}
+                </h3>
+                <p className="mt-1.5 text-[10px] leading-[1.45] text-[#8A8A8A]">
+                  {event.location}
+                </p>
                 <button
                   type="button"
                   aria-label={`Save ${event.title}`}
-                  className="rounded-full border border-[#E7E7E7] p-2 text-[#6A6A6A] transition-colors hover:border-[#202020] hover:text-[#202020]"
+                  className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-medium text-[#9A9A9A] transition-colors hover:text-[#202020]"
                 >
                   <svg
-                    width="17"
-                    height="17"
+                    width="10"
+                    height="10"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="1.6"
+                    strokeWidth="1.8"
                   >
                     <path d="M6 4h12v17l-6-4.5L6 21z" />
                   </svg>
+                  Save
                 </button>
               </div>
-              <p className="mt-5 text-[11.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
-                {event.category}
-              </p>
-              <h3 className="mt-3 text-[21px] font-semibold leading-[1.35] text-[#202020]">
-                {event.title}
-              </h3>
-              <p className="mt-4 text-[15px] leading-[1.75] text-[#6A6A6A]">
-                {event.summary}
-              </p>
-              <p className="mt-4 text-[14.5px] font-medium text-[#202020]">
-                {event.location}
-              </p>
             </article>
           ))}
         </div>
@@ -274,21 +294,23 @@ function FeaturedEventsSection() {
 
 function ValueSection() {
   return (
-    <section className="bg-[#FAFAFA] py-24">
-      <div className="ae-container">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    <section className="border-t border-[#E7E7E7] bg-[#F8F7F5] py-8">
+      <div className="ae-container max-w-[1260px]">
+        <div className="grid gap-0 md:grid-cols-2 xl:grid-cols-4">
           {valuePoints.map((point, index) => (
             <article
               key={point.title}
-              className="rounded-[20px] border border-[#E7E7E7] bg-white p-7 shadow-[0_16px_34px_-26px_rgba(20,20,20,0.24)]"
+              className="border-[#E1DED7] px-5 py-4 md:border-r last:border-r-0"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1E1E1E] text-[15px] font-semibold text-white">
-                0{index + 1}
-              </div>
-              <h3 className="mt-5 text-[20px] font-semibold text-[#202020]">
+              <div className="flex items-center gap-2">
+                <div className="flex h-4 w-4 items-center justify-center rounded-[3px] border border-[#BDB8AE] text-[8px] text-[#6A6A6A]">
+                  {index + 1}
+                </div>
+                <h3 className="text-[11px] font-medium text-[#202020]">
                 {point.title}
-              </h3>
-              <p className="mt-3 text-[15px] leading-[1.75] text-[#6A6A6A]">
+                </h3>
+              </div>
+              <p className="mt-2 pl-6 text-[9.5px] leading-[1.55] text-[#8A8A8A]">
                 {point.description}
               </p>
             </article>
