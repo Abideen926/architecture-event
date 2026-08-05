@@ -1,3 +1,4 @@
+import { Bookmark, Menu } from "lucide-react";
 import Link from "next/link";
 
 const navItems = [
@@ -39,16 +40,7 @@ export function SiteHeader() {
             aria-label="Saved events"
             className="flex items-center text-[#202020] transition-colors hover:text-[#B08A45]"
           >
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-            >
-              <path d="M6 4h12v17l-6-4.5L6 21z" />
-            </svg>
+            <Bookmark className="h-[17px] w-[17px]" strokeWidth={1.6} />
           </button>
           <Link
             href="/login"
@@ -76,16 +68,7 @@ export function SiteHeader() {
             aria-label="Open navigation"
             className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#E7E7E7] bg-white text-[#202020]"
           >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-            >
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
+            <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />
           </button>
         </div>
       </div>
