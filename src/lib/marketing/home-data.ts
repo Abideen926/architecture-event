@@ -9,6 +9,7 @@ export type BrandSpotlight = {
   summary: string;
   accent: string;
   token: string;
+  image: string;
 };
 
 export type FeaturedEvent = {
@@ -19,7 +20,11 @@ export type FeaturedEvent = {
   title: string;
   location: string;
   summary: string;
+  image: string;
 };
+
+export const heroImage =
+  "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80";
 
 export type ValuePoint = {
   title: string;
@@ -43,6 +48,8 @@ export const brandSpotlights: BrandSpotlight[] = [
       "Cladding, trim, and facade systems for projects that need precision, durability, and a strong architectural finish.",
     accent: "#c9b080",
     token: "T",
+    image:
+      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "forest-accents",
@@ -52,6 +59,8 @@ export const brandSpotlights: BrandSpotlight[] = [
       "Natural interior systems and material collections made for hospitality, workplace, and residential environments.",
     accent: "#5d6f53",
     token: "F",
+    image:
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: "company-name",
@@ -61,6 +70,8 @@ export const brandSpotlights: BrandSpotlight[] = [
       "Reserved for future brand spotlight inventory and premium sponsor placement across the homepage.",
     accent: "#9f9b94",
     token: "C",
+    image:
+      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80",
   },
 ];
 
@@ -74,6 +85,8 @@ export const featuredEvents: FeaturedEvent[] = [
     location: "Boston, MA",
     summary:
       "Three days of practice, technology, and materials sessions with the industry's largest exhibition floor.",
+    image:
+      "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?auto=format&fit=crop&w=800&q=70",
   },
   {
     id: "next-acuity",
@@ -84,6 +97,8 @@ export const featuredEvents: FeaturedEvent[] = [
     location: "Chicago, IL",
     summary:
       "A one-day showcase of new envelope, lighting, and interior systems with manufacturer-led demos.",
+    image:
+      "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=800&q=70",
   },
   {
     id: "bim-world",
@@ -94,6 +109,8 @@ export const featuredEvents: FeaturedEvent[] = [
     location: "San Diego, CA",
     summary:
       "Digital delivery, model coordination, and data standards for design and construction teams.",
+    image:
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=70",
   },
   {
     id: "women-in-architecture",
@@ -104,6 +121,8 @@ export const featuredEvents: FeaturedEvent[] = [
     location: "New York, NY",
     summary:
       "An evening of talks and structured networking for practitioners across the built environment.",
+    image:
+      "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=70",
   },
 ];
 
