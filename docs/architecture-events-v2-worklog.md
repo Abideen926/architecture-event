@@ -53,6 +53,7 @@ Project is in first implementation slice. Homepage conversion has started.
 - Browse events page implementation and structural refactor into event-specific components
 - Submit event page implementation with feature-specific component structure
 - Advertise packages page implementation with screenshot-based card layout
+- About page implementation with four screenshot-matched sections
 
 ## Next Step
 
@@ -97,6 +98,19 @@ Continue the homepage slice:
 - Added typed advertising package content under `src/lib/advertise/advertise-data.ts`.
 - Implemented the four-card package layout from the screenshot with badge, notes, and CTA variants.
 - Replaced the incorrect shared FAQ block on the advertise page with an advertise-specific inquiry form section.
+
+### 2026-08-05 About Progress
+
+- Added `/about` route.
+- Added feature-specific about page structure:
+  - `src/components/about/hero-section.tsx`
+  - `src/components/about/intro-card-section.tsx`
+  - `src/components/about/highlights-section.tsx`
+  - `src/components/about/vision-section.tsx`
+  - `src/components/about/founder-section.tsx`
+  - `src/components/about/about-page.tsx`
+- Added typed about-page content under `src/lib/about/about-data.ts`.
+- Matched the screenshots in order: dark hero, overlap intro card, more-than-calendar section, vision banner, and founder/details section.
 
 ## Suggested File/Folder Direction
 
