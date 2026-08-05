@@ -1,5 +1,8 @@
+"use client";
+
 import { Bookmark, Menu } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/events", label: "Browse Events" },
@@ -10,6 +13,8 @@ const navItems = [
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname();
+
   return (
     <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/94 backdrop-blur-md">
       <div className="ae-container flex h-[76px] items-center gap-8">
@@ -27,7 +32,9 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
+              className={`text-[14.5px] font-medium ae-nav-link ${
+                pathname === item.href ? "ae-nav-link-active" : ""
+              }`}
             >
               {item.label}
             </Link>
