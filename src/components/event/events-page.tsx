@@ -1,7 +1,7 @@
 import { SiteFooter } from "../marketing/site-footer";
 import { SiteHeader } from "../marketing/site-header";
-import { BrowseHeroSection } from "./browse-hero-section";
-import { BrowseMainSection } from "./browse-main-section";
+import { BrowseHeroSection } from "./hero-section";
+import { BrowseMainSection } from "./main-section";
 
 export function EventsPage() {
   return (
