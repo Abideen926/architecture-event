@@ -50,6 +50,7 @@ Project is in first implementation slice. Homepage conversion has started.
 ## In Progress
 
 - Homepage visual refinement against the bundled prototype
+- Browse events page implementation and structural refactor into event-specific components
 
 ## Next Step
 
@@ -59,6 +60,17 @@ Continue the homepage slice:
 2. Refine responsive behavior.
 3. Add any missing homepage details found in the prototype.
 4. Begin route-by-route public page conversion after homepage approval.
+
+### 2026-08-05 Browse Events Progress
+
+- Added `/events` route.
+- Added active nav state for `Browse Events` using the accent color.
+- Reworked browse hero search block with explicit global layout classes.
+- Started event-specific component structure under `src/components/event/`:
+  - `browse-hero-section.tsx`
+  - `browse-main-section.tsx`
+  - `events-page.tsx`
+- Added initial browse events data set and filters/sidebar/results layout from screenshot reference.
 
 ## Suggested File/Folder Direction
 
