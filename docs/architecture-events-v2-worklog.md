@@ -52,6 +52,7 @@ Project is in first implementation slice. Homepage conversion has started.
 - Homepage visual refinement against the bundled prototype
 - Browse events page implementation and structural refactor into event-specific components
 - Submit event page implementation with feature-specific component structure
+- Advertise packages page implementation with screenshot-based card layout
 
 ## Next Step
 
@@ -84,6 +85,18 @@ Continue the homepage slice:
 - Added typed page content under `src/lib/submit-event/submit-event-data.ts`.
 - Matched the screenshot-driven layout with two package cards and a FAQ block.
 - Kept the shared site header/footer so active nav state works automatically for `Submit an Event`.
+
+### 2026-08-05 Advertise Progress
+
+- Added `/advertise` route.
+- Added feature-specific advertise page structure:
+  - `src/components/advertise/hero-section.tsx`
+  - `src/components/advertise/packages-section.tsx`
+  - `src/components/advertise/advertise-page.tsx`
+- Added `src/components/advertise/contact-section.tsx` for the brand inquiry block under packages.
+- Added typed advertising package content under `src/lib/advertise/advertise-data.ts`.
+- Implemented the four-card package layout from the screenshot with badge, notes, and CTA variants.
+- Replaced the incorrect shared FAQ block on the advertise page with an advertise-specific inquiry form section.
 
 ## Suggested File/Folder Direction
 
