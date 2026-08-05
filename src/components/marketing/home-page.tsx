@@ -1,3 +1,12 @@
+import {
+  ArrowRight,
+  Bookmark,
+  CalendarDays,
+  Handshake,
+  MapPin,
+  Search,
+  Bell,
+} from "lucide-react";
 import Link from "next/link";
 import {
   brandSpotlights,
@@ -53,17 +62,7 @@ function HeroSection() {
             <HeroField
               label="KEYWORD"
               icon={
-                <svg
-                  width="17"
-                  height="17"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6A6A6A"
-                  strokeWidth="1.7"
-                >
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="M16.5 16.5 21 21" />
-                </svg>
+                <Search className="h-[17px] w-[17px] text-[#6A6A6A]" strokeWidth={1.7} />
               }
             >
               <input
@@ -76,17 +75,10 @@ function HeroSection() {
             <HeroField
               label="DATE"
               icon={
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6A6A6A"
-                  strokeWidth="1.7"
-                >
-                  <rect x="3" y="5" width="18" height="16" rx="2" />
-                  <path d="M3 10h18M8 3v4M16 3v4" />
-                </svg>
+                <CalendarDays
+                  className="h-4 w-4 text-[#6A6A6A]"
+                  strokeWidth={1.7}
+                />
               }
             >
               <select className="w-full appearance-none border-0 bg-transparent text-[15px] text-[#202020] outline-none">
@@ -100,17 +92,7 @@ function HeroSection() {
             <HeroField
               label="LOCATION"
               icon={
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6A6A6A"
-                  strokeWidth="1.7"
-                >
-                  <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z" />
-                  <circle cx="12" cy="10" r="2.6" />
-                </svg>
+                <MapPin className="h-4 w-4 text-[#6A6A6A]" strokeWidth={1.7} />
               }
             >
               <select className="w-full appearance-none border-0 bg-transparent text-[15px] text-[#202020] outline-none">
@@ -160,7 +142,7 @@ function BrandSpotlightSection() {
               className="mt-8 inline-flex h-[46px] items-center justify-center rounded-[14px] border border-[#D9D9D9] px-6 text-[13px] font-medium text-[#303030] transition-colors hover:border-[#B08A45] hover:text-[#B08A45]"
             >
               View all brands
-              <span className="ml-3 text-[14px]">→</span>
+              <ArrowRight className="ml-3 h-[14px] w-[14px]" strokeWidth={1.8} />
             </Link>
           </div>
           <div className="grid gap-5 lg:grid-cols-3">
@@ -195,13 +177,13 @@ function BrandSpotlightSection() {
                   </p>
                   <Link
                     href="/events"
-                    className="mt-5 inline-flex items-center text-[11px] font-semibold text-[#B08A45] transition-colors hover:text-[#94733A]"
-                  >
-                    View Spotlight
-                    <span className="ml-2">→</span>
-                  </Link>
-                </div>
-              </article>
+                  className="mt-5 inline-flex items-center text-[11px] font-semibold text-[#B08A45] transition-colors hover:text-[#94733A]"
+                >
+                  View Spotlight
+                  <ArrowRight className="ml-2 h-[12px] w-[12px]" strokeWidth={1.8} />
+                </Link>
+              </div>
+            </article>
             ))}
           </div>
         </div>
@@ -228,7 +210,7 @@ function FeaturedEventsSection() {
             className="inline-flex items-center text-[11px] font-medium text-[#B08A45] transition-colors hover:text-[#94733A]"
           >
             View all events
-            <span className="ml-2 text-[12px]">→</span>
+            <ArrowRight className="ml-2 h-[12px] w-[12px]" strokeWidth={1.8} />
           </Link>
         </div>
 
@@ -271,16 +253,7 @@ function FeaturedEventsSection() {
                   aria-label={`Save ${event.title}`}
                   className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-medium text-[#9A9A9A] transition-colors hover:text-[#202020]"
                 >
-                  <svg
-                    width="10"
-                    height="10"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  >
-                    <path d="M6 4h12v17l-6-4.5L6 21z" />
-                  </svg>
+                  <Bookmark className="h-[16px] w-[16px]" strokeWidth={2} />
                   Save
                 </button>
               </div>
@@ -303,8 +276,16 @@ function ValueSection() {
               className="border-[#E1DED7] px-5 py-4 md:border-r last:border-r-0"
             >
               <div className="flex items-center gap-2">
-                <div className="flex h-4 w-4 items-center justify-center rounded-[3px] border border-[#BDB8AE] text-[8px] text-[#6A6A6A]">
-                  {index + 1}
+                <div className="text-[#6A6A6A]">
+                  {index === 0 ? (
+                    <Search className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  ) : index === 1 ? (
+                    <Handshake className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  ) : index === 2 ? (
+                    <Bookmark className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  ) : (
+                    <Bell className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  )}
                 </div>
                 <h3 className="text-[11px] font-medium text-[#202020]">
                 {point.title}
