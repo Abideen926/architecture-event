@@ -161,7 +161,10 @@ function FilterGroup({ title, items }: FilterGroupProps) {
       <div className="mt-4 grid gap-3">
         {items.map((item) => (
           <label key={item} className="inline-flex items-center gap-2.5 text-[13px] text-[#5E5E5E]">
-            <span className="inline-flex h-[14px] w-[14px] rounded-[3px] border border-[#B9B9B9]" />
+            <input
+              type="checkbox"
+              className="h-[14px] w-[14px] rounded-[3px] border border-[#B9B9B9] accent-[var(--ae-accent)]"
+            />
             {item}
           </label>
         ))}
