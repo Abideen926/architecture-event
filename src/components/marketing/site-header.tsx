@@ -14,7 +14,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/94 backdrop-blur-md">
       <div className="ae-container flex h-[76px] items-center gap-8">
         <Link href="/" className="flex items-center gap-3">
-          <span className="ae-serif text-[34px] leading-none text-[#B08A45]">A</span>
+          <span className="ae-serif ae-accent-text text-[34px] leading-none">A</span>
           <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-[#202020]">
             ARCHITECTURE
             <br />
@@ -27,7 +27,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[#B08A45]"
+              className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
             >
               {item.label}
             </Link>
@@ -38,19 +38,19 @@ export function SiteHeader() {
           <button
             type="button"
             aria-label="Saved events"
-            className="flex items-center text-[#202020] transition-colors hover:text-[#B08A45]"
+            className="flex items-center text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
           >
             <Bookmark className="h-[17px] w-[17px]" strokeWidth={1.6} />
           </button>
           <Link
             href="/login"
-            className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[#B08A45]"
+            className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
           >
             Log In
           </Link>
           <Link
             href="/signup"
-            className="rounded-xl bg-[#B08A45] px-[22px] py-[11px] text-[14.5px] font-semibold text-white transition-colors hover:bg-[#94733A]"
+            className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[11px] text-[14.5px] font-semibold text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
           >
             Sign Up
           </Link>
@@ -59,7 +59,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-3 md:hidden">
           <Link
             href="/signup"
-            className="rounded-xl bg-[#B08A45] px-4 py-2.5 text-[13.5px] font-semibold text-white"
+            className="rounded-xl bg-[var(--ae-accent)] px-4 py-2.5 text-[13.5px] font-semibold text-white"
           >
             Sign Up
           </Link>

@@ -127,19 +127,17 @@ function BrandSpotlightSection() {
       <div className="ae-container max-w-[1366px]">
         <div className="grid gap-6 lg:grid-cols-[290px_minmax(0,1fr)] lg:items-start">
           <div className="pt-2">
-            <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
-              BRAND SPOTLIGHT
-            </p>
-            <h2 className="ae-serif mt-5 max-w-[10.8ch] text-[31px] leading-[0.96] tracking-[-0.04em] text-[#202020]">
+            <p className="ae-section-kicker">BRAND SPOTLIGHT</p>
+            <h2 className="ae-section-heading mt-5 max-w-[10.8ch] text-[31px] leading-[0.96]">
               Brands shaping the future of the built world.
             </h2>
-            <p className="mt-8 max-w-[25ch] text-[11.5px] leading-[1.9] text-[#7E7E7E]">
+            <p className="ae-section-description mt-8 max-w-[25ch] text-[11.5px] leading-[1.9]">
               Discover innovative products, materials, and systems from leading
               brands in the AEC industry.
             </p>
             <Link
               href="/events"
-              className="mt-8 inline-flex h-[46px] items-center justify-center rounded-[14px] border border-[#D9D9D9] px-6 text-[13px] font-medium text-[#303030] transition-colors hover:border-[#B08A45] hover:text-[#B08A45]"
+              className="mt-8 inline-flex h-[46px] items-center justify-center rounded-[14px] border border-[var(--ae-border)] px-6 text-[13px] font-medium text-[#303030] transition-colors hover:border-[var(--ae-accent)] hover:text-[var(--ae-accent)]"
             >
               View all brands
               <ArrowRight className="ml-3 h-[14px] w-[14px]" strokeWidth={1.8} />
@@ -172,18 +170,18 @@ function BrandSpotlightSection() {
                   <h3 className="text-[16px] font-semibold text-[#202020]">
                     {brand.name}
                   </h3>
-                  <p className="mt-3 max-w-[22ch] text-[11px] leading-[1.78] text-[#7B7B7B]">
+                  <p className="ae-section-description mt-3 max-w-[22ch] text-[11px] leading-[1.78]">
                     {brand.headline}
                   </p>
                   <Link
                     href="/events"
-                  className="mt-5 inline-flex items-center text-[11px] font-semibold text-[#B08A45] transition-colors hover:text-[#94733A]"
-                >
-                  View Spotlight
-                  <ArrowRight className="ml-2 h-[12px] w-[12px]" strokeWidth={1.8} />
-                </Link>
-              </div>
-            </article>
+                    className="ae-link-accent mt-5 inline-flex items-center text-[11px] font-semibold"
+                  >
+                    View Spotlight
+                    <ArrowRight className="ml-2 h-[12px] w-[12px]" strokeWidth={1.8} />
+                  </Link>
+                </div>
+              </article>
             ))}
           </div>
         </div>
@@ -195,19 +193,17 @@ function BrandSpotlightSection() {
 function FeaturedEventsSection() {
   return (
     <section className="bg-white py-24">
-      <div className="ae-container max-w-[1260px]">
+      <div className="ae-container max-w-[1280px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[520px]">
-            <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
-              FEATURED EVENTS
-            </p>
-            <h2 className="ae-serif mt-3 max-w-[11ch] text-[27px] leading-[1.02] tracking-[-0.03em] text-[#202020] md:text-[30px]">
+            <p className="ae-section-kicker">FEATURED EVENTS</p>
+            <h2 className="ae-section-heading mt-3 max-w-[11ch] text-[27px] leading-[1.02] md:text-[30px]">
               Curated events. Meaningful connections.
             </h2>
           </div>
           <Link
             href="/events"
-            className="inline-flex items-center text-[11px] font-medium text-[#B08A45] transition-colors hover:text-[#94733A]"
+            className="ae-link-accent inline-flex items-center text-[11px] font-medium"
           >
             View all events
             <ArrowRight className="ml-2 h-[12px] w-[12px]" strokeWidth={1.8} />
@@ -253,7 +249,7 @@ function FeaturedEventsSection() {
                   aria-label={`Save ${event.title}`}
                   className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-medium text-[#9A9A9A] transition-colors hover:text-[#202020]"
                 >
-                  <Bookmark className="h-[16px] w-[16px]" strokeWidth={2} />
+                  <Bookmark className="h-[16px] w-[16px]" strokeWidth={1.8} />
                   Save
                 </button>
               </div>
@@ -268,7 +264,7 @@ function FeaturedEventsSection() {
 function ValueSection() {
   return (
     <section className="border-t border-[#E7E7E7] bg-[#F8F7F5] py-8">
-      <div className="ae-container max-w-[1260px]">
+      <div className="ae-container max-w-[1280px]">
         <div className="grid gap-0 md:grid-cols-2 xl:grid-cols-4">
           {valuePoints.map((point, index) => (
             <article
@@ -309,10 +305,8 @@ function NewsletterSection() {
         <div className="rounded-[28px] bg-[#1E1E1E] px-6 py-10 text-white md:px-10 md:py-12 xl:px-14 xl:py-14">
           <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr] xl:items-center">
             <div className="max-w-[700px]">
-              <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
-                NEWSLETTER
-              </p>
-              <h2 className="ae-serif mt-4 max-w-[16ch] text-[38px] leading-[1.08] tracking-[-0.02em] text-white md:text-[46px]">
+              <p className="ae-section-kicker">NEWSLETTER</p>
+              <h2 className="ae-section-heading mt-4 max-w-[16ch] text-[38px] leading-[1.08] text-white md:text-[46px]">
                 The events worth your time, once a month.
               </h2>
               <p className="mt-4 max-w-[48ch] text-[16.5px] leading-[1.75] text-white/74">
@@ -335,7 +329,7 @@ function NewsletterSection() {
               </label>
               <button
                 type="button"
-                className="mt-4 h-[54px] w-full rounded-xl bg-[#B08A45] text-[15.5px] font-semibold text-white transition-colors hover:bg-[#94733A]"
+                className="mt-4 h-[54px] w-full rounded-xl bg-[var(--ae-accent)] text-[15.5px] font-semibold text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
               >
                 Subscribe
               </button>
