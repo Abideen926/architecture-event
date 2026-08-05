@@ -167,7 +167,7 @@ function BrandSpotlightSection() {
             {brandSpotlights.map((brand) => (
               <article
                 key={brand.id}
-                className="overflow-hidden rounded-[16px] border border-[#DEDEDE] bg-white shadow-[0_14px_30px_-26px_rgba(20,20,20,0.26)]"
+                 className="overflow-hidden rounded-[8px] border border-[#DCDCDC] bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_14px_-8px_rgba(0,0,0,0.35)]"
               >
                 <div
                   className="h-[248px] bg-cover bg-center bg-no-repeat"
@@ -215,7 +215,7 @@ function FeaturedEventsSection() {
     <section className="bg-white py-24">
       <div className="ae-container max-w-[1260px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-[320px]">
+          <div className="max-w-[520px]">
             <p className="text-[11.5px] font-bold tracking-[0.13em] text-[#B08A45]">
               FEATURED EVENTS
             </p>
@@ -236,7 +236,7 @@ function FeaturedEventsSection() {
           {featuredEvents.map((event) => (
             <article
               key={event.id}
-              className="overflow-hidden rounded-[8px] border border-[#DCDCDC] bg-white transition-transform duration-200 hover:-translate-y-1"
+               className="overflow-hidden rounded-[8px] border border-[#DCDCDC] bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_14px_-8px_rgba(0,0,0,0.35)]"
             >
               <div className="relative h-[124px] border-b border-[#E7E7E7]">
                 <img
