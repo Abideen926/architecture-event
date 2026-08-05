@@ -1,4 +1,4 @@
-import { Instagram, Linkedin } from "lucide-react";
+// import { Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 const discoverLinks = [
@@ -28,7 +28,7 @@ export function SiteFooter() {
       <div className="ae-container grid gap-14 py-[76px] pb-[34px] lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
-            <span className="ae-serif text-[34px] leading-none text-[#B08A45]">A</span>
+            <span className="ae-serif ae-accent-text text-[34px] leading-none">A</span>
             <span className="text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-white">
               ARCHITECTURE
               <br />
@@ -51,7 +51,7 @@ export function SiteFooter() {
               />
               <button
                 type="button"
-                className="h-[46px] rounded-xl bg-white px-5 text-[14.5px] font-semibold text-[#1E1E1E] transition-colors hover:bg-[#B08A45] hover:text-white"
+                className="h-[46px] rounded-xl bg-white px-5 text-[14.5px] font-semibold text-[#1E1E1E] transition-colors hover:bg-[var(--ae-accent)] hover:text-white"
               >
                 Subscribe
               </button>
