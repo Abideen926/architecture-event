@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
-import { adminAttentionItems, adminOverviewStats } from "@/lib/admin/dashboard-data";
-import { AdminPageHeader } from "./admin-page-header";
+import {
+  adminAttentionItems,
+  adminOverviewStats,
+} from "@/lib/admin/dashboard-data";
 
 export function AdminOverviewPage() {
   return (
@@ -23,7 +27,9 @@ export function AdminOverviewPage() {
             </p>
             <p
               className={`mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] ${
-                "accent" in stat && stat.accent ? "text-[var(--ae-accent)]" : "text-[#202020]"
+                "accent" in stat && stat.accent
+                  ? "text-[var(--ae-accent)]"
+                  : "text-[#202020]"
               }`}
             >
               {stat.value}
@@ -38,14 +44,19 @@ export function AdminOverviewPage() {
                       className="flex items-center justify-between gap-3 text-[13.5px] text-[#6A6A6A]"
                     >
                       <span>{row.label}</span>
-                      <span className="font-semibold text-[#202020]">{row.value}</span>
+                      <span className="font-semibold text-[#202020]">
+                        {row.value}
+                      </span>
                     </div>
                   ))}
                 </div>
               </div>
             ) : (
               <div className="mt-4 border-t border-[#ECE8E0] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">{stat.detail}</p>
+                {/* FIX: Cast to any to allow access to 'detail' which exists on the alternate card type */}
+                <p className="text-[13.5px] text-[#6A6A6A]">
+                  {(stat as any).detail}
+                </p>
               </div>
             )}
           </article>
@@ -57,7 +68,9 @@ export function AdminOverviewPage() {
           <h2 className="ae-serif text-[24px] leading-[1.08] tracking-[-0.02em] text-[#202020]">
             Needs your attention
           </h2>
-          <p className="text-[13.5px] text-[#7A7A7A]">{adminAttentionItems.length} items</p>
+          <p className="text-[13.5px] text-[#7A7A7A]">
+            {adminAttentionItems.length} items
+          </p>
         </div>
 
         <div>
@@ -65,17 +78,25 @@ export function AdminOverviewPage() {
             <article
               key={item.title}
               className={`flex items-center gap-4 px-6 py-5 ${
-                index < adminAttentionItems.length - 1 ? "border-b border-[#EFEAE2]" : ""
+                index < adminAttentionItems.length - 1
+                  ? "border-b border-[#EFEAE2]"
+                  : ""
               }`}
             >
               <span
                 className={`mt-1 h-2.5 w-2.5 flex-none rounded-full ${
-                  item.tone === "accent" ? "bg-[var(--ae-accent)]" : "bg-[#727272]"
+                  item.tone === "accent"
+                    ? "bg-[var(--ae-accent)]"
+                    : "bg-[#727272]"
                 }`}
               />
               <div className="min-w-0 flex-1">
-                <h3 className="text-[15px] font-semibold text-[#202020]">{item.title}</h3>
-                <p className="text-[13.5px] leading-[1.6] text-[#7A7A7A]">{item.meta}</p>
+                <h3 className="text-[15px] font-semibold text-[#202020]">
+                  {item.title}
+                </h3>
+                <p className="text-[13.5px] leading-[1.6] text-[#7A7A7A]">
+                  {item.meta}
+                </p>
               </div>
               <Link
                 href={item.href}
