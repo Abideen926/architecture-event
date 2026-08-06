@@ -13,6 +13,8 @@ export const appRoutes = {
   },
   attendee: {
     root: "/attendee",
+    history: "/attendee/history",
+    profile: "/attendee/profile",
   },
   organizer: {
     root: "/organizer",
