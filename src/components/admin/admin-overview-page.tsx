@@ -79,7 +79,7 @@ export function AdminOverviewPage() {
               </div>
               <Link
                 href={item.href}
-                className="text-right text-[13.5px] font-medium text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                className="text-right text-[13.5px] font-medium !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
               >
                 {item.actionLabel} →
               </Link>

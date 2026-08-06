@@ -86,6 +86,110 @@ export const adminAttentionItems = [
   },
 ] as const;
 
+export const adminEventRows = [
+  {
+    title: "Daylighting and Glazing Performance",
+    organizer: "Northline Forum",
+    category: "Education / CEU",
+    submitted: "Jul 22, 2026",
+    status: "Under Review",
+  },
+  {
+    title: "Mass Timber & Low-Carbon Structures",
+    organizer: "Cedar & Frame Collective",
+    category: "Product Showcase",
+    submitted: "Jul 26, 2026",
+    status: "Changes Requested",
+  },
+  {
+    title: "AEC Practice Leaders Dinner",
+    organizer: "Meridian Events Group",
+    category: "Networking",
+    submitted: "Jul 28, 2026",
+    status: "Submitted",
+  },
+  {
+    title: "Facade Systems Summit 2026",
+    organizer: "Northline Forum",
+    category: "Conference",
+    submitted: "Jul 14, 2026",
+    status: "Published",
+  },
+  {
+    title: "Interior Materials Week",
+    organizer: "Studio Verde",
+    category: "Exhibition",
+    submitted: "Jul 30, 2026",
+    status: "Draft",
+  },
+  {
+    title: "Regional Contractors Expo",
+    organizer: "Harbor Design Council",
+    category: "Conference",
+    submitted: "Jun 30, 2026",
+    status: "Rejected",
+  },
+  {
+    title: "BIM / VDC Coordination Forum",
+    organizer: "Meridian Events Group",
+    category: "Conference",
+    submitted: "Jul 19, 2026",
+    status: "Under Review",
+  },
+] as const;
+
+export const adminArchiveRows = [
+  {
+    title: "Adaptive Reuse Symposium",
+    organizer: "Harbor Design Council",
+    category: "Conference",
+    eventDate: "May 12, 2026",
+    result: "Completed",
+  },
+  {
+    title: "Envelope Detailing Workshop",
+    organizer: "Northline Forum",
+    category: "Education / CEU",
+    eventDate: "Apr 24, 2026",
+    result: "Completed",
+  },
+  {
+    title: "Spring Studio Mixer",
+    organizer: "Meridian Events Group",
+    category: "Networking",
+    eventDate: "Mar 30, 2026",
+    result: "Completed",
+  },
+  {
+    title: "Acoustic Ceilings Product Day",
+    organizer: "Studio Verde",
+    category: "Product Showcase",
+    eventDate: "Feb 18, 2026",
+    result: "Completed",
+  },
+  {
+    title: "Design Technology Conference",
+    organizer: "Northline Forum",
+    category: "Conference",
+    eventDate: "Jan 27, 2026",
+    result: "Completed",
+  },
+] as const;
+
+export const adminEventCategories = [
+  "Conference",
+  "Product Showcase",
+  "Education / CEU",
+  "Networking",
+  "Exhibition",
+  "Awards",
+] as const;
+
+export const adminEventPricing = {
+  featuredListing: "$49",
+  brandSpotlight: "$299 / month",
+} as const;
+
 export const spotlightSlots = [
   { slot: "Slot 1", company: "Solstice Glazing", until: "Through Sep 2026" },
   { slot: "Slot 2", company: "Halewood Timber", until: "Through Aug 2026" },
