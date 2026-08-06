@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, MapPin } from "lucide-react";
+import { ArrowRight, Bookmark, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { attendeeSavedEvents } from "@/lib/attendee/attendee-data";
@@ -27,9 +27,10 @@ export function AttendeeSavedPage() {
         </div>
         <Link
           href={appRoutes.architectureEvents.events}
-          className="text-[14.5px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+          className="flex gap-1 text-[14.5px] font-semibold !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
         >
-          Browse all events {"->"}
+          
+          Browse all events <ArrowRight />
         </Link>
       </div>
 
