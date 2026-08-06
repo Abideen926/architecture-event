@@ -1,14 +1,11 @@
 import Link from "next/link";
-import { SiteHeader } from "@/components/architecture-events/marketing/site-header";
 import { signupPageContent } from "@/lib/architecture-events/auth/signup-data";
 
 export function SignupPage() {
   const content = signupPageContent;
 
   return (
-    <div className="min-h-screen bg-white">
-      <SiteHeader />
-
+    <div className="bg-white">
       <main className="px-6 py-14 sm:px-10 lg:px-16">
         <section className="mx-auto max-w-[670px]">
           <h1 className="ae-section-heading text-[56px] leading-[0.96] tracking-[-0.045em] text-[#202020]">
