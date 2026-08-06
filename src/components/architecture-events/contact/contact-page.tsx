@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { contactHelpOptions, contactPageContent } from "@/lib/architecture-events/contact/contact-data";
-import { SiteFooter } from "@/components/architecture-events/marketing/site-footer";
-import { SiteHeader } from "@/components/architecture-events/marketing/site-header";
 
 export function ContactPage() {
   const { description, email, kicker, socials, supportCards, title } =
@@ -9,8 +7,6 @@ export function ContactPage() {
 
   return (
     <div className="ae-shell">
-      <SiteHeader />
-
       <main className="bg-white py-[52px] pb-[96px]">
         <section className="ae-container max-w-[1020px]">
           <p className="ae-section-kicker">{kicker}</p>
@@ -114,8 +110,6 @@ export function ContactPage() {
           </section>
         </section>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

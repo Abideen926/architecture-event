@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { SiteHeader } from "@/components/architecture-events/marketing/site-header";
 import { loginPageContent } from "@/lib/architecture-events/auth/login-data";
 import { appRoutes } from "@/lib/routes";
 
@@ -7,9 +6,7 @@ export function LoginPage() {
   const content = loginPageContent;
 
   return (
-    <div className="min-h-screen bg-white">
-      <SiteHeader />
-
+    <div className="bg-white">
       <main className="grid min-h-[calc(100vh-76px)] xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <section className="flex items-center justify-center px-6 py-14 sm:px-10 lg:px-16 xl:px-20">
           <div className="w-full max-w-[400px]">

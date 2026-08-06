@@ -153,6 +153,11 @@ Continue the homepage slice:
 - Changed `/` to redirect into `/architecture-events` so the public section has a single explicit namespace.
 - Reserved clean top-level separation for future `/admin`, `/attendee`, and `/organizer` route trees.
 
+### 2026-08-06 Shared Shell Layout Progress
+
+- Added `src/app/architecture-events/layout.tsx` to render the public header and footer once for the entire Architecture Events section.
+- Removed duplicated header/footer rendering from public marketing and auth pages so route-level pages only provide page-specific content.
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`

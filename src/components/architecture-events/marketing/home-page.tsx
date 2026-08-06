@@ -15,14 +15,10 @@ import {
   valuePoints,
 } from "@/lib/architecture-events/marketing/home-data";
 import { appRoutes } from "@/lib/routes";
-import { SiteFooter } from "./site-footer";
-import { SiteHeader } from "./site-header";
 
 export function HomePage() {
   return (
     <div className="ae-shell">
-      <SiteHeader />
-
       <main>
         <HeroSection />
         <BrandSpotlightSection />
@@ -30,8 +26,6 @@ export function HomePage() {
         <ValueSection />
         <NewsletterSection />
       </main>
-
-      <SiteFooter />
     </div>
   );
 }
