@@ -1,5 +1,6 @@
-import { HomePage } from "@/components/marketing/home-page";
+import { redirect } from "next/navigation";
+import { appRoutes } from "@/lib/routes";
 
 export default function Page() {
-  return <HomePage />;
+  redirect(appRoutes.architectureEvents.root);
 }

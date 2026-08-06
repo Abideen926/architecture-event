@@ -240,16 +240,16 @@ Business alignment requirements:
 
 Initial public route plan:
 
-- `/`
-- `/events`
-- `/events/[slug]`
-- `/about`
-- `/faq`
-- `/contact`
-- `/advertise`
-- `/login`
-- `/signup`
-- `/submit-event`
+- `/architecture-events`
+- `/architecture-events/events`
+- `/architecture-events/events/[slug]`
+- `/architecture-events/about`
+- `/architecture-events/faq`
+- `/architecture-events/contact`
+- `/architecture-events/advertise`
+- `/architecture-events/login`
+- `/architecture-events/signup`
+- `/architecture-events/submit-event`
 
 Planned application/dashboard route groups:
 
@@ -259,9 +259,10 @@ Planned application/dashboard route groups:
 
 Possible App Router organization:
 
-- `src/app/(marketing)/...`
-- `src/app/(auth)/...`
-- `src/app/(dashboard)/...`
+- `src/app/architecture-events/...`
+- `src/app/attendee/...`
+- `src/app/organizer/...`
+- `src/app/admin/...`
 
 ## Component Strategy
 
@@ -405,4 +406,3 @@ The first actual code slice should be:
 - shared marketing shell
 - reusable homepage components
 - homepage route conversion in Next.js/TypeScript
-
