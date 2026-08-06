@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminPlaceholderPage } from "@/components/admin/admin-placeholder-page";
+import { AdminPaymentsPage } from "@/components/admin/admin-payments-page";
 
 export const metadata: Metadata = {
   title: "Admin Payments | Architecture Events",
@@ -7,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminPaymentsRoute() {
-  return (
-    <AdminPlaceholderPage
-      title="Payments and ledger"
-      description="Monitor paid placements, reconcile internal records, and prepare invoices and receipts."
-    />
-  );
+  return <AdminPaymentsPage />;
 }
