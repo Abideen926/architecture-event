@@ -3,12 +3,25 @@
 import { useState } from "react";
 import { adminOrganizerRows } from "@/lib/admin/dashboard-data";
 
-type OrganizerRow = (typeof adminOrganizerRows)[number];
+// FIX: Define a flexible interface so TypeScript doesn't narrow types to mock data constants
+interface Organizer {
+  organization: string;
+  contact: string;
+  email: string;
+  listings: string;
+  joined: string;
+  featured: boolean;
+  active: boolean;
+}
 
 export function AdminOrganizersPage() {
-  const [formOpen, setFormOpen] = useState(true);
-  const [organizers, setOrganizers] =
-    useState<Array<OrganizerRow>>([...adminOrganizerRows]);
+  const [formOpen, setFormOpen] = useState(false);
+  
+  // FIX: Explicitly type as Organizer[]
+  const [organizers, setOrganizers] = useState<Organizer[]>(
+    adminOrganizerRows.map((row) => ({ ...row }))
+  );
+
   const [formData, setFormData] = useState({
     contactName: "",
     organization: "",
@@ -39,6 +52,7 @@ export function AdminOrganizersPage() {
       return;
     }
 
+    // This now works because the state is Organizer[], not a collection of literal strings
     setOrganizers((current) => [
       {
         organization: formData.organization.trim(),
