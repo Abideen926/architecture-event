@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminPlaceholderPage } from "@/components/admin/admin-placeholder-page";
+import { AdminInboxPage } from "@/components/admin/admin-inbox-page";
 
 export const metadata: Metadata = {
   title: "Admin Inbox | Architecture Events",
@@ -7,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminInboxRoute() {
-  return (
-    <AdminPlaceholderPage
-      title="Inbox workflow"
-      description="Handle general contact messages, advertising inquiries, and support follow-ups."
-    />
-  );
+  return <AdminInboxPage />;
 }
