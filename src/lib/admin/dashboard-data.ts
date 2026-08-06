@@ -190,6 +190,54 @@ export const adminEventPricing = {
   brandSpotlight: "$299 / month",
 } as const;
 
+export const adminOrganizerRows = [
+  {
+    organization: "Northline Forum",
+    contact: "Daniel Okafor",
+    email: "daniel@northlineforum.com",
+    listings: "12",
+    joined: "Mar 2024",
+    featured: true,
+    active: true,
+  },
+  {
+    organization: "Meridian Events Group",
+    contact: "Sofia Alvarez",
+    email: "sofia@meridianevents.com",
+    listings: "9",
+    joined: "Jul 2024",
+    featured: false,
+    active: true,
+  },
+  {
+    organization: "Cedar & Frame Collective",
+    contact: "Ben Whitaker",
+    email: "ben@cedarframe.co",
+    listings: "4",
+    joined: "Nov 2025",
+    featured: false,
+    active: true,
+  },
+  {
+    organization: "Studio Verde",
+    contact: "Ana Mirković",
+    email: "ana@studioverde.design",
+    listings: "3",
+    joined: "Feb 2026",
+    featured: false,
+    active: true,
+  },
+  {
+    organization: "Harbor Design Council",
+    contact: "Grace Lin",
+    email: "grace@harbordesign.org",
+    listings: "6",
+    joined: "Sep 2023",
+    featured: false,
+    active: false,
+  },
+] as const;
+
 export const spotlightSlots = [
   { slot: "Slot 1", company: "Solstice Glazing", until: "Through Sep 2026" },
   { slot: "Slot 2", company: "Halewood Timber", until: "Through Aug 2026" },
