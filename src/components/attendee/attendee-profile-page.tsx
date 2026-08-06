@@ -15,12 +15,13 @@ function toggleInList(current: string[], value: string) {
 }
 
 export function AttendeeProfilePage() {
-  const [fullName, setFullName] = useState(attendeeDefaultProfile.fullName);
-  const [email, setEmail] = useState(attendeeDefaultProfile.email);
-  const [role, setRole] = useState(attendeeDefaultProfile.role);
-  const [categories, setCategories] = useState([...attendeeDefaultProfile.categories]);
-  const [regions, setRegions] = useState([...attendeeDefaultProfile.regions]);
-  const [newsletter, setNewsletter] = useState(attendeeDefaultProfile.newsletter);
+  // FIX: Explicitly type states to prevent narrowing to mock data constants
+  const [fullName, setFullName] = useState<string>(attendeeDefaultProfile.fullName);
+  const [email, setEmail] = useState<string>(attendeeDefaultProfile.email);
+  const [role, setRole] = useState<string>(attendeeDefaultProfile.role);
+  const [categories, setCategories] = useState<string[]>([...attendeeDefaultProfile.categories]);
+  const [regions, setRegions] = useState<string[]>([...attendeeDefaultProfile.regions]);
+  const [newsletter, setNewsletter] = useState<boolean>(attendeeDefaultProfile.newsletter);
 
   const resetProfile = () => {
     setFullName(attendeeDefaultProfile.fullName);
