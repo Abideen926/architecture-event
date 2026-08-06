@@ -467,3 +467,12 @@ export const seoHealthItems = [
     detail: "Updated automatically on publish",
   },
 ] as const;
+
+export const adminLeadVolume = {
+  total: "3,482",
+  detail: "All time · 412 in July",
+  rows: [
+    { label: "Saved events", value: "2,145", percentage: 100, tone: "dark" },
+    { label: "Registration opt-ins", value: "1,337", percentage: 62, tone: "accent" },
+  ],
+} as const;
