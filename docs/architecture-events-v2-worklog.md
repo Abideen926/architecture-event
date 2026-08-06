@@ -145,6 +145,14 @@ Continue the homepage slice:
   - optional category and city preference chips
   - newsletter opt-in and login handoff
 
+### 2026-08-06 Route Partition Progress
+
+- Moved all public Architecture Events routes under `/architecture-events/...`.
+- Updated shared navigation, footer links, auth links, and marketing CTAs to use the new prefixed URLs.
+- Added `src/lib/routes.ts` as the shared route map for future middleware and section-based routing.
+- Changed `/` to redirect into `/architecture-events` so the public section has a single explicit namespace.
+- Reserved clean top-level separation for future `/admin`, `/attendee`, and `/organizer` route trees.
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`
