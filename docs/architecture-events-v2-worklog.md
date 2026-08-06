@@ -158,6 +158,30 @@ Continue the homepage slice:
 - Added `src/app/architecture-events/layout.tsx` to render the public header and footer once for the entire Architecture Events section.
 - Removed duplicated header/footer rendering from public marketing and auth pages so route-level pages only provide page-specific content.
 
+### 2026-08-06 Admin Dashboard Progress
+
+- Started the admin section under its own route and folder boundaries:
+  - `src/app/admin/...`
+  - `src/components/admin/...`
+  - `src/lib/admin/...`
+- Added a shared admin shell with:
+  - top header
+  - sidebar navigation
+  - admin footer
+- Implemented `/admin` as the first real dashboard page using prototype-derived overview content:
+  - stats
+  - needs-attention panel
+  - advertising inventory
+  - payments and ledger summary
+  - volume chart
+  - SEO health summary
+- Scaffolded sibling admin routes for:
+  - `/admin/events`
+  - `/admin/organizers`
+  - `/admin/inbox`
+  - `/admin/payments`
+  - `/admin/reports`
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`

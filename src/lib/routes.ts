@@ -19,5 +19,10 @@ export const appRoutes = {
   },
   admin: {
     root: "/admin",
+    events: "/admin/events",
+    organizers: "/admin/organizers",
+    inbox: "/admin/inbox",
+    payments: "/admin/payments",
+    reports: "/admin/reports",
   },
 } as const;
