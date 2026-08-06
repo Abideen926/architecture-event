@@ -37,26 +37,46 @@ function OrganizerSubmitPageFallback() {
 
 function OrganizerSubmitPageContent() {
   const searchParams = useSearchParams();
-  const initialStep: SubmitStep = searchParams.get("step") === "form" ? "form" : "package";
+  const initialStep: SubmitStep =
+    searchParams.get("step") === "form" ? "form" : "package";
   const [step, setStep] = useState<SubmitStep>(initialStep);
   const [selectedPackage, setSelectedPackage] = useState<PackageId>("featured");
   const [thumbnailIndex, setThumbnailIndex] = useState(0);
 
-  const [eventName, setEventName] = useState(organizerDefaultForm.eventName);
-  const [eventDate, setEventDate] = useState(organizerDefaultForm.eventDate);
-  const [city, setCity] = useState(organizerDefaultForm.city);
-  const [venue, setVenue] = useState(organizerDefaultForm.venue);
-  const [category, setCategory] = useState(organizerDefaultForm.category);
-  const [registrationUrl, setRegistrationUrl] = useState(organizerDefaultForm.registrationUrl);
-  const [description, setDescription] = useState(organizerDefaultForm.description);
-  const [notes, setNotes] = useState(organizerDefaultForm.notes);
-  const [contactName, setContactName] = useState(organizerDefaultForm.contactName);
-  const [contactEmail, setContactEmail] = useState(organizerDefaultForm.contactEmail);
-  const [phone, setPhone] = useState(organizerDefaultForm.phone);
-  const [organization, setOrganization] = useState(organizerDefaultForm.organization);
+  // FIX: Explicitly type all form states as <string> to allow updates from inputs
+  const [eventName, setEventName] = useState<string>(
+    organizerDefaultForm.eventName
+  );
+  const [eventDate, setEventDate] = useState<string>(
+    organizerDefaultForm.eventDate
+  );
+  const [city, setCity] = useState<string>(organizerDefaultForm.city);
+  const [venue, setVenue] = useState<string>(organizerDefaultForm.venue);
+  const [category, setCategory] = useState<string>(
+    organizerDefaultForm.category
+  );
+  const [registrationUrl, setRegistrationUrl] = useState<string>(
+    organizerDefaultForm.registrationUrl
+  );
+  const [description, setDescription] = useState<string>(
+    organizerDefaultForm.description
+  );
+  const [notes, setNotes] = useState<string>(organizerDefaultForm.notes);
+  const [contactName, setContactName] = useState<string>(
+    organizerDefaultForm.contactName
+  );
+  const [contactEmail, setContactEmail] = useState<string>(
+    organizerDefaultForm.contactEmail
+  );
+  const [phone, setPhone] = useState<string>(organizerDefaultForm.phone);
+  const [organization, setOrganization] = useState<string>(
+    organizerDefaultForm.organization
+  );
 
   const selectedPackageLabel =
-    selectedPackage === "featured" ? "Featured Listing - $49" : "Basic Listing - Free";
+    selectedPackage === "featured"
+      ? "Featured Listing - $49"
+      : "Basic Listing - Free";
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
@@ -75,7 +95,8 @@ function OrganizerSubmitPageContent() {
             Choose a listing package
           </h3>
           <p className="mt-2 text-[15px] leading-[1.7] text-[#6A6A6A]">
-            Pick a package to open the submission form. You can change it before you submit.
+            Pick a package to open the submission form. You can change it before
+            you submit.
           </p>
 
           <div className="mt-6 grid gap-5 lg:grid-cols-2">
@@ -83,7 +104,9 @@ function OrganizerSubmitPageContent() {
               <div
                 key={item.id}
                 className={`rounded-[20px] border bg-white p-[26px] ${
-                  item.id === "featured" ? "border-[#202020]" : "border-[#E7E7E7]"
+                  item.id === "featured"
+                    ? "border-[#202020]"
+                    : "border-[#E7E7E7]"
                 }`}
               >
                 <div className="flex items-start justify-between gap-5">
@@ -138,7 +161,8 @@ function OrganizerSubmitPageContent() {
       {step === "form" ? (
         <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
           <div className="rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] px-5 py-4 text-[14.5px] text-[#3A3A3A]">
-            <span className="font-semibold">Package:</span> {selectedPackageLabel}
+            <span className="font-semibold">Package:</span>{" "}
+            {selectedPackageLabel}
           </div>
 
           <div className="mt-8">
@@ -147,7 +171,9 @@ function OrganizerSubmitPageContent() {
             </h3>
             <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
               <label className="block md:col-span-2">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Event name</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Event name
+                </span>
                 <input
                   type="text"
                   value={eventName}
@@ -156,7 +182,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Event date</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Event date
+                </span>
                 <input
                   type="date"
                   value={eventDate}
@@ -165,7 +193,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">City / region</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  City / region
+                </span>
                 <input
                   type="text"
                   value={city}
@@ -174,7 +204,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Venue</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Venue
+                </span>
                 <input
                   type="text"
                   value={venue}
@@ -183,7 +215,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Category</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Category
+                </span>
                 <input
                   type="text"
                   value={category}
@@ -203,7 +237,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block md:col-span-2">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Description</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Description
+                </span>
                 <textarea
                   rows={5}
                   value={description}
@@ -213,7 +249,8 @@ function OrganizerSubmitPageContent() {
               </label>
               <label className="block md:col-span-2">
                 <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Internal notes <span className="font-medium text-[#6A6A6A]">- optional</span>
+                  Internal notes{" "}
+                  <span className="font-medium text-[#6A6A6A]">- optional</span>
                 </span>
                 <textarea
                   rows={3}
@@ -248,7 +285,9 @@ function OrganizerSubmitPageContent() {
                       <OrganizerThumbArt imageId={imageId} />
                       <span
                         className={`absolute left-3 top-3 rounded-full px-[12px] py-[6px] text-[10px] font-bold tracking-[0.14em] ${
-                          selected ? "bg-[#1E1E1E] text-white" : "bg-white/92 text-[#3A3A3A]"
+                          selected
+                            ? "bg-[#1E1E1E] text-white"
+                            : "bg-white/92 text-[#3A3A3A]"
                         }`}
                       >
                         {selected ? "THUMBNAIL" : "SET AS THUMB"}
@@ -273,7 +312,9 @@ function OrganizerSubmitPageContent() {
             </h3>
             <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Contact name</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Contact name
+                </span>
                 <input
                   type="text"
                   value={contactName}
@@ -282,7 +323,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Contact email</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Contact email
+                </span>
                 <input
                   type="email"
                   value={contactEmail}
@@ -292,7 +335,8 @@ function OrganizerSubmitPageContent() {
               </label>
               <label className="block">
                 <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Phone <span className="font-medium text-[#6A6A6A]">- optional</span>
+                  Phone{" "}
+                  <span className="font-medium text-[#6A6A6A]">- optional</span>
                 </span>
                 <input
                   type="tel"
@@ -302,7 +346,9 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
               <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Organization</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Organization
+                </span>
                 <input
                   type="text"
                   value={organization}
@@ -340,13 +386,14 @@ function OrganizerSubmitPageContent() {
             Your event has been submitted
           </h3>
           <p className="mx-auto mt-[14px] max-w-[52ch] text-[16px] leading-[1.75] text-[#6A6A6A]">
-            It is now under review. You&apos;ll receive a confirmation email shortly, and
-            the status on your listing will update as editorial works through it.
+            It is now under review. You&apos;ll receive a confirmation email
+            shortly, and the status on your listing will update as editorial
+            works through it.
           </p>
           {selectedPackage === "featured" ? (
             <p className="mx-auto mt-[18px] max-w-[52ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
-              Payment for the Featured Listing is processed after editorial approval.
-              Nothing has been charged yet.
+              Payment for the Featured Listing is processed after editorial
+              approval. Nothing has been charged yet.
             </p>
           ) : null}
           <div className="mt-[30px] flex flex-wrap justify-center gap-3">
@@ -425,8 +472,8 @@ function OrganizerThumbArt({ imageId }: OrganizerThumbArtProps) {
                 index % 3 === 0
                   ? "#3f6fa2"
                   : index % 3 === 1
-                    ? "#62487b"
-                    : "#24262d",
+                  ? "#62487b"
+                  : "#24262d",
             }}
           />
         ))}

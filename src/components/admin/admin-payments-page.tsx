@@ -8,14 +8,30 @@ import {
   stripePayments,
 } from "@/lib/admin/dashboard-data";
 
-type SpotlightSlot = (typeof initialSpotlightSlots)[number];
-type LedgerEntry = (typeof initialLedgerEntries)[number];
+// FIX: Explicitly define interfaces to prevent TS from narrowing types to specific mock strings
+interface SpotlightSlot {
+  slot: string;
+  company: string;
+  until: string;
+}
+
+interface LedgerEntry {
+  date: string;
+  description: string;
+  amount: string;
+  invoice: string;
+}
 
 export function AdminPaymentsPage() {
-  const [spotlightSlots, setSpotlightSlots] =
-    useState<Array<SpotlightSlot>>([...initialSpotlightSlots]);
-  const [ledgerEntries, setLedgerEntries] =
-    useState<Array<LedgerEntry>>([...initialLedgerEntries]);
+  // FIX: Use the interfaces in the generic state declaration
+  const [spotlightSlots, setSpotlightSlots] = useState<SpotlightSlot[]>(
+    initialSpotlightSlots.map((s) => ({ ...s }))
+  );
+
+  const [ledgerEntries, setLedgerEntries] = useState<LedgerEntry[]>(
+    initialLedgerEntries.map((e) => ({ ...e }))
+  );
+
   const [ledgerFormOpen, setLedgerFormOpen] = useState(false);
   const [ledgerForm, setLedgerForm] = useState({
     date: "",
@@ -24,10 +40,7 @@ export function AdminPaymentsPage() {
     invoice: "",
   });
 
-  function updateLedgerField(
-    field: keyof typeof ledgerForm,
-    value: string
-  ) {
+  function updateLedgerField(field: keyof typeof ledgerForm, value: string) {
     setLedgerForm((current) => ({ ...current, [field]: value }));
   }
 
@@ -135,15 +148,23 @@ export function AdminPaymentsPage() {
           <div
             key={item.name}
             className={`grid grid-cols-[1.2fr_0.8fr_1.15fr_0.8fr] gap-4 px-5 py-[15px] ${
-              index < advertisingPackages.length - 1 ? "border-b border-[#EEE8E0]" : ""
+              index < advertisingPackages.length - 1
+                ? "border-b border-[#EEE8E0]"
+                : ""
             }`}
           >
-            <div className="text-[15px] font-semibold text-[#202020]">{item.name}</div>
+            <div className="text-[15px] font-semibold text-[#202020]">
+              {item.name}
+            </div>
             <div className="text-[14px] text-[#666666]">{item.price}</div>
-            <div className="text-[14px] leading-[1.55] text-[#666666]">{item.holders}</div>
+            <div className="text-[14px] leading-[1.55] text-[#666666]">
+              {item.holders}
+            </div>
             <div
               className={`text-[14px] ${
-                item.availability.includes("remaining") ? "text-[var(--ae-accent)]" : "text-[#4F4F4F]"
+                item.availability.includes("remaining")
+                  ? "text-[var(--ae-accent)]"
+                  : "text-[#4F4F4F]"
               }`}
             >
               {item.availability}
@@ -177,12 +198,18 @@ export function AdminPaymentsPage() {
           <div
             key={`${payment.date}-${payment.customer}`}
             className={`grid grid-cols-[1fr_0.9fr_1.5fr_1.5fr] gap-4 px-5 py-[15px] ${
-              index < stripePayments.length - 1 ? "border-b border-[#EEE8E0]" : ""
+              index < stripePayments.length - 1
+                ? "border-b border-[#EEE8E0]"
+                : ""
             }`}
           >
             <div className="text-[14px] text-[#7A7A7A]">{payment.date}</div>
-            <div className="text-[15px] font-semibold text-[#202020]">{payment.amount}</div>
-            <div className="text-[14px] text-[#666666]">{payment.packageName}</div>
+            <div className="text-[15px] font-semibold text-[#202020]">
+              {payment.amount}
+            </div>
+            <div className="text-[14px] text-[#666666]">
+              {payment.packageName}
+            </div>
             <div className="text-[14px] text-[#666666]">{payment.customer}</div>
           </div>
         ))}
@@ -211,21 +238,29 @@ export function AdminPaymentsPage() {
           <div className="border-t border-[#EAE6DE] px-5 py-5">
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block">
-                <span className="mb-2 block text-[12.5px] font-medium text-[#303030]">Date</span>
+                <span className="mb-2 block text-[12.5px] font-medium text-[#303030]">
+                  Date
+                </span>
                 <input
                   type="text"
                   value={ledgerForm.date}
-                  onChange={(event) => updateLedgerField("date", event.target.value)}
+                  onChange={(event) =>
+                    updateLedgerField("date", event.target.value)
+                  }
                   placeholder="mm/dd/yyyy"
                   className={fieldClassName}
                 />
               </label>
               <label className="block">
-                <span className="mb-2 block text-[12.5px] font-medium text-[#303030]">Amount</span>
+                <span className="mb-2 block text-[12.5px] font-medium text-[#303030]">
+                  Amount
+                </span>
                 <input
                   type="text"
                   value={ledgerForm.amount}
-                  onChange={(event) => updateLedgerField("amount", event.target.value)}
+                  onChange={(event) =>
+                    updateLedgerField("amount", event.target.value)
+                  }
                   placeholder="$0.00"
                   className={fieldClassName}
                 />
@@ -250,7 +285,9 @@ export function AdminPaymentsPage() {
                 <input
                   type="text"
                   value={ledgerForm.invoice}
-                  onChange={(event) => updateLedgerField("invoice", event.target.value)}
+                  onChange={(event) =>
+                    updateLedgerField("invoice", event.target.value)
+                  }
                   className={fieldClassName}
                 />
               </label>
@@ -300,12 +337,18 @@ export function AdminPaymentsPage() {
           <div
             key={`${entry.invoice}-${entry.date}-${index}`}
             className={`grid grid-cols-[1fr_2.2fr_0.9fr_0.9fr_0.9fr] gap-4 px-5 py-[15px] ${
-              index < ledgerEntries.length - 1 ? "border-b border-[#EEE8E0]" : ""
+              index < ledgerEntries.length - 1
+                ? "border-b border-[#EEE8E0]"
+                : ""
             }`}
           >
             <div className="text-[14px] text-[#7A7A7A]">{entry.date}</div>
-            <div className="text-[14px] text-[#666666]">{entry.description}</div>
-            <div className="text-[15px] font-semibold text-[#202020]">{entry.amount}</div>
+            <div className="text-[14px] text-[#666666]">
+              {entry.description}
+            </div>
+            <div className="text-[15px] font-semibold text-[#202020]">
+              {entry.amount}
+            </div>
             <div className="text-[14px] text-[#7A7A7A]">{entry.invoice}</div>
             <button
               type="button"
