@@ -112,6 +112,17 @@ Continue the homepage slice:
 - Added typed about-page content under `src/lib/about/about-data.ts`.
 - Matched the screenshots in order: dark hero, overlap intro card, more-than-calendar section, vision banner, and founder/details section.
 
+### 2026-08-06 Contact Progress
+
+- Added `/contact` route.
+- Added feature-specific contact page structure:
+  - `src/components/contact/contact-page.tsx`
+- Added typed contact-page content under `src/lib/contact/contact-data.ts`.
+- Matched the screenshot-driven contact layout with:
+  - intro and inquiry form
+  - advertising and event-submission support cards
+  - response-time, email, and social follow-up block
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`
