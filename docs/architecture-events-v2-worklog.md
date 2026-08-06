@@ -123,6 +123,17 @@ Continue the homepage slice:
   - advertising and event-submission support cards
   - response-time, email, and social follow-up block
 
+### 2026-08-06 Login Progress
+
+- Added `/login` route.
+- Added feature-specific login page structure:
+  - `src/components/auth/login-page.tsx`
+- Added typed login-page content under `src/lib/auth/login-data.ts`.
+- Matched the screenshot-driven auth layout with:
+  - left-column sign-in form
+  - account-creation prompt
+  - right-column editorial architecture image panel
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`
