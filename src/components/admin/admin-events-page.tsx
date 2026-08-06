@@ -26,12 +26,16 @@ type EventsView = (typeof topTabs)[number];
 export function AdminEventsPage() {
   const [view, setView] = useState<EventsView>("Submissions");
   const [filter, setFilter] = useState<SubmissionFilter>("All");
-  const [categories, setCategories] = useState([...adminEventCategories]);
+  
+  // FIX: Added <string[]> to allow the array to grow with any string category
+  const [categories, setCategories] = useState<string[]>([...adminEventCategories]);
   const [newCategory, setNewCategory] = useState("");
-  const [featuredListingPrice, setFeaturedListingPrice] = useState(
+  
+  // FIX: Added <string> to allow the price input fields to be edited
+  const [featuredListingPrice, setFeaturedListingPrice] = useState<string>(
     adminEventPricing.featuredListing
   );
-  const [brandSpotlightPrice, setBrandSpotlightPrice] = useState(
+  const [brandSpotlightPrice, setBrandSpotlightPrice] = useState<string>(
     adminEventPricing.brandSpotlight
   );
 
