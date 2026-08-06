@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AdminPlaceholderPage } from "@/components/admin/admin-placeholder-page";
+import { AdminReportsPage } from "@/components/admin/admin-reports-page";
 
 export const metadata: Metadata = {
   title: "Admin Reports | Architecture Events",
@@ -7,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminReportsRoute() {
-  return (
-    <AdminPlaceholderPage
-      title="Reports"
-      description="Track submission volume, publication performance, and search health across the platform."
-    />
-  );
+  return <AdminReportsPage />;
 }
