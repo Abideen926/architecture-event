@@ -6,11 +6,25 @@ import { adminInboxMessages } from "@/lib/admin/dashboard-data";
 const inboxFilters = ["All messages", "Contact Us", "Advertising"] as const;
 type InboxFilter = (typeof inboxFilters)[number];
 
+// FIX: Define an interface to prevent TS from narrowing "resolved" to only "false"
+interface InboxMessage {
+  from: string;
+  subject: string;
+  tag: string;
+  shortTag: string;
+  date: string;
+  kind: string;
+  resolved: boolean;
+  body: readonly string[];
+}
+
 export function AdminInboxPage() {
   const [filter, setFilter] = useState<InboxFilter>("All messages");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [reply, setReply] = useState("");
-  const [messages, setMessages] = useState(
+  
+  // FIX: Explicitly type the state with the interface
+  const [messages, setMessages] = useState<InboxMessage[]>(
     adminInboxMessages.map((message) => ({ ...message }))
   );
 
