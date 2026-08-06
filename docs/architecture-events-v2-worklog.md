@@ -182,6 +182,25 @@ Continue the homepage slice:
   - `/admin/payments`
   - `/admin/reports`
 
+### 2026-08-06 Attendee Dashboard Progress
+
+- Started the attendee section under its own route and folder boundaries:
+  - `src/app/attendee/...`
+  - `src/components/attendee/...`
+  - `src/lib/attendee/...`
+- Added a shared attendee shell with:
+  - account header
+  - sidebar navigation
+  - compact attendee footer
+- Implemented attendee dashboard routes from the prototype:
+  - `/attendee`
+  - `/attendee/history`
+  - `/attendee/profile`
+- Matched the prototype structure with:
+  - saved events cards and empty-state handling
+  - registration history table and empty-state handling
+  - profile/preferences form with chip toggles and newsletter toggle
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`
