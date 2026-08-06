@@ -18,6 +18,8 @@ export const appRoutes = {
   },
   organizer: {
     root: "/organizer",
+    submit: "/organizer/submit",
+    account: "/organizer/account",
   },
   admin: {
     root: "/admin",

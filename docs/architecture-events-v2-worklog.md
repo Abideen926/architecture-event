@@ -201,6 +201,25 @@ Continue the homepage slice:
   - registration history table and empty-state handling
   - profile/preferences form with chip toggles and newsletter toggle
 
+### 2026-08-06 Organizer Dashboard Progress
+
+- Started the organizer section under its own route and folder boundaries:
+  - `src/app/organizer/...`
+  - `src/components/organizer/...`
+  - `src/lib/organizer/...`
+- Added a shared organizer shell with:
+  - organizer header
+  - sidebar navigation
+  - compact organizer footer
+- Implemented organizer dashboard routes from the prototype:
+  - `/organizer`
+  - `/organizer/submit`
+  - `/organizer/account`
+- Matched the prototype structure with:
+  - organizer listings status cards and empty-state handling
+  - two-step event submission flow plus submitted confirmation state
+  - account, organization, and partnership request sections
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`
