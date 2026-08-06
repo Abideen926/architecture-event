@@ -134,6 +134,17 @@ Continue the homepage slice:
   - account-creation prompt
   - right-column editorial architecture image panel
 
+### 2026-08-06 Signup Progress
+
+- Added `/signup` route.
+- Added feature-specific signup page structure:
+  - `src/components/auth/signup-page.tsx`
+- Added typed signup-page content under `src/lib/auth/signup-data.ts`.
+- Matched the screenshot-driven signup layout with:
+  - centered account-creation card
+  - optional category and city preference chips
+  - newsletter opt-in and login handoff
+
 ## Suggested File/Folder Direction
 
 - `src/app/(marketing)/page.tsx`
