@@ -25,7 +25,12 @@ export function AdminSidebar() {
               }`}
             >
               <Icon className="h-4 w-4" strokeWidth={1.7} />
-              {item.label}
+              <span>{item.label}</span>
+              {"badge" in item && item.badge ? (
+                <span className="ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#232323] px-1.5 text-[11px] font-bold text-white">
+                  {item.badge}
+                </span>
+              ) : null}
             </Link>
           );
         })}

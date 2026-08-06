@@ -12,8 +12,17 @@ export const adminNavItems = [
   { href: appRoutes.admin.root, label: "Overview", icon: LayoutGrid },
   { href: appRoutes.admin.events, label: "Events", icon: CalendarDays },
   { href: appRoutes.admin.organizers, label: "Organizers", icon: Users },
-  { href: appRoutes.admin.inbox, label: "Inbox", icon: Inbox },
-  { href: appRoutes.admin.payments, label: "Payments", icon: CreditCard },
+  {
+    href: appRoutes.admin.inbox,
+    label: "Inbox & Messages",
+    icon: Inbox,
+    badge: "3",
+  },
+  {
+    href: appRoutes.admin.payments,
+    label: "Payments & Advertising",
+    icon: CreditCard,
+  },
   { href: appRoutes.admin.reports, label: "Reports", icon: BarChart3 },
 ] as const;
 
@@ -21,49 +30,59 @@ export const adminOverviewStats = [
   {
     label: "Total events",
     value: "148",
-    detail: "Across draft, review, and published listings",
+    rows: [
+      { label: "Under review", value: "7" },
+      { label: "Approved", value: "12" },
+      { label: "Published", value: "121" },
+    ],
   },
   {
-    label: "Under review",
-    value: "7",
-    detail: "Oldest submitted on July 19, 2026",
+    label: "Organizers",
+    value: "64",
+    detail: "3 joined this month",
   },
   {
-    label: "Published",
-    value: "121",
-    detail: "Searchable on the public platform today",
+    label: "Advertising inquiries",
+    value: "5",
+    accent: true,
+    detail: "Pending a reply",
   },
   {
-    label: "Monthly revenue",
-    value: "$1,596",
-    detail: "Featured listings, spotlight slots, and partnerships",
+    label: "Contact messages",
+    value: "9",
+    accent: true,
+    detail: "Unresolved",
   },
 ] as const;
 
 export const adminAttentionItems = [
   {
     title: "7 events awaiting review",
-    meta: "Oldest submitted July 19, 2026",
+    meta: "Oldest submitted Jul 19",
     actionLabel: "Review queue",
     href: appRoutes.admin.events,
+    tone: "accent",
   },
   {
     title: "3 unread advertising inquiries",
     meta: "Brand Spotlight, Founding Partner, Sponsored Reel",
     actionLabel: "Open inbox",
     href: appRoutes.admin.inbox,
+    tone: "accent",
   },
   {
-    title: "1 listing needs follow-up",
-    meta: "Changes requested July 26, 2026 and no response yet",
-    actionLabel: "View events",
+    title: "1 listing needs a follow-up",
+    meta: "Changes requested Jul 26 - no response yet",
+    actionLabel: "View listing",
     href: appRoutes.admin.events,
+    tone: "muted",
   },
   {
     title: "2 redirects need review",
     meta: "Flagged by SEO monitoring",
     actionLabel: "Open reports",
     href: appRoutes.admin.reports,
+    tone: "muted",
   },
 ] as const;
 
