@@ -28,7 +28,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-[34px] xl:flex">
+        <nav className="ml-auto hidden items-center gap-[34px] xl:flex pr-4">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -58,7 +58,7 @@ export function SiteHeader() {
           </Link>
           <Link
             href={appRoutes.architectureEvents.signup}
-            className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[11px] text-[14.5px] font-semibold text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+            className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[9px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
           >
             Sign Up
           </Link>
