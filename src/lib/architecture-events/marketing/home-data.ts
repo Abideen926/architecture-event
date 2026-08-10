@@ -24,7 +24,9 @@ export type FeaturedEvent = {
 };
 
 export const heroImage =
-  "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80";
+  "/images/background.jfif";
+// export const heroImage =
+//   "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80";
 
 export type ValuePoint = {
   title: string;
@@ -49,7 +51,7 @@ export const brandSpotlights: BrandSpotlight[] = [
     accent: "#c9b080",
     token: "T",
     image:
-      "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=80",
+      "/images/taylor.jfif",
   },
   {
     id: "forest-accents",
@@ -60,7 +62,7 @@ export const brandSpotlights: BrandSpotlight[] = [
     accent: "#5d6f53",
     token: "F",
     image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80",
+      "/images/forest.jfif",
   },
   {
     id: "company-name",
@@ -71,7 +73,7 @@ export const brandSpotlights: BrandSpotlight[] = [
     accent: "#9f9b94",
     token: "C",
     image:
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80",
+      "/images/company.jfif",
   },
 ];
 
@@ -130,21 +132,21 @@ export const valuePoints: ValuePoint[] = [
   {
     title: "Find Relevant Events",
     description:
-      "Discover conferences, showcases, and networking events that align with your interests and goals.",
+      "Discover events that match your interests and goals.",
   },
   {
     title: "Connect & Network",
     description:
-      "Build relationships with industry leaders, manufacturers, studios, consultants, and peers.",
+      "Build relationships with industry leaders and peers.",
   },
   {
     title: "Save & Organize",
     description:
-      "Bookmark events and brand spotlights to plan your calendar before registration windows close.",
+      "Bookmark events and brands to plan your calendar.",
   },
   {
     title: "Stay Informed",
     description:
-      "Get curated updates on events worth your time without digging through scattered industry channels.",
+      "Get the latest events and updates, delivered to you.",
   },
 ];
