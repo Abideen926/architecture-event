@@ -218,8 +218,13 @@ function FeaturedEventsSection() {
           {featuredEvents.map((event) => (
             <article
               key={event.id}
-              className="cursor-pointer overflow-hidden rounded-[16px] border border-[#E7E7E7] bg-white transition-shadow duration-200 hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.4)]"
+              className="group relative overflow-hidden rounded-[16px] border border-[#E7E7E7] bg-white transition-shadow duration-200 hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.4)]"
             >
+              <Link
+                href={appRoutes.architectureEvents.eventDetail(event.id)}
+                className="absolute inset-0 z-10"
+                aria-label={`Open ${event.title}`}
+              />
               <div className="relative h-[190px] overflow-hidden">
                 <img
                   src={event.image}
@@ -238,7 +243,7 @@ function FeaturedEventsSection() {
                   </span>
                 </div>
               </div>
-              <div className="px-[14px] pb-[14px] pt-[14px]">
+              <div className="relative z-20 px-[14px] pb-[14px] pt-[14px]">
                 <p className="m-0 text-[12px] font-semibold tracking-[0.1em] text-[#8D8D8D]">
                   {event.category}
                 </p>
@@ -248,14 +253,10 @@ function FeaturedEventsSection() {
                 <p className="mt-1 flex items-center gap-2 text-[10px] leading-[1.45] text-[#8A8A8A]">
                   <MapPin size={14} /> {event.location}
                 </p>
-                <button
-                  type="button"
-                  aria-label={`Save ${event.title}`}
-                  className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#9A9A9A] transition-colors hover:text-[#202020]"
-                >
+                <span className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#9A9A9A] transition-colors group-hover:text-[#202020]">
                   <Bookmark className="h-[14px] w-[14px]" strokeWidth={1.8} />
                   Save
-                </button>
+                </span>
               </div>
             </article>
           ))}

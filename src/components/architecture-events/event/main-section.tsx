@@ -5,12 +5,14 @@ import {
   List,
   MapPin,
 } from "lucide-react";
+import Link from "next/link";
 import {
   browseEvents,
   eventTypes,
   industryFilters,
   priceFilters,
 } from "@/lib/architecture-events/event/browse-events-data";
+import { appRoutes } from "@/lib/routes";
 
 export function BrowseMainSection() {
   return (
@@ -84,8 +86,13 @@ export function BrowseMainSection() {
               {browseEvents.map((event) => (
                 <article
                   key={event.id}
-                  className="overflow-hidden rounded-[16px] border border-[#DEDEDE] bg-white shadow-[0_14px_26px_-24px_rgba(20,20,20,0.28)]"
+                  className="group relative overflow-hidden rounded-[16px] border border-[#DEDEDE] bg-white shadow-[0_14px_26px_-24px_rgba(20,20,20,0.28)]"
                 >
+                  <Link
+                    href={appRoutes.architectureEvents.eventDetail(event.id)}
+                    className="absolute inset-0 z-10"
+                    aria-label={`Open ${event.title}`}
+                  />
                   <div
                     className="relative h-[132px] bg-cover bg-center bg-no-repeat"
                     style={{ backgroundImage: `url(${event.image})` }}
@@ -108,7 +115,7 @@ export function BrowseMainSection() {
                     </button>
                   </div>
 
-                  <div className="px-4 pb-4 pt-4">
+                  <div className="relative z-20 px-4 pb-4 pt-4">
                     <p className="text-[9px] font-bold tracking-[0.16em] text-[#848484]">
                       {event.category}
                     </p>

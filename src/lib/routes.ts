@@ -4,6 +4,7 @@ export const appRoutes = {
   architectureEvents: {
     root: architectureEventsBase,
     events: `${architectureEventsBase}/events`,
+    eventDetail: (slug: string) => `${architectureEventsBase}/events/${slug}`,
     submitEvent: `${architectureEventsBase}/submit-event`,
     advertise: `${architectureEventsBase}/advertise`,
     about: `${architectureEventsBase}/about`,
