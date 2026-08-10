@@ -1,20 +1,13 @@
+import type { ReactNode } from "react";
 import {
   ArrowRight,
   Bookmark,
   CalendarDays,
-  Handshake,
+  CalendarIcon,
+  Mail,
   MapPin,
   Search,
-  Bell,
-  LocateIcon,
-  LocationEdit,
-  MapPinCheck,
-  LucideMapPin,
-  CalendarSearchIcon,
-  CalendarIcon,
-  Group,
   Users,
-  Mail,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -27,7 +20,7 @@ import { appRoutes } from "@/lib/routes";
 
 export function HomePage() {
   return (
-    <div className="">
+    <>
       <main>
         <HeroSection />
         <BrandSpotlightSection />
@@ -35,7 +28,7 @@ export function HomePage() {
         <ValueSection />
         <NewsletterSection />
       </main>
-    </div>
+    </>
   );
 }
 
@@ -47,21 +40,21 @@ function HeroSection() {
         alt="Modern glass conference building at dusk"
         className="absolute inset-0 h-full w-full object-cover opacity-[0.85]"
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(176,138,69,0.36),transparent_25%),linear-gradient(120deg,rgba(24,24,24,0.96)_8%,rgba(24,24,24,0.78)_52%,rgba(24,24,24,0.38)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(20,20,20,0.92)_8%,rgba(20,20,20,0.55)_52%,rgba(20,20,20,0.2)_100%)]" />
 
-      <div className="ae-container relative px-20 pb-0 pt-24 lg:min-h-[697px]">
+      <div className="ae-container relative pb-0 pt-24 lg:min-h-[695.5px]">
         <div className="max-w-[760px]">
-          <h1 className="ae-serif  max-w-[12ch] font-semibold text-balance text-[52px] leading-[0.98] tracking-[-0.02em] text-white md:text-[64px] xl:text-[78px]">
+          <h1 className="ae-serif max-w-[12ch] text-balance text-[52px] font-semibold leading-[1.02] tracking-[-0.02em] text-white md:text-[64px] xl:text-[78px]">
             Discover Architecture Events
           </h1>
-          <p className="mt-7 max-w-[46ch] text-[16px] leading-[1.7] text-white/82 md:text-[18px]">
+          <p className="mt-7 max-w-[46ch] text-[17.5px] leading-[1.7] text-[rgba(255,255,255,0.82)]">
             Connecting architects, engineers, contractors, manufacturers,
             designers, and BIM/VDC professionals through conferences, networking
             events, product showcases, and educational programs.
           </p>
         </div>
 
-        <div className="relative mt-17.5 translate-y-14 rounded-[20px] border border-[#E7E7E7] bg-white px-5 py-6 shadow-[0_24px_60px_-30px_rgba(20,20,20,0.35)] md:px-7 md:py-[26px]">
+        <div className="relative mt-14 translate-y-[56px] rounded-[20px_20px_0px_0px] border border-[#E7E7E7] bg-white px-5 py-6 shadow-[0_24px_60px_-30px_rgba(20,20,20,0.35)] md:px-7 md:py-[26px]">
           <div className="grid gap-[22px] xl:grid-cols-[1.6fr_1fr_1fr_auto] xl:items-end">
             <HeroField
               label="KEYWORD"
@@ -118,10 +111,6 @@ function HeroSection() {
               Search Events
             </Link>
           </div>
-
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <span className="mt-5 block w-full border-2 border-[#6A6A6A]" />
-          </div>
         </div>
       </div>
     </section>
@@ -130,37 +119,37 @@ function HeroSection() {
 
 function BrandSpotlightSection() {
   return (
-    <section className="bg-white pt-35">
+    <section className="bg-white pt-[152px]">
       <div className="ae-container max-w-[1440px]">
-        <div className="grid gap-6 lg:grid-cols-[330px_minmax(0,1fr)] lg:items-start">
-          <div className="">
+        <div className="grid gap-14 lg:grid-cols-[1fr_3.1fr] lg:items-start">
+          <div className="pt-[6px]">
             <span className="ae-section-kicker">BRAND SPOTLIGHT</span>
-            <h2 className="ae-section-heading !font-semibold mt-5 max-w-[11ch] text-[31px] leading-[0.96]">
+            <h2 className="ae-section-heading mt-3 max-w-[11ch] text-[40px] leading-[1.14]">
               Brands shaping the future of the built world.
             </h2>
-            <p className="ae-section-description mt-8.5 max-w-[26ch] text-[11.5px] leading-[1.9] !text-[#5B5B5B]">
+            <p className="mt-[22px] max-w-[26ch] text-[15.5px] leading-[1.75] text-[#6A6A6A]">
               Discover innovative products, materials, and systems from leading
               brands in the AEC industry.
             </p>
             <Link
               href={appRoutes.architectureEvents.events}
-              className="mt-8 inline-flex h-[46px] items-center justify-center rounded-[14px] border border-[var(--ae-border)] px-6 text-[13px] font-bold text-[#303030] transition-colors hover:border-[var(--ae-accent)] hover:text-[var(--ae-accent)]"
+              className="mt-[32px] inline-flex items-center gap-[12px] rounded-xl border border-[#E7E7E7] bg-white px-[22px] py-[13px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:border-[#202020]"
             >
               View all brands
               <ArrowRight
-                className="ml-3 h-[14px] w-[14px]"
-                strokeWidth={1.8}
+                className="h-[15px] w-[15px]"
+                strokeWidth={1.7}
               />
             </Link>
           </div>
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 lg:grid-cols-3 lg:gap-6">
             {brandSpotlights.map((brand) => (
               <article
                 key={brand.id}
-                className="overflow-hidden rounded-[20px] border border-[#DCDCDC] bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_14px_-8px_rgba(0,0,0,0.35)]"
+                className="overflow-hidden rounded-[16px] border border-[#E7E7E7] bg-white transition-shadow duration-200 hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.35)]"
               >
                 <div
-                  className="h-[248px] bg-cover bg-center bg-no-repeat"
+                  className="h-[250px] bg-cover bg-center bg-no-repeat"
                   style={{ backgroundImage: `url(${brand.image})` }}
                   aria-label={brand.name}
                 />
@@ -172,24 +161,24 @@ function BrandSpotlightSection() {
                     >
                       {brand.token}
                     </span>
-                    <span className="mt-3 text-center text-[10px] font-semibold tracking-[0.30em] !text-[#202020]">
+                    <span className="mt-3 text-center text-[10px] font-semibold tracking-[0.30em] text-[#202020]">
                       {brand.name.toUpperCase()}
                     </span>
                   </div>
 
-                  <h3 className="text-[20px] !font-bold text-[#202020]">
+                  <h3 className="m-0 text-[20px] font-bold text-[#202020]">
                     {brand.name}
                   </h3>
-                  <p className="ae-section-description max-w-[23ch] text-[10px] leading-4  !text-[#5B5B5B]">
+                  <p className="mt-2 max-w-[23ch] text-[14px] leading-[1.70] text-[#5B5B5B]">
                     {brand.headline}
                   </p>
                   <Link
                     href={appRoutes.architectureEvents.events}
-                    className="ae-link-accent mt-5 inline-flex items-center text-[14px] font-bold"
+                    className="ae-link-accent mt-[18px] inline-flex items-center gap-[9px] text-[14px] font-semibold"
                   >
                     View Spotlight
                     <ArrowRight
-                      className="ml-2 h-[12px] w-[12px]"
+                      className="h-[15px] w-[15px]"
                       strokeWidth={1.8}
                     />
                   </Link>
@@ -205,63 +194,64 @@ function BrandSpotlightSection() {
 
 function FeaturedEventsSection() {
   return (
-    <section className="bg-white py-24">
+    <section className="bg-white pt-[120px]">
       <div className="ae-container max-w-[1440px]">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-[520px]">
-            <p className="ae-section-kicker">FEATURED EVENTS</p>
-            <h2 className="ae-section-heading mt-3 max-w-[18ch] text-[27px] leading-[1.02] md:text-[30px]">
-              Curated events. Meaningful connections.
+            <p className="ae-section-kicker mb-[18px]">FEATURED EVENTS</p>
+            <h2 className="ae-section-heading max-w-[18ch] text-[40px] leading-[1.16]">
+              Curated events.
+              <br />
+              Meaningful connections.
             </h2>
           </div>
           <Link
             href={appRoutes.architectureEvents.events}
-            className="ae-link-accent inline-flex items-center text-[14px] font-semibold"
+            className="ae-link-accent inline-flex items-center gap-[10px] pb-2 text-[14.5px] font-semibold"
           >
             View all events
-            <ArrowRight className="ml-2 h-[12px] w-[12px]" strokeWidth={1.8} />
+            <ArrowRight className="h-[15px] w-[15px]" strokeWidth={1.8} />
           </Link>
         </div>
 
-        <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-[42px] grid gap-[26px] md:grid-cols-2 xl:grid-cols-4">
           {featuredEvents.map((event) => (
             <article
               key={event.id}
-              className="overflow-hidden rounded-[8px] border border-[#DCDCDC] bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_10px_14px_-8px_rgba(0,0,0,0.35)]"
+              className="cursor-pointer overflow-hidden rounded-[16px] border border-[#E7E7E7] bg-white transition-shadow duration-200 hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.4)]"
             >
-              <div className="relative h-[186px] border-b border-[#E7E7E7]">
+              <div className="relative h-[190px] overflow-hidden">
                 <img
                   src={event.image}
                   alt={event.title}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
-                <div className="absolute left-2 top-2 flex justify-center items-center flex-col rounded-[6px] bg-[#252525]  text-white shadow-sm p-2">
-                  <span className="!text-[12px] font-medium uppercase leading-none tracking-[0.1em]">
+                <div className="absolute left-2 top-2 flex flex-col items-center justify-center rounded-[6px] bg-[#252525] px-2 py-2 text-white shadow-sm">
+                  <span className="text-[12px] font-medium uppercase leading-none tracking-[0.1em]">
                     {event.month}
                   </span>
-                  <span className="!text-[16px] font-bold leading-none py-1.5">
+                  <span className="py-[6px] text-[16px] font-bold leading-none">
                     {event.day}
                   </span>
-                  <span className=" !text-[12px] font-medium leading-none text-white/80">
+                  <span className="text-[12px] font-medium leading-none text-[rgba(255,255,255,0.8)]">
                     2026
                   </span>
                 </div>
               </div>
-              <div className="p-3.5">
-                <p className="!text-[12px] !mt-0 font-semibold tracking-[0.1em] !text-[#8D8D8D]">
+              <div className="px-[14px] pb-[14px] pt-[14px]">
+                <p className="m-0 text-[12px] font-semibold tracking-[0.1em] text-[#8D8D8D]">
                   {event.category}
                 </p>
                 <h3 className="mt-2 text-[18px] font-semibold leading-[1.3] text-[#202020]">
                   {event.title}
                 </h3>
-                <p className="mt-1 !text-[10px] leading-[1.45] !text-[#8A8A8A] flex gap-2 items-center">
-                  <LucideMapPin size={14} /> {event.location}
+                <p className="mt-1 flex items-center gap-2 text-[10px] leading-[1.45] text-[#8A8A8A]">
+                  <MapPin size={14} /> {event.location}
                 </p>
-                {/* <div className="mt-2 h-[0.1px] w-full bg-[#8A8A8A] !text-[#8A8A8A] " /> */}
                 <button
                   type="button"
                   aria-label={`Save ${event.title}`}
-                  className="mt-3 inline-flex items-center gap-1.5 !text-[12px] font-medium text-[#9A9A9A] transition-colors hover:text-[#202020]"
+                  className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#9A9A9A] transition-colors hover:text-[#202020]"
                 >
                   <Bookmark className="h-[14px] w-[14px]" strokeWidth={1.8} />
                   Save
@@ -277,48 +267,44 @@ function FeaturedEventsSection() {
 
 function ValueSection() {
   return (
-    <section className="border-t border-[#E7E7E7] bg-[#F8F7F5] py-8">
+    <section className="mt-[120px] border-y border-[#E7E7E7] bg-[#FAFAFA]">
       <div className="ae-container max-w-[1440px]">
-        <div className="grid gap-0 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-0 py-[56px] md:grid-cols-2 xl:grid-cols-4 xl:gap-[44px]">
           {valuePoints.map((point, index) => (
             <article
               key={point.title}
-              className="flex gap-4 items-start justify-center border-[#E1DED7] px-5 py-4 md:border-r last:border-r-0"
+              className={`flex gap-4 ${index > 0 ? "xl:border-l xl:border-[#E7E7E7] xl:pl-[44px]" : ""}`}
             >
-              <div className="flex items-center gap-4">
-                <div className="text-[#6A6A6A]">
-                  {index === 0 ? (
-                    <CalendarIcon
-                      size={20}
-                      className="text-[#202020]"
-                      strokeWidth={1.8}
-                    />
-                  ) : index === 1 ? (
-                    <Users
-                      size={20}
-                      className="text-[#202020]"
-                      strokeWidth={1.8}
-                    />
-                  ) : index === 2 ? (
-                    <Bookmark
-                      size={20}
-                      className="text-[#202020]"
-                      strokeWidth={1.8}
-                    />
-                  ) : (
-                    <Mail
-                      size={20}
-                      className="text-[#202020]"
-                      strokeWidth={1.8}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className="">
-                <h3 className="text-[16px] font-semibold text-[#202020]">
+              {index === 0 ? (
+                <CalendarIcon
+                  size={24}
+                  className="mt-[2px] flex-none text-[#202020]"
+                  strokeWidth={1.5}
+                />
+              ) : index === 1 ? (
+                <Users
+                  size={24}
+                  className="mt-[2px] flex-none text-[#202020]"
+                  strokeWidth={1.5}
+                />
+              ) : index === 2 ? (
+                <Bookmark
+                  size={24}
+                  className="mt-[2px] flex-none text-[#202020]"
+                  strokeWidth={1.5}
+                />
+              ) : (
+                <Mail
+                  size={24}
+                  className="mt-[2px] flex-none text-[#202020]"
+                  strokeWidth={1.5}
+                />
+              )}
+              <div>
+                <h3 className="m-0 text-[15px] font-bold text-[#202020]">
                   {point.title}
                 </h3>
-                <p className="!mt-2 !text-[13px] leading-[1.55] !text-[#8A8A8A] max-w-[24ch]">
+                <p className="mt-[7px] max-w-[24ch] text-[13.5px] leading-[1.65] text-[#6A6A6A]">
                   {point.description}
                 </p>
               </div>
@@ -332,43 +318,43 @@ function ValueSection() {
 
 function NewsletterSection() {
   return (
-    <section className="bg-white py-24">
+    <section className="bg-white py-[110px]">
       <div className="ae-container">
-        <div className="rounded-[28px] bg-[#1E1E1E] px-6 py-10 text-white md:px-10 md:py-12 xl:px-14 xl:py-14">
-          <div className="grid gap-10 xl:grid-cols-[1.1fr_0.9fr] xl:items-center">
+        <div className="grid gap-[72px] rounded-[20px] bg-[#1E1E1E] px-6 py-10 text-white md:px-10 md:py-12 xl:grid-cols-[1.1fr_1fr] xl:items-center xl:px-20 xl:py-[72px]">
+          <div>
             <div className="max-w-[700px]">
-              <p className="ae-section-kicker">NEWSLETTER</p>
-              <h2 className="ae-section-heading mt-4 max-w-[16ch] text-[38px] leading-[1.08] text-white md:text-[46px]">
+              <p className="ae-section-kicker mb-[18px]">NEWSLETTER</p>
+              <h2 className="ae-section-heading max-w-[20ch] text-[38px] leading-[1.16] !text-white">
                 The events worth your time, once a month.
               </h2>
-              <p className="mt-4 max-w-[48ch] text-[16.5px] leading-[1.75] text-white/74">
+              <p className="mt-[20px] max-w-[48ch] text-[15.5px] leading-[1.75] text-[rgba(255,255,255,0.7)]">
                 A short, curated email with upcoming conferences, product
                 showcases, and educational programs across the AEC industry. No
                 noise, unsubscribe anytime.
               </p>
             </div>
+          </div>
 
-            <div className="rounded-[24px] border border-white/10 bg-white/6 p-6 md:p-7">
-              <label className="block">
-                <span className="mb-3 block text-[13.5px] font-semibold text-white">
-                  Email address
-                </span>
-                <input
-                  type="email"
-                  placeholder="you@studio.com"
-                  className="h-[54px] w-full rounded-xl border border-white/18 bg-white px-4 text-[15px] text-foreground outline-none placeholder:text-muted"
-                />
-              </label>
+          <div>
+            <label className="mb-[10px] block text-[13px] font-semibold text-[rgba(255,255,255,0.75)]">
+              Email address
+            </label>
+            <div className="flex gap-3">
+              <input
+                type="email"
+                placeholder="you@studio.com"
+                className="h-[54px] flex-1 rounded-xl border border-white/20 bg-[rgba(255,255,255,0.06)] px-[18px] text-[15px] text-white outline-none placeholder:text-[rgba(255,255,255,0.55)]"
+              />
               <button
                 type="button"
-                className="mt-4 h-[54px] w-full rounded-xl bg-[var(--ae-accent)] text-[15.5px] font-semibold text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+                className="h-[54px] rounded-xl bg-white px-7 text-[15px] font-semibold text-[#1E1E1E] transition-colors hover:bg-[var(--ae-accent)] hover:text-white"
               >
                 Subscribe
               </button>
-              <p className="mt-4 text-[13.5px] leading-[1.7] text-white/64">
-                By subscribing you agree to our privacy policy.
-              </p>
             </div>
+            <p className="mt-[14px] text-[12.5px] text-[rgba(255,255,255,0.55)]">
+              By subscribing you agree to our privacy policy.
+            </p>
           </div>
         </div>
       </div>
@@ -378,8 +364,8 @@ function NewsletterSection() {
 
 type HeroFieldProps = {
   label: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
+  icon: ReactNode;
+  children: ReactNode;
 };
 
 function HeroField({ label, icon, children }: HeroFieldProps) {
