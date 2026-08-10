@@ -25,7 +25,7 @@ const companyLinks = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-[#1E1E1E] text-white/72">
+    <footer className="bg-[#1E1E1E] text-[rgba(255,255,255,0.72)]">
       <div className="ae-container grid gap-14 py-[76px] pb-[34px] lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
@@ -48,7 +48,7 @@ export function SiteFooter() {
               <input
                 type="email"
                 placeholder="you@studio.com"
-                className="h-[46px] min-w-0 flex-1 rounded-xl border border-white/20 bg-white/6 px-[14px] text-[14.5px] text-white outline-none placeholder:text-white/42"
+                className="h-[46px] min-w-0 flex-1 rounded-xl border border-white/20 bg-[rgba(255,255,255,0.06)] px-[14px] text-[14.5px] text-white outline-none placeholder:text-[rgba(255,255,255,0.42)]"
               />
               <button
                 type="button"
@@ -61,13 +61,13 @@ export function SiteFooter() {
           <div className="mt-[26px] flex gap-3">
             <Link
               href="#linkedin"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/18 text-[13px] font-semibold text-white transition-colors hover:border-white"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.18] text-[13px] font-semibold text-white transition-colors hover:border-white"
             >
               in
             </Link>
             <Link
               href="#instagram"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/18 text-white transition-colors hover:border-white"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.18] text-white transition-colors hover:border-white"
             >
               <svg
                 width="16"
@@ -90,7 +90,7 @@ export function SiteFooter() {
         <FooterColumn title="COMPANY" links={companyLinks} />
       </div>
 
-      <div className="ae-container flex flex-col gap-3 border-t border-white/12 py-[26px] pb-[44px] text-[13px] sm:flex-row sm:items-center sm:justify-between">
+      <div className="ae-container flex flex-col gap-3 border-t border-white/[0.12] py-[26px] pb-[44px] text-[13px] sm:flex-row sm:items-center sm:justify-between">
         <span>&copy; 2026 Architecture Events. All rights reserved.</span>
         <span>Made for the built world.</span>
       </div>

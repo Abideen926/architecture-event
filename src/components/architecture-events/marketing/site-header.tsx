@@ -17,8 +17,8 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/94 backdrop-blur-md">
-      <div className="ae-container flex h-[76px] items-center gap-8">
+    <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-[rgba(255,255,255,0.94)] backdrop-blur-[8px] backdrop-saturate-125">
+      <div className="ae-container flex h-[76px] items-center gap-12">
         <Link href={appRoutes.architectureEvents.root} className="flex items-center gap-3">
           <span className="ae-serif ae-accent-text text-[34px] leading-none">A</span>
           <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-[#202020]">
@@ -28,7 +28,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="ml-auto hidden items-center gap-[34px] xl:flex pr-4">
+        <nav className="ml-auto hidden items-center gap-[34px] xl:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -58,7 +58,7 @@ export function SiteHeader() {
           </Link>
           <Link
             href={appRoutes.architectureEvents.signup}
-            className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[9px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+            className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
           >
             Sign Up
           </Link>

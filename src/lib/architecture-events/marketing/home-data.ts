@@ -23,8 +23,7 @@ export type FeaturedEvent = {
   image: string;
 };
 
-export const heroImage =
-  "/images/background.jfif";
+export const heroImage = "/images/Background.jfif";
 // export const heroImage =
 //   "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80";
 
@@ -81,7 +80,7 @@ export const featuredEvents: FeaturedEvent[] = [
   {
     id: "aia-conference",
     month: "MAY",
-    day: "22-24",
+    day: "22–24",
     category: "CONFERENCE",
     title: "AIA Conference on Architecture 2026",
     location: "Boston, MA",
@@ -105,7 +104,7 @@ export const featuredEvents: FeaturedEvent[] = [
   {
     id: "bim-world",
     month: "JUN",
-    day: "18-19",
+    day: "18–19",
     category: "CONFERENCE",
     title: "BIM World 2026",
     location: "San Diego, CA",
