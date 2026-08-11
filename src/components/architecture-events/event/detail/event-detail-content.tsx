@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { ArrowRight, Share2, Star } from "lucide-react";
+import { Share2, Star } from "lucide-react";
 import type { EventDetail } from "@/lib/architecture-events/event/event-detail-data";
-import { appRoutes } from "@/lib/routes";
+import { EventRelatedSection } from "@/components/architecture-events/event/detail/event-related-section";
 
 type EventDetailContentProps = {
   event: EventDetail;
@@ -28,19 +27,31 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                 ))}
               </div>
 
-              <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {event.stats.map((stat) => (
-                  <StatCard key={stat.label} label={stat.label} value={stat.value} />
-                ))}
+              <div className="mt-9 overflow-hidden rounded-[18px] border border-[#E6E1D9] bg-white">
+                <div className="grid divide-y divide-[#EDE7DE] md:grid-cols-4 md:divide-x md:divide-y-0">
+                  {event.stats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="px-6 py-5 md:px-7 md:py-6"
+                    >
+                      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7E7E7E]">
+                        {stat.label}
+                      </p>
+                      <p className="mt-2 text-[17px] font-medium tracking-[-0.02em] text-[#202020]">
+                        {stat.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
 
             <section>
-              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px]">
+              <h2 className="ae-serif text-[30px] font-semibold  leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[33px]">
                 {event.agendaHeading}
               </h2>
 
-              <div className="mt-6 overflow-hidden rounded-[18px] border border-[#E6E1D9] bg-white">
+              <div className="mt-6 overflow-hidden rounded-[20px] border border-[#E6E1D9] bg-white">
                 <div className="border-b border-[#EFE7DB] px-5 py-4 md:px-6">
                   <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#7F7F7F]">
                     {event.agendaDayLabel}
@@ -50,16 +61,16 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                   {event.agendaItems.map((item) => (
                     <div
                       key={`${item.time}-${item.title}`}
-                      className="grid gap-4 px-5 py-4 md:grid-cols-[96px_1fr] md:px-6 md:py-5"
+                      className="grid gap-4 px-5 py-5 md:grid-cols-[124px_1fr] md:px-6 md:py-6"
                     >
-                      <p className="text-[13px] font-medium tracking-[-0.02em] text-[#666666] md:text-[14px]">
+                      <p className="text-[15px] font-medium tracking-[-0.02em] text-[#666666] md:text-[16px]">
                         {item.time}
                       </p>
                       <div>
-                        <p className="text-[13px] font-semibold leading-[1.35] tracking-[-0.02em] text-[#202020] md:text-[14px]">
+                        <p className="text-[16px] font-semibold leading-[1.35] tracking-[-0.02em] text-[#202020] md:text-[17px]">
                           {item.title}
                         </p>
-                        <p className="mt-1 text-[11px] text-[#7A7A7A] md:text-[12px]">
+                        <p className="mt-1 text-[13px] text-[#7A7A7A] md:text-[14px]">
                           {item.location}
                         </p>
                       </div>
@@ -70,22 +81,22 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </section>
 
             <section>
-              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px]">
+              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px] font-semibold">
                 {event.speakersHeading}
               </h2>
 
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="mt-5 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
                 {event.speakers.map((speaker, index) => (
                   <article
                     key={`${speaker.name}-${index}`}
-                    className="overflow-hidden rounded-[18px] bg-white"
+                    className=" rounded-[18px] bg-white"
                   >
-                    <div className="h-[68px] rounded-[10px] bg-[#F2EDE4]" />
+                    <div className="h-[130px] rounded-[10px] bg-[#F2EDE4]" />
                     <div className="pt-2">
-                      <h3 className="text-[11px] font-semibold tracking-[-0.01em] text-[#202020]">
+                      <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-[#202020]">
                         {speaker.name}
                       </h3>
-                      <p className="mt-1 text-[10px] text-[#7C7C7C]">
+                      <p className="mt-1 text-[12px] text-[#7C7C7C]">
                         {speaker.title}
                       </p>
                     </div>
@@ -95,27 +106,27 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </section>
 
             <section>
-              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px]">
+              <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[36px]">
                 {event.venueHeading}
               </h2>
-              <div className="mt-5 overflow-hidden rounded-[18px] border border-[#E6E1D9] bg-white p-3 shadow-[0_20px_40px_-36px_rgba(32,32,32,0.3)]">
-                <div className="relative overflow-hidden rounded-[18px] bg-[#EFE8DB]">
-                  <div className="flex min-h-[186px] items-center justify-center bg-[radial-gradient(circle_at_50%_50%,rgba(193,149,69,0.25)_0,rgba(193,149,69,0.15)_18%,rgba(239,232,219,0.95)_45%,#EFE8DB_70%)]">
+              <div className="mt-6 overflow-hidden rounded-[22px] border border-[#E6E1D9] bg-white p-0 shadow-[0_20px_40px_-36px_rgba(32,32,32,0.3)]">
+                <div className="relative overflow-hidden rounded-t-[22px] bg-[#EFE8DB]">
+                  <div className="flex min-h-[262px] items-center justify-center bg-[linear-gradient(180deg,#F5F1EA_0%,#F0ECE5_100%)]">
                     <div className="h-5 w-5 rounded-full border-4 border-[#C79A4D] bg-white shadow-[0_0_0_10px_rgba(199,154,77,0.14)]" />
                   </div>
                 </div>
-                <div className="flex flex-col gap-3 px-2 pb-1 pt-3 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <h3 className="text-[11px] font-semibold tracking-[-0.01em] text-[#202020]">
+                <div className="flex flex-col gap-4 border-t border-[#EDE7DE] px-5 py-5 md:flex-row md:items-center md:justify-between md:px-6">
+                  <div className="min-w-0">
+                    <h3 className="text-[18px] font-semibold tracking-[-0.02em] text-[#202020]">
                       {event.venueName}
                     </h3>
-                    <p className="mt-1 text-[9px] text-[#7A7A7A]">
+                    <p className="mt-1 text-[13px] text-[#7A7A7A]">
                       {event.venueAddress}
                     </p>
                   </div>
                   <button
                     type="button"
-                    className="inline-flex h-[24px] items-center justify-center rounded-[8px] border border-[#E2DED7] bg-white px-3 text-[9px] font-medium text-[#202020]"
+                    className="inline-flex h-[40px] shrink-0 items-center justify-center rounded-[12px] border border-[#E2DED7] bg-white px-5 text-[14px] font-medium text-[#202020]"
                   >
                     Get directions
                   </button>
@@ -124,66 +135,17 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </section>
 
             <section>
-              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px]">
+              <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[36px]">
                 {event.sponsorsHeading}
               </h2>
-              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
                 {event.sponsors.map((sponsor, index) => (
                   <div
                     key={`${sponsor}-${index}`}
-                    className="flex min-h-[26px] items-center justify-center rounded-[9px] border border-[#E2DED7] bg-white px-3 py-2 text-center text-[9px] font-medium tracking-[-0.01em] text-[#747474]"
+                    className="flex min-h-[84px] items-center justify-center rounded-[16px] border border-[#E2DED7] bg-white px-4 text-center text-[14px] font-medium tracking-[-0.01em] text-[#747474]"
                   >
                     {sponsor}
                   </div>
-                ))}
-              </div>
-            </section>
-
-            <section>
-              <div className="flex items-end justify-between gap-6">
-                <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px]">
-                  {event.relatedHeading}
-                </h2>
-                <Link
-                  href={appRoutes.architectureEvents.events}
-                  className="hidden items-center gap-2 text-[14px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)] md:inline-flex"
-                >
-                  {event.relatedViewAllLabel}
-                  <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
-                </Link>
-              </div>
-
-              <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {event.relatedEvents.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={appRoutes.architectureEvents.eventDetail(item.id)}
-                    className="group overflow-hidden rounded-[24px] border border-[#E8E0D3] bg-white shadow-[0_18px_36px_-30px_rgba(32,32,32,0.28)] transition-transform duration-300 hover:-translate-y-1"
-                  >
-                    <div className="relative aspect-[1.55] overflow-hidden bg-[#D8D0C2]">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                      <div className="absolute left-4 top-4 rounded-[16px] border border-white/16 bg-[#171717]/88 px-3 py-2 text-white shadow-[0_12px_30px_-18px_rgba(0,0,0,0.85)]">
-                        <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-white/72">
-                          {item.month}
-                        </p>
-                        <p className="mt-1 text-[20px] font-semibold leading-none">
-                          {item.day}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="text-[18px] font-semibold tracking-[-0.02em] text-[#202020]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[14px] text-[#6A6A6A]">
-                        {item.location}
-                      </p>
-                    </div>
-                  </Link>
                 ))}
               </div>
             </section>
@@ -256,26 +218,9 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </div>
           </aside>
         </div>
+
+        <EventRelatedSection event={event} />
       </div>
     </section>
   );
 }
-
-type StatCardProps = {
-  label: string;
-  value: string;
-};
-
-function StatCard({ label, value }: StatCardProps) {
-  return (
-    <div className="rounded-[20px] border border-[#E6E1D9] bg-white px-5 py-4">
-      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7A7A7A]">
-        {label}
-      </p>
-      <p className="mt-2 text-[16px] font-semibold tracking-[-0.02em] text-[#202020]">
-        {value}
-      </p>
-    </div>
-  );
-}
-

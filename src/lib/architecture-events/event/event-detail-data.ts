@@ -160,4 +160,3 @@ const eventDetailsBySlug: Record<string, EventDetail> = {
 export function getEventDetailBySlug(slug: string) {
   return eventDetailsBySlug[slug] ?? null;
 }
-

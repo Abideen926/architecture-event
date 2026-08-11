@@ -18,7 +18,7 @@ export default async function EventDetailPage({
   }
 
   return (
-    <div className="ae-shell bg-white">
+    <div className="ae-shell bg-[#F7F4EF]">
       <main>
         <EventDetailHero event={event} />
         <EventDetailContent event={event} />
