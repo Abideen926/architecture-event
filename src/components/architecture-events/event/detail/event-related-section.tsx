@@ -24,15 +24,15 @@ const relatedCardDetails: Record<string, { category: string; dateLabel: string }
 
 export function EventRelatedSection({ event }: EventRelatedSectionProps) {
   return (
-    <section className="bg-[#F7F4EF] py-10 md:py-12">
+    <section className="border-y border-[#E7E7E7] bg-[#FAFAFA] py-10 md:py-23 mt-15">
       <div className="ae-container">
         <div className="flex items-end justify-between gap-6">
-          <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[36px]">
+          <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[33px] font-semibold  mb-4">
             {event.relatedHeading}
           </h2>
           <Link
             href={appRoutes.architectureEvents.events}
-            className="hidden items-center gap-2 text-[14px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)] md:inline-flex"
+            className="hidden items-center gap-2 text-[14px] font-semibold !text-[var(--ae-accent)] transition-colors !hover:text-[var(--ae-accent-strong)] md:inline-flex"
           >
             {event.relatedViewAllLabel}
             <ArrowRight className="h-4 w-4" strokeWidth={1.8} />

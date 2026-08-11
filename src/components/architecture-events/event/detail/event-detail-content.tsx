@@ -8,7 +8,7 @@ type EventDetailContentProps = {
 
 export function EventDetailContent({ event }: EventDetailContentProps) {
   return (
-    <section className="bg-white py-10 md:py-12">
+    <section className="bg-white pt-10 md:pt-12">
       <div className="ae-container">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_384px] lg:items-start lg:gap-14">
           <div className="space-y-10 md:space-y-12">
@@ -28,7 +28,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
               </div>
 
               <div className="mt-9 overflow-hidden rounded-[18px] border border-[#E6E1D9] bg-white">
-                <div className="grid divide-y divide-[#EDE7DE] md:grid-cols-4 md:divide-x md:divide-y-0">
+                <div className="grid  md:grid-cols-4">
                   {event.stats.map((stat) => (
                     <div
                       key={stat.label}
@@ -52,8 +52,8 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
               </h2>
 
               <div className="mt-6 overflow-hidden rounded-[20px] border border-[#E6E1D9] bg-white">
-                <div className="border-b border-[#EFE7DB] px-5 py-4 md:px-6">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#7F7F7F]">
+                <div className="border-b border-[#EFE7DB] px-5 py-4 md:px-6 bg-[#FAFAFA]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#7F7F7F] ">
                     {event.agendaDayLabel}
                   </p>
                 </div>
@@ -81,7 +81,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </section>
 
             <section>
-              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[26px] font-semibold">
+              <h2 className="ae-serif text-[24px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[34px] ] font-semibold">
                 {event.speakersHeading}
               </h2>
 
@@ -106,7 +106,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </section>
 
             <section>
-              <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[36px]">
+              <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[34px] ] font-semibold">
                 {event.venueHeading}
               </h2>
               <div className="mt-6 overflow-hidden rounded-[22px] border border-[#E6E1D9] bg-white p-0 shadow-[0_20px_40px_-36px_rgba(32,32,32,0.3)]">
@@ -135,7 +135,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
             </section>
 
             <section>
-              <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[36px]">
+              <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[34px] ] font-semibold">
                 {event.sponsorsHeading}
               </h2>
               <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -156,8 +156,8 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
               <p className="text-[14px] font-medium text-[#7B7B7B]">
                 {event.priceLabel}
               </p>
-              <div className="mt-1 flex items-end gap-2">
-                <p className="ae-serif text-[56px] leading-[0.92] tracking-[-0.05em] text-[#202020]">
+              <div className="my-3 flex items-end gap-2">
+                <p className="ae-serif text-[36px] font-semibold leading-[0.92] tracking-[-0.05em] text-[#202020]">
                   {event.price}
                 </p>
               </div>
@@ -176,7 +176,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                 {event.ctaNote}
               </p>
 
-              <div className="mt-7 grid grid-cols-2 gap-3">
+              <div className="mt-7 grid grid-cols-2 gap-3 border-t pt-4 border-[#E7E7E7]">
                 <button
                   type="button"
                   className="inline-flex h-[46px] items-center justify-center gap-2 rounded-[14px] border border-[#E2DED7] bg-white px-4 text-[14px] font-medium text-[#202020]"
@@ -219,8 +219,8 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
           </aside>
         </div>
 
-        <EventRelatedSection event={event} />
       </div>
+        <EventRelatedSection event={event} />
     </section>
   );
 }
