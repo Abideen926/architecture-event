@@ -19,7 +19,7 @@ export function BrowseMainSection() {
   return (
     <section className="bg-white pb-18 pt-16">
       <div className="mx-auto w-full max-w-[1310px]" style={{ paddingInline: "20px" }}>
-        <div className="grid gap-9 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+        <div className="grid gap-9 lg:grid-cols-[248px_minmax(0,1fr)] lg:gap-10">
           <aside className="text-[#3A3A3A]">
             <div className="flex items-center justify-between border-b border-[#E5E1DA] pb-4">
               <h2 className="text-[16px] font-semibold leading-none text-[#2A2A2A]">
@@ -42,9 +42,9 @@ export function BrowseMainSection() {
                 MAP
               </h3>
               <div className="mt-3 overflow-hidden rounded-[14px] border border-[#E0DDD6] bg-[#F6F3ED]">
-                <div className="relative h-[134px] bg-[linear-gradient(180deg,rgba(176,138,69,0.06),rgba(176,138,69,0.02)),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:auto,58px_58px,58px_58px]">
+                <div className="relative h-[138px] bg-[linear-gradient(180deg,rgba(176,138,69,0.06),rgba(176,138,69,0.02)),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:auto,58px_58px,58px_58px]">
                   <span className="absolute left-[44px] top-[31px] h-3.5 w-3.5 rounded-full bg-[var(--ae-accent)] ring-4 ring-[#DCC89E]/50" />
-                  <span className="absolute left-[95px] top-[74px] h-3.5 w-3.5 rounded-full bg-[var(--ae-accent)] ring-4 ring-[#DCC89E]/50" />
+                  <span className="absolute left-[95px] top-[78px] h-3.5 w-3.5 rounded-full bg-[var(--ae-accent)] ring-4 ring-[#DCC89E]/50" />
                   <button
                     type="button"
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-[10px] bg-white px-4 py-2 text-[11px] font-medium text-[#2A2A2A] shadow-[0_8px_18px_-16px_rgba(20,20,20,0.5)]"
@@ -103,7 +103,7 @@ export function BrowseMainSection() {
                     className="relative h-[198px] bg-cover bg-center bg-no-repeat"
                     style={{ backgroundImage: `url(${event.image})` }}
                   >
-                    <div className="absolute left-3 top-3 flex h-[66px] w-[66px] flex-col items-center justify-center rounded-[12px] bg-[#242424] text-white shadow-sm">
+                    <div className="absolute left-3 top-3 flex h-[66px] px-3 flex-col items-center justify-center rounded-[12px] bg-[#242424] text-white shadow-sm">
                       <p className="text-[10px] font-semibold uppercase leading-none tracking-[0.1em]">
                         {event.month}
                       </p>
@@ -175,11 +175,11 @@ function FilterGroup({ title, items }: FilterGroupProps) {
       <h3 className="text-[11px] font-bold tracking-[0.12em] text-[#6F6F6F]">
         {title}
       </h3>
-      <div className="mt-4 grid gap-[13px]">
+      <div className="mt-7 grid gap-[14px]">
         {items.map((item) => (
           <label
             key={item}
-            className="inline-flex items-center gap-2.5 text-[13px] text-[#5E5E5E]"
+            className="inline-flex items-center gap-2.5 text-[14px] text-[#5E5E5E] mb-1"
           >
             <input
               type="checkbox"
