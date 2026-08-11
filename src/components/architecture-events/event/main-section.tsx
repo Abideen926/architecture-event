@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Bookmark,
   ChevronLeft,
@@ -6,6 +8,7 @@ import {
   List,
   MapPin,
 } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   browseEvents,
@@ -15,7 +18,17 @@ import {
 } from "@/lib/architecture-events/event/browse-events-data";
 import { appRoutes } from "@/lib/routes";
 
+const sortOptions = [
+  "Date (soonest)",
+  "Date (latest)",
+  "Price (low to high)",
+  "Price (high to low)",
+] as const;
+
 export function BrowseMainSection() {
+  const [sortOpen, setSortOpen] = useState(false);
+  const [sortLabel, setSortLabel] = useState(sortOptions[0]);
+
   return (
     <section className="bg-white pb-18 pt-16">
       <div className="mx-auto w-full max-w-[1310px]" style={{ paddingInline: "20px" }}>
@@ -63,13 +76,40 @@ export function BrowseMainSection() {
                 matching your filters
               </p>
               <div className="flex items-center gap-3 self-start sm:self-auto">
-                <button
-                  type="button"
-                  className="inline-flex h-[32px] items-center gap-2 rounded-[10px] border border-[#E0DDD6] bg-white px-4 text-[12px] font-medium text-[#2E2E2E]"
-                >
-                  Sort: Date (soonest)
-                  <ChevronDown className="h-3.5 w-3.5 text-[#6F6F6F]" strokeWidth={1.8} />
-                </button>
+                <div className="relative">
+                  <button
+                    type="button"
+                    aria-expanded={sortOpen}
+                    onClick={() => setSortOpen((value) => !value)}
+                    className="inline-flex h-[32px] items-center gap-2 rounded-[10px] border border-[#E0DDD6] bg-white px-4 text-[12px] font-medium text-[#2E2E2E]"
+                  >
+                    Sort: {sortLabel}
+                    <ChevronDown
+                      className="h-3.5 w-3.5 text-[#6F6F6F]"
+                      strokeWidth={1.8}
+                    />
+                  </button>
+
+                  {sortOpen ? (
+                    <div className="absolute right-0 top-full z-20 mt-2 w-[190px] overflow-hidden rounded-[12px] border border-[#E0DDD6] bg-white shadow-[0_16px_34px_-24px_rgba(20,20,20,0.26)]">
+                      {sortOptions.map((option, index) => (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => {
+                            setSortLabel(option);
+                            setSortOpen(false);
+                          }}
+                          className={`flex h-[40px] w-full items-center px-4 text-left text-[12px] text-[#2E2E2E] transition-colors hover:bg-[#FAFAFA] ${
+                            index > 0 ? "border-t border-[#F2EEE7]" : ""
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
                 <div className="inline-flex overflow-hidden rounded-[10px] border border-[#DAD7D0]">
                   <button
                     type="button"
