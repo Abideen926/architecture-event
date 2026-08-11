@@ -7,9 +7,9 @@ const interestOptions = [
 
 export function AdvertiseContactSection() {
   return (
-    <section className="bg-white pb-[96px] pt-[8px]">
+    <section className=" pb-[96px] pt-[8px]">
       <div className="ae-container">
-        <div className="mx-auto grid max-w-[1280px] gap-9 rounded-[21px] border border-[#E4E0D8] bg-[#fdfbf8] px-[34px] py-[34px] lg:grid-cols-[0.92fr_1.25fr]">
+        <div className="mx-auto grid max-w-[1280px] gap-9 rounded-[21px] border border-[#E4E0D8] bg-[var(--mainbackground)] px-[34px] py-[34px] lg:grid-cols-[0.92fr_1.25fr]">
           <div>
             <h2 className="ae-section-heading text-[32px] leading-none md:text-[36px]">
               Tell us about your brand
@@ -19,10 +19,10 @@ export function AdvertiseContactSection() {
             </p>
 
             <div
-              className="mt-8 h-[226px] rounded-[14px] bg-cover bg-center bg-no-repeat shadow-[0_18px_24px_-24px_rgba(20,20,20,0.55)] sm:h-[260px] lg:h-[225px]"
+              className="mt-8 h-[226px] rounded-[14px] bg-cover bg-center bg-no-repeat shadow-[0_18px_24px_-24px_rgba(20,20,20,0.55)] sm:h-[260px] lg:h-[305px]"
               style={{
                 backgroundImage:
-                  "url(https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80)",
+                  "url(/images/advirtise_brand.png)",
               }}
             />
           </div>
@@ -60,10 +60,10 @@ export function AdvertiseContactSection() {
               />
             </FormField>
 
-            <div className="pt-1">
+            <div className="">
               <button
                 type="submit"
-                className="inline-flex h-[37px] min-w-[120px] items-center justify-center rounded-[10px] border border-[#232323] bg-[#232323] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-black"
+                className="inline-flex h-[47px] min-w-[120px] items-center justify-center rounded-[10px] border border-[#232323] bg-[#232323] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-black"
               >
                 Send inquiry
               </button>

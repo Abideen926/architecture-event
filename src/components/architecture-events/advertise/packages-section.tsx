@@ -3,9 +3,14 @@ import { advertisingPackages } from "@/lib/architecture-events/advertise/adverti
 
 export function AdvertisePackagesSection() {
   return (
-    <section className="bg-white pb-[84px] pt-[30px]">
+    <section className="bg-white pb-[84px] pt-[26px]">
       <div className="ae-container">
-        <div className="mx-auto grid max-w-[1280px] gap-[14px] xl:grid-cols-4">
+        <div className="mx-auto max-w-[1280px] mt-20 mb-12">
+          <h2 className="ae-section-heading text-[40px] leading-none md:text-[40px]">
+            Packages
+          </h2>
+        </div>
+        <div className="mx-auto mt-8 grid max-w-[1280px] gap-[14px] xl:grid-cols-4">
           {advertisingPackages.map((pkg) => (
             <article
               key={pkg.id}
@@ -14,7 +19,7 @@ export function AdvertisePackagesSection() {
               }`}
             >
               {pkg.badge ? (
-                <span className="absolute left-1/2 top-[-11px] -translate-x-1/2 rounded-[8px] bg-[var(--ae-accent)] px-4 py-[5px] text-[10px] font-bold tracking-[0.05em] text-white">
+                <span className="absolute right-1/120 top-[-11px] -translate-x-1/2 rounded-[8px] bg-[var(--ae-accent)] px-4 py-[5px] text-[10px] font-bold tracking-[0.05em] text-white">
                   {pkg.badge}
                 </span>
               ) : null}
