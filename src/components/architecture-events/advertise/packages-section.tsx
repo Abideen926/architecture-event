@@ -14,7 +14,9 @@ export function AdvertisePackagesSection() {
           {advertisingPackages.map((pkg) => (
             <article
               key={pkg.id}
-              className={`relative flex min-h-[698px] flex-col rounded-[19px] border bg-[#fdfbf8] px-5 pb-6 pt-[26px] shadow-[0_20px_30px_-32px_rgba(20,20,20,0.45)] ${
+              className={`relative flex min-h-[698px] flex-col rounded-[19px] border ${
+                pkg.badge ? " bg-[#fdfbf8]" : ""
+              } px-5 pb-6 pt-[26px] shadow-[0_20px_30px_-32px_rgba(20,20,20,0.45)] ${
                 pkg.featured ? "border-[#252525]" : "border-[#E3E0D9]"
               }`}
             >
@@ -24,14 +26,18 @@ export function AdvertisePackagesSection() {
                 </span>
               ) : null}
 
-              <h2 className="ae-serif text-[24px] leading-[1.1] text-[#262626]">{pkg.name}</h2>
+              <h2 className="ae-serif text-[24px] leading-[1.1] text-[#262626]">
+                {pkg.name}
+              </h2>
 
               <div className="mt-5 flex items-end gap-2">
                 <span className="text-[18px] font-semibold leading-none text-[#262626]">
                   {pkg.price}
                 </span>
                 {pkg.priceSuffix ? (
-                  <span className="pb-[1px] text-[13px] text-[#8A8A8A]">{pkg.priceSuffix}</span>
+                  <span className="pb-[1px] text-[13px] text-[#8A8A8A]">
+                    {pkg.priceSuffix}
+                  </span>
                 ) : null}
               </div>
 
@@ -46,7 +52,10 @@ export function AdvertisePackagesSection() {
 
                 <ul className="mt-4 grid gap-[13px]">
                   {pkg.details.map((detail) => (
-                    <li key={detail} className="flex items-start gap-3 text-[14px] leading-[1.55] text-[#676767]">
+                    <li
+                      key={detail}
+                      className="flex items-start gap-3 text-[14px] leading-[1.55] text-[#676767]"
+                    >
                       <Check
                         className="mt-[2px] h-[13px] w-[13px] shrink-0 text-[var(--ae-accent)]"
                         strokeWidth={2.2}
