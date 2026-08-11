@@ -24,10 +24,11 @@ const sortOptions = [
   "Price (low to high)",
   "Price (high to low)",
 ] as const;
+type SortOption = (typeof sortOptions)[number];
 
 export function BrowseMainSection() {
   const [sortOpen, setSortOpen] = useState(false);
-  const [sortLabel, setSortLabel] = useState(sortOptions[0]);
+  const [sortLabel, setSortLabel] = useState<SortOption>(sortOptions[0]);
 
   return (
     <section className="bg-white pb-18 pt-16">
