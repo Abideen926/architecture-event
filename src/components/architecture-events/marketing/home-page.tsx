@@ -231,7 +231,7 @@ function FeaturedEventsSection() {
                   alt={event.title}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
-                <div className="absolute left-2 top-2 flex flex-col items-center justify-center rounded-[6px] bg-[#252525] px-2 py-2 text-white shadow-sm">
+                <div className="absolute left-4 top-4 flex flex-col items-center justify-center rounded-[14px] bg-[#252525] px-4 py-3 text-white shadow-sm">
                   <span className="text-[12px] font-medium uppercase leading-none tracking-[0.1em]">
                     {event.month}
                   </span>

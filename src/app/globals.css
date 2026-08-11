@@ -8,6 +8,7 @@
   --ae-muted: #6a6a6a;
   --ae-border: #e7e7e7;
   --ae-border-strong: #dcdcdc;
+  --mainbackground: #FAFAFA;
 }
 
 * {
@@ -122,11 +123,12 @@ textarea {
 
 .ae-browse-title {
   font-family: var(--font-playfair-display), Georgia, serif;
-  font-size: 58px;
+  font-size: 55px;
   line-height: 0.98;
   letter-spacing: -0.04em;
   color: var(--foreground);
   margin: 20px 0 0;
+  font-weight: 550;
 }
 
 .ae-browse-panel {

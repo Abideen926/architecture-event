@@ -2,7 +2,7 @@ import { CalendarDays, ChevronDown, MapPin, Search } from "lucide-react";
 
 export function BrowseHeroSection() {
   return (
-    <section className="bg-[#f1ebebcc] pb-11 pt-14">
+    <section className="bg-[var(--mainbackground)] border-b border-[#E7E7E7] pb-11 pt-14">
       <div className="ae-container">
         <div className="ae-browse-shell">
           <p className="ae-section-kicker">BROWSE EVENTS</p>
