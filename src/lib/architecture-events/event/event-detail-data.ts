@@ -155,6 +155,10 @@ const bimWorldEvent: EventDetail = {
 
 const eventDetailsBySlug: Record<string, EventDetail> = {
   "bim-world": bimWorldEvent,
+  "aia-conference": bimWorldEvent,
+  "next-acuity": bimWorldEvent,
+  "women-in-architecture": bimWorldEvent,
+
 };
 
 export function getEventDetailBySlug(slug: string) {
