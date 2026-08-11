@@ -4,19 +4,35 @@ import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { submitEventFaqItems } from "@/lib/architecture-events/submit-event/submit-event-data";
 
-export function SubmitEventFaqSection() {
-  const [openItemId, setOpenItemId] = useState<string>(submitEventFaqItems[0].id);
+type FaqItem = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
+type SubmitEventFaqSectionProps = {
+  heading?: string;
+  items?: readonly FaqItem[];
+  maxWidthClassName?: string;
+};
+
+export function SubmitEventFaqSection({
+  heading = "Submit an Event FAQ",
+  items = submitEventFaqItems,
+  maxWidthClassName = "max-w-[1040px]",
+}: SubmitEventFaqSectionProps) {
+  const [openItemId, setOpenItemId] = useState<string>(items[0]?.id ?? "");
 
   return (
     <section className="bg-white pb-[88px] pt-[56px]">
       <div className="ae-container">
-        <div className="mx-auto max-w-[1040px]">
+        <div className={`mx-auto w-full ${maxWidthClassName}`}>
           <h2 className="ae-section-heading text-[32px] leading-none md:text-[40px]">
-            Submit an Event FAQ
+            {heading}
           </h2>
 
           <div className="mt-7 border-t border-[#E3DED7]">
-            {submitEventFaqItems.map((item) => {
+            {items.map((item) => {
               const isOpen = openItemId === item.id;
 
               return (
