@@ -1,14 +1,20 @@
-
 import Image from "next/image";
 
 export function AboutHeroSection() {
   return (
-    <div className="bg-[#fbfaf7] antialiased">
+    <div className="bg-white antialiased pb-5">
       <section className="relative isolate overflow-hidden bg-[#1f1e1d]">
         <div className="grid min-h-[560px] lg:min-h-[672px] lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="relative z-10 flex items-start px-6 pb-24 pt-16 sm:px-8 sm:pt-20 lg:px-16 lg:pb-28 lg:pt-24 xl:px-20">
+          <div className="relative z-10 flex items-start px-6 pb-24 pt-16 sm:px-8 sm:pt-20 lg:px-16 lg:pb-28 lg:pt-18 xl:px-20">
             <div className="max-w-[650px]">
-              <h1 className="ae-serif text-balance text-[56px] font-semibold leading-[0.94] tracking-[-0.05em] text-white sm:text-[52px] lg:text-[60px] xl:text-[70px]">
+              <div className="flex gap-4 mb-8">
+                <div className="w-[55px] h-[1px] bg-[var(--ae-accent)] mt-[8px] shrink-0"></div>
+
+                <p className="text-[12px] font-semibold tracking-[0.26em] text-[var(--ae-accent)] mb-4">
+                  ABOUT
+                </p>
+              </div>
+              <h1 className="ae-serif text-balance text-[56px] font-semibold leading-[0.94] tracking-[-0.05em] text-white sm:text-[52px] lg:text-[60px] xl:text-[80px]">
                 Where the AEC
                 <br />
                 Community
@@ -18,7 +24,7 @@ export function AboutHeroSection() {
                 </span>
               </h1>
 
-              <p className="mt-10 max-w-[40rem] text-[17px] leading-[1.75] text-[rgba(255,255,255,0.72)] sm:text-[18px]">
+              <p className="mt-10 max-w-[40rem] text-[14px] leading-[1.65] tracking-[-0.010em] text-[rgba(255,255,255,0.72)] sm:text-[18px]">
                 Architecture Events was created with one simple goal: to make it
                 easier for professionals across the Architecture, Engineering,
                 and Construction (AEC) industry to discover meaningful events,
@@ -54,11 +60,11 @@ export function AboutHeroSection() {
               <div className="space-y-3 text-[16px] leading-[1.95] text-[#6f6f6f] sm:text-[17px]">
                 <p>
                   For years, industry events have been scattered across
-                  association websites, LinkedIn posts, newsletters, and word
-                  of mouth. Finding the right networking event, product
-                  showcase, conference, or educational program often meant
-                  searching multiple sources and hoping you didn&apos;t miss
-                  something important.
+                  association websites, LinkedIn posts, newsletters, and word of
+                  mouth. Finding the right networking event, product showcase,
+                  conference, or educational program often meant searching
+                  multiple sources and hoping you didn&apos;t miss something
+                  important.
                 </p>
                 <p>
                   Whether you&apos;re an architect, designer, engineer,
