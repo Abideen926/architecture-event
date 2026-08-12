@@ -2,14 +2,14 @@ import { aboutHighlights } from "@/lib/architecture-events/about/about-data";
 
 export function AboutHighlightsSection() {
   return (
-    <section className="bg-[#fbfaf7] py-[96px] md:py-[118px]">
+    <section className="bg-[#f6f4ef] py-[92px] md:py-[112px]">
       <div className="ae-container">
-        <div className="mx-auto grid max-w-[1150px] gap-14 lg:grid-cols-[0.84fr_1.16fr] lg:gap-20">
-          <div>
-            <h2 className="ae-section-heading max-w-[10ch] text-[52px] leading-[0.96] md:text-[62px]">
+        <div className="mx-auto grid max-w-[1280px] gap-14 lg:grid-cols-[0.88fr_1.12fr] lg:gap-[72px] xl:gap-[84px]">
+          <div className="pt-[2px] lg:pt-0">
+            <h2 className="ae-serif max-w-[18ch] text-[42px] font-semibold leading-[0.94] tracking-[-0.05em] text-[#232323] md:text-[52px] xl:text-[45px]">
               More Than an Event Calendar
             </h2>
-            <div className="mt-8 max-w-[33ch] space-y-7 text-[17px] leading-[1.72] text-[#6b6b6b]">
+            <div className="mt-8 max-w-[70ch] space-y-6 text-[18px] leading-[1.68] tracking-[-0.01em] text-[#232323]">
               <p>
                 We believe the best opportunities in the AEC industry happen through
                 relationships.
@@ -22,16 +22,16 @@ export function AboutHighlightsSection() {
             </div>
           </div>
 
-          <div className="border-t border-[#e4ded3]">
+          <div className="border-t border-[#ded6c9]">
             {aboutHighlights.map((item, index) => (
               <div
                 key={item}
-                className="grid gap-5 border-b border-[#e4ded3] py-[23px] md:grid-cols-[58px_1fr] md:items-start"
+                className="grid gap-4 border-b border-[#ded6c9] py-[22px] md:grid-cols-[54px_1fr] md:items-start md:gap-6"
               >
-                <span className="ae-serif text-[24px] leading-none text-[var(--ae-accent)]">
+                <span className="ae-serif text-[24px] leading-none tracking-[-0.04em] text-[var(--ae-accent)] md:text-[26px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <p className="max-w-[34ch] text-[16px] leading-[1.5] text-[#373737] md:text-[17px]">
+                <p className="max-w-[44ch] text-[16px] leading-[1.55] tracking-[-0.01em] text-[#343434] md:text-[17px] lg:max-w-[54ch]">
                   {item}
                 </p>
               </div>
