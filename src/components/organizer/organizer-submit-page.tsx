@@ -159,94 +159,167 @@ function OrganizerSubmitPageContent() {
       ) : null}
 
       {step === "form" ? (
-        <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
-          <div className="rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] px-5 py-4 text-[14.5px] text-[#3A3A3A]">
-            <span className="font-semibold">Package:</span>{" "}
-            {selectedPackageLabel}
+        <>
+          <div className="flex justify-between rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] mt-8 px-5 py-4 text-[14.5px] text-[#3A3A3A]">
+            <div>
+              <span className="font-semibold">Package:</span>{" "}
+              {selectedPackageLabel}
+            </div>
+            <span className="text-[13.5px] font-semibold text-[var(--ae-accent)]">
+              Change package
+            </span>
           </div>
+          <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
+            <div className="mt-8">
+              <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
+                Event details
+              </h3>
+              <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
+                <label className="block md:col-span-2">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Event name
+                  </span>
+                  <input
+                    type="text"
+                    value={eventName}
+                    onChange={(event) => setEventName(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Category
+                  </span>
+                  <input
+                    type="text"
+                    value={category}
+                    onChange={(event) => setCategory(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Registration URL
+                  </span>
+                  <input
+                    type="url"
+                    value={registrationUrl}
+                    onChange={(event) => setRegistrationUrl(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
 
-          <div className="mt-8">
-            <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
-              Event details
-            </h3>
-            <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
-              <label className="block md:col-span-2">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Event name
-                </span>
-                <input
-                  type="text"
-                  value={eventName}
-                  onChange={(event) => setEventName(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Event date
-                </span>
-                <input
-                  type="date"
-                  value={eventDate}
-                  onChange={(event) => setEventDate(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  City / region
-                </span>
-                <input
-                  type="text"
-                  value={city}
-                  onChange={(event) => setCity(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Venue
-                </span>
-                <input
-                  type="text"
-                  value={venue}
-                  onChange={(event) => setVenue(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Category
-                </span>
-                <input
-                  type="text"
-                  value={category}
-                  onChange={(event) => setCategory(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block md:col-span-2">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Registration URL
-                </span>
-                <input
-                  type="url"
-                  value={registrationUrl}
-                  onChange={(event) => setRegistrationUrl(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block md:col-span-2">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Description
-                </span>
-                <textarea
-                  rows={5}
-                  value={description}
-                  onChange={(event) => setDescription(event.target.value)}
-                  className="w-full resize-y rounded-[12px] border border-[#E7E7E7] px-4 py-[14px] text-[15px] leading-[1.7] outline-none"
-                />
-              </label>
+                <label className="block md:col-span-2">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Description
+                  </span>
+                  <textarea
+                    rows={5}
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
+                    className="w-full resize-y rounded-[12px] border border-[#E7E7E7] px-4 py-[14px] text-[15px] leading-[1.7] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Date
+                  </span>
+                  <input
+                    type="date"
+                    value={eventDate}
+                    onChange={(event) => setEventDate(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    City / region
+                  </span>
+                  <input
+                    type="text"
+                    value={city}
+                    onChange={(event) => setCity(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+
+                {/* <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Venue
+                  </span>
+                  <input
+                    type="text"
+                    value={venue}
+                    onChange={(event) => setVenue(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label> */}
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-[#E7E7E7] pt-8">
+              <h3 className="ae-serif text-[16px] font-semibold tracking-[-0.01em] text-[#202020]">
+                Images and video
+              </h3>
+              <span className="font-medium text-[#6A6A6A] mb-5">
+                Upload up to six images and one video. Select which image is
+                used as the listing thumbnail.
+              </span>
+
+              <div className="pt-6">
+                <div className="flex h-[142px] w-full flex-col items-center justify-center rounded-[17px] border border-dashed border-[#D1D1D1] bg-white">
+                  <p className="mb-[14px] text-[14px] font-normal leading-[20px] text-[#444444]">
+                    Drop files here, or
+                  </p>
+
+                  <label
+                    htmlFor="file-upload"
+                    className="flex h-[44px] w-[129px] cursor-pointer items-center justify-center rounded-[12px] border border-[#202020] bg-white text-[15px] font-semibold leading-none text-[#202020]"
+                  >
+                    Choose files
+                  </label>
+
+                  <input
+                    id="file-upload"
+                    type="file"
+                    multiple
+                    className="hidden"
+                  />
+                </div>
+              </div>
+              <div className="mt-[22px] grid gap-[14px] md:grid-cols-3">
+                {organizerUploadImages.map((imageId, index) => {
+                  const selected = thumbnailIndex === index;
+
+                  return (
+                    <button
+                      key={imageId}
+                      type="button"
+                      onClick={() => setThumbnailIndex(index)}
+                      className={`overflow-hidden rounded-[18px] border text-left transition-colors ${
+                        selected
+                          ? "border-[#202020] bg-white"
+                          : "border-[#E7E7E7] bg-white hover:bg-[#FAFAFA]"
+                      }`}
+                    >
+                      <div className="relative h-[182px]">
+                        <OrganizerThumbArt imageId={imageId} />
+                        <span
+                          className={`absolute left-3 top-3 rounded-full px-[12px] py-[6px] text-[10px] font-bold tracking-[0.14em] ${
+                            selected
+                              ? "bg-[#1E1E1E] text-white"
+                              : "bg-white/92 text-[#3A3A3A]"
+                          }`}
+                        >
+                          {selected ? "THUMBNAIL" : "SET AS THUMB"}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className=" mt-10 pt-10 border-t border-[#E7E7E7] ">
               <label className="block md:col-span-2">
                 <span className="mb-[9px] block text-[13.5px] font-semibold">
                   Internal notes{" "}
@@ -260,121 +333,78 @@ function OrganizerSubmitPageContent() {
                 />
               </label>
             </div>
-          </div>
-
-          <div className="mt-8 border-t border-[#E7E7E7] pt-8">
-            <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
-              Images and thumbnail
-            </h3>
-            <div className="mt-[22px] grid gap-[14px] md:grid-cols-3">
-              {organizerUploadImages.map((imageId, index) => {
-                const selected = thumbnailIndex === index;
-
-                return (
-                  <button
-                    key={imageId}
-                    type="button"
-                    onClick={() => setThumbnailIndex(index)}
-                    className={`overflow-hidden rounded-[18px] border text-left transition-colors ${
-                      selected
-                        ? "border-[#202020] bg-white"
-                        : "border-[#E7E7E7] bg-white hover:bg-[#FAFAFA]"
-                    }`}
-                  >
-                    <div className="relative h-[182px]">
-                      <OrganizerThumbArt imageId={imageId} />
-                      <span
-                        className={`absolute left-3 top-3 rounded-full px-[12px] py-[6px] text-[10px] font-bold tracking-[0.14em] ${
-                          selected
-                            ? "bg-[#1E1E1E] text-white"
-                            : "bg-white/92 text-[#3A3A3A]"
-                        }`}
-                      >
-                        {selected ? "THUMBNAIL" : "SET AS THUMB"}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+            <div className="mt-8 border-t border-[#E7E7E7] pt-8">
+              <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
+                Organizer contact
+              </h3>
+              <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Contact name
+                  </span>
+                  <input
+                    type="text"
+                    value={contactName}
+                    onChange={(event) => setContactName(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Contact email
+                  </span>
+                  <input
+                    type="email"
+                    value={contactEmail}
+                    onChange={(event) => setContactEmail(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Phone{" "}
+                    <span className="font-medium text-[#6A6A6A]">
+                      - optional
+                    </span>
+                  </span>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-[9px] block text-[13.5px] font-semibold">
+                    Organization
+                  </span>
+                  <input
+                    type="text"
+                    value={organization}
+                    onChange={(event) => setOrganization(event.target.value)}
+                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  />
+                </label>
+              </div>
             </div>
-            <button
-              type="button"
-              className="mt-4 inline-flex items-center gap-2 rounded-[12px] border border-[#202020] bg-white px-5 py-[13px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA]"
-            >
-              <ImagePlus className="h-4 w-4" strokeWidth={1.8} />
-              Add more images
-            </button>
-          </div>
 
-          <div className="mt-8 border-t border-[#E7E7E7] pt-8">
-            <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
-              Contact details
-            </h3>
-            <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Contact name
-                </span>
-                <input
-                  type="text"
-                  value={contactName}
-                  onChange={(event) => setContactName(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Contact email
-                </span>
-                <input
-                  type="email"
-                  value={contactEmail}
-                  onChange={(event) => setContactEmail(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Phone{" "}
-                  <span className="font-medium text-[#6A6A6A]">- optional</span>
-                </span>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Organization
-                </span>
-                <input
-                  type="text"
-                  value={organization}
-                  onChange={(event) => setOrganization(event.target.value)}
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                />
-              </label>
+            <div className="mt-[34px] flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setStep("done")}
+                className="rounded-[12px] bg-[#1E1E1E] px-[28px] py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-black"
+              >
+                Submit for Review
+              </button>
+              <button
+                type="button"
+                className="rounded-[12px] border border-[#202020] bg-white px-[26px] py-[15px] text-[15px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA]"
+              >
+                Save as Draft
+              </button>
             </div>
           </div>
-
-          <div className="mt-[34px] flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setStep("done")}
-              className="rounded-[12px] bg-[#1E1E1E] px-[28px] py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-black"
-            >
-              Submit for Review
-            </button>
-            <button
-              type="button"
-              className="rounded-[12px] border border-[#202020] bg-white px-[26px] py-[15px] text-[15px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA]"
-            >
-              Save as Draft
-            </button>
-          </div>
-        </div>
+        </>
       ) : null}
 
       {step === "done" ? (
