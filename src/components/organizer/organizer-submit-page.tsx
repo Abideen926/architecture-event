@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ImagePlus } from "lucide-react";
+import { Check, MapPin } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import {
@@ -243,17 +243,57 @@ function OrganizerSubmitPageContent() {
                   />
                 </label>
 
-                {/* <label className="block">
-                  <span className="mb-[9px] block text-[13.5px] font-semibold">
-                    Venue
-                  </span>
-                  <input
-                    type="text"
-                    value={venue}
-                    onChange={(event) => setVenue(event.target.value)}
-                    className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
-                  />
-                </label> */}
+                <div className="md:col-span-2 mt-[14px] border-t border-[#E7E7E7] pt-7">
+                  <h3 className="m-0 text-[15px] font-bold text-[#202020]">
+                    Location
+                  </h3>
+                  <label className="mt-[16px] block">
+                    <span className="mb-[9px] block text-[13.5px] font-semibold text-[#202020]">
+                      Venue address
+                    </span>
+                    <span className="flex h-[52px] items-center gap-[10px] rounded-[12px] border border-[#E7E7E7] bg-white px-4">
+                      <MapPin
+                        className="h-4 w-4 flex-none text-[#6A6A6A]"
+                        strokeWidth={1.7}
+                      />
+                      <input
+                        type="text"
+                        value={venue}
+                        onChange={(event) => setVenue(event.target.value)}
+                        placeholder="Search for a venue or address"
+                        className="w-full border-0 bg-transparent text-[15px] text-[#202020] outline-none placeholder:text-[#6A6A6A]"
+                      />
+                    </span>
+                  </label>
+                  <div className="mt-[14px] h-[240px] overflow-hidden rounded-[16px] border border-[#E7E7E7] bg-[#F1F1F1]">
+                    <div
+                      className="relative h-full w-full"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(90deg, #E7E7E7 1px, transparent 1px), linear-gradient(#E7E7E7 1px, transparent 1px)",
+                        backgroundSize: "64px 64px",
+                      }}
+                    >
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-[10px]">
+                        <svg
+                          width="26"
+                          height="26"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="#B08A45"
+                          strokeWidth="1.6"
+                          aria-hidden="true"
+                        >
+                          <path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z" />
+                          <circle cx="12" cy="10" r="2.6" />
+                        </svg>
+                        <p className="m-0 text-[13.5px] text-[#6A6A6A]">
+                          Drag the pin to set the exact location
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
