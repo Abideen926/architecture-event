@@ -27,32 +27,36 @@ export function AdminEventsPage() {
   const [view, setView] = useState<EventsView>("Submissions");
   const [filter, setFilter] = useState<SubmissionFilter>("All");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [categories, setCategories] = useState<string[]>([...adminEventCategories]);
+  const [categories, setCategories] = useState<string[]>([
+    ...adminEventCategories,
+  ]);
   const [newCategory, setNewCategory] = useState("");
-  const [featuredListingPrice, setFeaturedListingPrice] = useState(
+  const [featuredListingPrice, setFeaturedListingPrice] = useState<string>(
     adminEventPricing.featuredListing
   );
-  const [brandSpotlightPrice, setBrandSpotlightPrice] = useState(
+
+  const [brandSpotlightPrice, setBrandSpotlightPrice] = useState<string>(
     adminEventPricing.brandSpotlight
   );
   const [decisionMessage, setDecisionMessage] = useState("");
-  const [decision, setDecision] = useState<"pending" | "changes" | "rejected" | "done">(
-    "pending"
-  );
+  const [decision, setDecision] = useState<
+    "pending" | "changes" | "rejected" | "done"
+  >("pending");
 
   const filteredRows = useMemo(() => {
     if (filter === "All") return adminEventRows;
     return adminEventRows.filter((row) => row.status === filter);
   }, [filter]);
 
-  const selectedRow = filteredRows[selectedIndex] ?? filteredRows[0] ?? adminEventRows[0];
+  const selectedRow =
+    filteredRows[selectedIndex] ?? filteredRows[0] ?? adminEventRows[0];
 
   const subtitle =
     view === "Submissions"
       ? "148 total submissions · 7 awaiting review"
       : view === "Archive"
-        ? "Read-only history"
-        : "Categories and pricing";
+      ? "Read-only history"
+      : "Categories and pricing";
 
   function addCategory() {
     const trimmed = newCategory.trim();
@@ -127,7 +131,7 @@ export function AdminEventsPage() {
           </div>
 
           <div className="grid gap-6">
-          {/* <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)]"> */}
+            {/* <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)]"> */}
             <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
               <div className="grid grid-cols-[2.2fr_1.2fr_1fr_0.9fr_auto] gap-[22px] border-b border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
                 <span>EVENT</span>
@@ -143,20 +147,30 @@ export function AdminEventsPage() {
                   type="button"
                   onClick={() => openDetail(index)}
                   className={`grid w-full grid-cols-[2.2fr_1.2fr_1fr_0.9fr_auto] items-center gap-[22px] border-t border-[#F1F1F1] px-[26px] py-[18px] text-left transition-colors hover:bg-[#FAFAFA] ${
-                    selectedRow?.title === row.title ? "bg-[#F7F3EC]" : "bg-white"
+                    selectedRow?.title === row.title
+                      ? "bg-[#F7F3EC]"
+                      : "bg-white"
                   }`}
                 >
                   <div className="text-[15px] font-semibold leading-[1.45] text-[#202020]">
                     {row.title}
                   </div>
-                  <div className="text-[14.5px] text-[#3A3A3A]">{row.organizer}</div>
-                  <div className="text-[14.5px] text-[#3A3A3A]">{row.category}</div>
-                  <div className="text-[14px] text-[#6A6A6A]">{row.submitted}</div>
-                  <div className="flex justify-end">{renderStatus(row.status)}</div>
+                  <div className="text-[14.5px] text-[#3A3A3A]">
+                    {row.organizer}
+                  </div>
+                  <div className="text-[14.5px] text-[#3A3A3A]">
+                    {row.category}
+                  </div>
+                  <div className="text-[14px] text-[#6A6A6A]">
+                    {row.submitted}
+                  </div>
+                  <div className="flex justify-end">
+                    {renderStatus(row.status)}
+                  </div>
                 </button>
               ))}
             </section>
-{/* 
+            {/* 
             <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
               <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
                 {selectedRow.status.toUpperCase()}
@@ -257,9 +271,15 @@ export function AdminEventsPage() {
                 <div className="text-[15px] font-semibold leading-[1.45] text-[#202020]">
                   {row.title}
                 </div>
-                <div className="text-[14.5px] text-[#3A3A3A]">{row.organizer}</div>
-                <div className="text-[14.5px] text-[#3A3A3A]">{row.category}</div>
-                <div className="text-[14px] text-[#6A6A6A]">{row.eventDate}</div>
+                <div className="text-[14.5px] text-[#3A3A3A]">
+                  {row.organizer}
+                </div>
+                <div className="text-[14.5px] text-[#3A3A3A]">
+                  {row.category}
+                </div>
+                <div className="text-[14px] text-[#6A6A6A]">
+                  {row.eventDate}
+                </div>
                 <div className="flex justify-end">
                   <span className="inline-flex rounded-full border border-[#E7E7E7] bg-[#F1EEE8] px-[14px] py-1.5 text-[12px] font-medium text-[#6A6A6A]">
                     {row.result}
@@ -326,7 +346,9 @@ export function AdminEventsPage() {
                 <input
                   type="text"
                   value={featuredListingPrice}
-                  onChange={(event) => setFeaturedListingPrice(event.target.value)}
+                  onChange={(event) =>
+                    setFeaturedListingPrice(event.target.value)
+                  }
                   className="h-[42px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[14px] text-[#202020] outline-none"
                 />
               </label>
@@ -338,7 +360,9 @@ export function AdminEventsPage() {
                 <input
                   type="text"
                   value={brandSpotlightPrice}
-                  onChange={(event) => setBrandSpotlightPrice(event.target.value)}
+                  onChange={(event) =>
+                    setBrandSpotlightPrice(event.target.value)
+                  }
                   className="h-[42px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[14px] text-[#202020] outline-none"
                 />
               </label>
