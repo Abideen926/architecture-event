@@ -12,7 +12,7 @@ export const loginPageContent = {
   accountCtaHref: appRoutes.architectureEvents.signup,
   note: "You can browse and register for events without an account.",
   image:
-    "https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=80",
+    "/images/login-pic.jfif",
   imageCaption:
     "Save the events that matter, and get a reminder before registration closes.",
 } as const;
