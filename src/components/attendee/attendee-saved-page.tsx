@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Bookmark, MapPin } from "lucide-react";
+import { Bookmark, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { attendeeSavedEvents } from "@/lib/attendee/attendee-data";
@@ -27,10 +27,9 @@ export function AttendeeSavedPage() {
         </div>
         <Link
           href={appRoutes.architectureEvents.events}
-          className="flex gap-1 text-[14.5px] font-semibold !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+          className="text-[14.5px] font-semibold !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
         >
-          
-          Browse all events <ArrowRight />
+          Browse all events →
         </Link>
       </div>
 
@@ -47,7 +46,7 @@ export function AttendeeSavedPage() {
                   <div className="text-[12px] font-bold leading-none tracking-[0.06em]">
                     {event.month}
                   </div>
-                  <div className="mt-[3px] text-[37px] font-bold leading-[0.9]">{event.day}</div>
+                  <div className="mt-[3px] text-center text-[18px] font-bold leading-[0.9]">{event.day}</div>
                   <div className="mt-[6px] text-[12px] font-medium leading-none text-white/86">
                     {event.year}
                   </div>
@@ -64,7 +63,7 @@ export function AttendeeSavedPage() {
                 <h3 className="mt-[8px] min-h-[74px] text-[18px] font-bold leading-[1.18] tracking-[-0.02em] text-[#2B2B2B]">
                   {event.title}
                 </h3>
-                <div className="mt-[14px] flex items-center justify-between gap-4 border-t border-[#ECECEC] pt-[12px] text-[14.5px] text-[#6A6A6A]">
+                <div className="mt-[1px] flex items-center justify-between gap-4 border-t border-[#ECECEC] pt-[12px] text-[14.5px] text-[#6A6A6A]">
                   <span className="flex items-center gap-[7px]">
                     <MapPin className="h-[14px] w-[14px]" strokeWidth={1.7} />
                     {event.city}

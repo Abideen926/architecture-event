@@ -7,7 +7,7 @@ type AttendeeShellProps = {
 
 export function AttendeeShell({ children }: AttendeeShellProps) {
   return (
-    <main className="mx-auto w-full max-w-[1600px] px-[18px] pb-[90px] pt-[30px] md:px-7 lg:px-16">
+    <main className="mx-auto w-full max-w-[1440px] px-[28px] pb-[90px] pt-[30px] lg:px-[80px]">
       <div className="max-w-[1440px]">
         <p className="mb-[7px] text-[11.5px] font-bold tracking-[0.16em] text-[var(--ae-accent)]">
           MY ACCOUNT

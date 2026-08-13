@@ -15,11 +15,12 @@ function toggleInList(current: string[], value: string) {
 }
 
 export function AttendeeProfilePage() {
-  // FIX: Explicitly type states to prevent narrowing to mock data constants
   const [fullName, setFullName] = useState<string>(attendeeDefaultProfile.fullName);
   const [email, setEmail] = useState<string>(attendeeDefaultProfile.email);
   const [role, setRole] = useState<string>(attendeeDefaultProfile.role);
-  const [categories, setCategories] = useState<string[]>([...attendeeDefaultProfile.categories]);
+  const [categories, setCategories] = useState<string[]>([
+    ...attendeeDefaultProfile.categories,
+  ]);
   const [regions, setRegions] = useState<string[]>([...attendeeDefaultProfile.regions]);
   const [newsletter, setNewsletter] = useState<boolean>(attendeeDefaultProfile.newsletter);
 
@@ -33,9 +34,9 @@ export function AttendeeProfilePage() {
   };
 
   return (
-    <div className="max-w-[780px] animate-[fadeIn_0.35s_ease]">
-      <div className="border-b border-[#E7E7E7] pb-5">
-        <h2 className="ae-serif text-[30px] font-semibold tracking-[-0.015em] text-[#202020]">
+    <div className="animate-[fadeIn_0.35s_ease] max-w-[780px]">
+      <div style={{ paddingBottom: 20, borderBottom: "1px solid #E7E7E7" }}>
+        <h2 className="ae-serif m-0 text-[30px] font-semibold tracking-[-0.015em] text-[#202020]">
           Profile
         </h2>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
@@ -44,7 +45,7 @@ export function AttendeeProfilePage() {
         </p>
       </div>
 
-      <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
+      <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-[36px]">
         <div className="grid gap-[18px] md:grid-cols-2">
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">Full name</span>
@@ -69,7 +70,7 @@ export function AttendeeProfilePage() {
         <div className="mt-[26px]">
           <label className="block max-w-[380px]">
             <span className="mb-[9px] block text-[13.5px] font-semibold">
-              Role <span className="font-medium text-[#6A6A6A]">- optional</span>
+              Role <span className="font-medium text-[#6A6A6A]">— optional</span>
             </span>
             <select
               value={role}
@@ -85,14 +86,15 @@ export function AttendeeProfilePage() {
           </label>
         </div>
 
-        <div className="mt-8 border-t border-[#E7E7E7] pt-7">
-          <h3 className="text-[15px] font-bold text-[#202020]">
-            Categories you follow <span className="font-medium text-[#6A6A6A]">- optional</span>
+        <div className="mt-[32px] border-t border-[#E7E7E7] pt-[28px]">
+          <h3 className="m-0 text-[15px] font-bold text-[#202020]">
+            Categories you follow{" "}
+            <span className="font-medium text-[#6A6A6A]">— optional</span>
           </h3>
-          <p className="mt-2 text-[14px] text-[#6A6A6A]">
+          <p className="mt-[8px] text-[14px] text-[#6A6A6A]">
             Tap to add or remove. Changes save as you go.
           </p>
-          <div className="mt-4 flex flex-wrap gap-[10px]">
+          <div className="mt-[16px] flex flex-wrap gap-[10px]">
             {attendeeCategoryOptions.map((option) => {
               const active = categories.includes(option);
 
@@ -101,7 +103,7 @@ export function AttendeeProfilePage() {
                   key={option}
                   type="button"
                   onClick={() => setCategories((current) => toggleInList(current, option))}
-                  className={`rounded-full border px-[18px] py-[10px] text-[14px] transition-colors ${
+                  className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
                       ? "border-[#202020] bg-[#1E1E1E] text-white"
                       : "border-[#E7E7E7] bg-white text-[#202020] hover:border-[#202020]"
@@ -114,12 +116,12 @@ export function AttendeeProfilePage() {
           </div>
         </div>
 
-        <div className="mt-7">
-          <h3 className="text-[15px] font-bold text-[#202020]">
+        <div className="mt-[28px]">
+          <h3 className="m-0 text-[15px] font-bold text-[#202020]">
             Regions and cities you follow{" "}
-            <span className="font-medium text-[#6A6A6A]">- optional</span>
+            <span className="font-medium text-[#6A6A6A]">— optional</span>
           </h3>
-          <div className="mt-4 flex flex-wrap gap-[10px]">
+          <div className="mt-[16px] flex flex-wrap gap-[10px]">
             {attendeeRegionOptions.map((option) => {
               const active = regions.includes(option);
 
@@ -128,7 +130,7 @@ export function AttendeeProfilePage() {
                   key={option}
                   type="button"
                   onClick={() => setRegions((current) => toggleInList(current, option))}
-                  className={`rounded-full border px-[18px] py-[10px] text-[14px] transition-colors ${
+                  className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
                       ? "border-[#202020] bg-[#1E1E1E] text-white"
                       : "border-[#E7E7E7] bg-white text-[#202020] hover:border-[#202020]"
@@ -141,9 +143,11 @@ export function AttendeeProfilePage() {
           </div>
         </div>
 
-        <div className="mt-[30px] flex flex-col gap-5 rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] p-[22px] sm:flex-row sm:items-start sm:justify-between">
+        <div className="mt-[30px] flex items-start justify-between gap-6 rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] p-[22px]">
           <div>
-            <p className="text-[15px] font-semibold text-[#202020]">Monthly newsletter</p>
+            <p className="m-0 text-[15px] font-semibold text-[#202020]">
+              Monthly newsletter
+            </p>
             <p className="mt-[7px] max-w-[52ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
               A curated round-up of upcoming events. Unsubscribe anytime.
             </p>
@@ -152,7 +156,7 @@ export function AttendeeProfilePage() {
             type="button"
             title="Toggle newsletter"
             onClick={() => setNewsletter((current) => !current)}
-            className={`flex h-[30px] w-[52px] flex-none items-center rounded-full border p-[3px] transition-colors ${
+            className={`flex h-[30px] w-[52px] flex-none rounded-full border p-[3px] transition-colors ${
               newsletter
                 ? "justify-end border-[#202020] bg-[#1E1E1E]"
                 : "justify-start border-[#E7E7E7] bg-white"
@@ -183,13 +187,15 @@ export function AttendeeProfilePage() {
         </div>
       </div>
 
-      <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
-        <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
+      <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] p-[36px]">
+        <h3 className="ae-serif m-0 text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
           Account settings
         </h3>
         <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">Current password</span>
+            <span className="mb-[9px] block text-[13.5px] font-semibold">
+              Current password
+            </span>
             <input
               type="password"
               placeholder="********"
@@ -197,7 +203,9 @@ export function AttendeeProfilePage() {
             />
           </label>
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">New password</span>
+            <span className="mb-[9px] block text-[13.5px] font-semibold">
+              New password
+            </span>
             <input
               type="password"
               placeholder="At least 8 characters"
@@ -212,7 +220,9 @@ export function AttendeeProfilePage() {
           Update password
         </button>
         <div className="mt-[26px] flex flex-wrap items-center justify-between gap-5 border-t border-[#E7E7E7] pt-[22px]">
-          <p className="text-[14.5px] text-[#6A6A6A]">Signed in as maya@reyesstudio.com</p>
+          <p className="text-[14.5px] text-[#6A6A6A]">
+            Signed in as maya@reyesstudio.com
+          </p>
           <button
             type="button"
             className="text-[14.5px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
