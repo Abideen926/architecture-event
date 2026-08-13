@@ -10,7 +10,7 @@ export function AdminPageHeader({
   description,
 }: AdminPageHeaderProps) {
   return (
-    <div className="pb-12">
+    <div className="pb-[40px]">
       <p className="mb-[10px] text-[11.5px] font-bold tracking-[0.16em] text-[var(--ae-accent)]">
         {kicker}
       </p>

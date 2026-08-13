@@ -5,7 +5,7 @@ import { appRoutes } from "@/lib/routes";
 
 export function AdminHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/94 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/95 backdrop-blur-[8px]">
       <div className="mx-auto flex h-[76px] w-full max-w-[1600px] items-center gap-8 px-7 lg:px-16">
         <Link href={appRoutes.architectureEvents.root} className="flex items-center gap-3">
           <span className="ae-serif text-[34px] leading-none text-[var(--ae-accent)]">A</span>
