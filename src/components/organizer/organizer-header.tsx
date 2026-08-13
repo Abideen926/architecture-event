@@ -6,7 +6,7 @@ import { appRoutes } from "@/lib/routes";
 export function OrganizerHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/94 backdrop-blur-md">
-      <div className="mx-auto flex h-[76px] w-full max-w-[1600px] items-center gap-8 px-[18px] md:px-7 lg:px-16">
+      <div className="mx-auto flex h-[76px] w-full max-w-[1440px] items-center gap-8 px-[28px] lg:px-[80px]">
         <Link href={appRoutes.architectureEvents.root} className="flex items-center gap-3">
           <span className="ae-serif text-[34px] leading-none text-[var(--ae-accent)]">A</span>
           <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-[#202020]">
@@ -16,7 +16,7 @@ export function OrganizerHeader() {
           </span>
         </Link>
 
-        <div className="ml-auto flex items-center gap-4 md:gap-6">
+        <div className="ml-auto flex items-center gap-6">
           <Link
             href={appRoutes.architectureEvents.events}
             className="hidden text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)] md:inline-flex"

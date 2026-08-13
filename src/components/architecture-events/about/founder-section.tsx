@@ -1,101 +1,53 @@
-import { ArrowRight } from "lucide-react";
-import { aboutValues, contactLinks, platformSteps } from "@/lib/architecture-events/about/about-data";
+import Image from "next/image";
 
 export function AboutFounderSection() {
   return (
-    <section className="bg-[#fbfaf7] py-[78px] md:py-[102px]">
+    <section className="bg-[#FFFFFF] py-[78px] md:py-[102px]">
       <div className="ae-container">
-        <div className="mx-auto max-w-[1150px]">
-          <div className="border-t border-[#272727]" />
+        <div className="mx-auto max-w-[1280px]">
+          <div className="border-t border-[#252525]" />
 
-          <div className="pt-5">
-            <h2 className="ae-section-heading text-[38px] leading-none md:text-[44px]">
+          <div className="pt-9">
+            <h2 className="ae-serif text-[50px] font-semibold leading-[0.98] tracking-[-0.05em] text-[#252525] md:text-[56px] lg:text-[58px]">
               Meet the Founder
             </h2>
 
-            <div className="mt-6 grid gap-8 lg:grid-cols-[280px_1fr] lg:gap-10">
-              <div
-                className="h-[266px] rounded-[10px] bg-cover bg-center bg-no-repeat shadow-[0_22px_30px_-30px_rgba(20,20,20,0.4)]"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=900&q=80)",
-                }}
-              />
+            <div className="mt-10 grid gap-10 lg:grid-cols-[510px_1fr] lg:gap-[72px] xl:grid-cols-[510px_1fr] xl:gap-[86px]">
+              <div className="relative aspect-[1/1] overflow-hidden rounded-[18px] bg-[#e8e2da] shadow-[0_22px_40px_-34px_rgba(20,20,20,0.45)]">
+                <Image
+                  src="/images/founder.png"
+                  alt="Founder portrait"
+                  fill
+                  sizes="(min-width: 1024px) 510px, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
 
-              <div className="text-[12.5px] leading-[1.72] text-[#6d6d6d]">
-                <p className="max-w-[70ch]">
+              <div className="pt-[10px] text-[16px] leading-[1.9] tracking-[-0.01em] text-[#252525] md:text-[17px]">
+                <p className="max-w-[50ch]">
                   After spending more than 15 years working in the AEC industry, I
-                  experienced firsthand how difficult it was to keep up with industry
-                  events. Great networking opportunities were often hidden across
-                  dozens of organization websites, newsletters, and email lists.
+                  experienced firsthand how difficult it was to keep up with
+                  industry events. Great networking opportunities were often
+                  hidden across dozens of organizations, websites, and email
+                  lists.
                 </p>
 
-                <div className="mt-6 border-y border-[#e5dfd4] py-5">
-                  <p className="ae-serif max-w-[23ch] text-[33px] leading-[1.16] text-[#2b2b2b]">
+                <div className="my-8 border-y border-[#e7e0d7] py-8">
+                  <p className="ae-serif max-w-[28ch] text-[32px] leading-[1.08] tracking-[-0.05em] text-[#2b2b2b] md:text-[36px] lg:text-[38px]">
                     I created Architecture Events to solve that problem.
                   </p>
                 </div>
 
-                <div className="mt-5 space-y-3">
+                <div className="space-y-6">
                   <p className="max-w-[72ch]">
                     My goal is simple: make it easier for our industry to connect,
                     learn from one another, and build stronger professional
                     relationships.
                   </p>
-                  <p className="max-w-[72ch]">
+                  <p className="max-w-[72ch] text-[#757575]">
                     Thank you for being part of the community. We&apos;re just getting
                     started.
                   </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12 grid gap-8 border-t border-[#e5dfd4] pt-8 lg:grid-cols-3 lg:gap-7">
-              {aboutValues.map((item) => (
-                <div key={item.title} className="lg:border-r lg:border-[#e5dfd4] lg:pr-7 last:lg:border-r-0 last:lg:pr-0">
-                  <h3 className="ae-serif text-[18px] text-[#2c2c2c]">{item.title}</h3>
-                  <p className="mt-3 text-[12px] leading-[1.72] text-[#6d6d6d]">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-12 grid gap-10 lg:grid-cols-[1.06fr_0.94fr]">
-              <div>
-                <h3 className="ae-section-heading text-[36px] leading-none">
-                  How the platform works
-                </h3>
-                <div className="mt-6 border-t border-[#e5dfd4]">
-                  {platformSteps.map((step) => (
-                    <p
-                      key={step}
-                      className="border-b border-[#e5dfd4] py-[16px] text-[12px] leading-[1.72] text-[#6d6d6d]"
-                    >
-                      {step}
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="ae-section-heading text-[36px] leading-none">Get in touch</h3>
-                <p className="mt-6 max-w-[30ch] text-[12px] leading-[1.72] text-[#6d6d6d]">
-                  For listings, advertising, corrections, or anything else, email is
-                  fastest.
-                </p>
-
-                <div className="mt-6 border-t border-[#e5dfd4]">
-                  {contactLinks.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      className="flex w-full items-center justify-between border-b border-[#e5dfd4] py-[14px] text-left text-[12px] font-medium text-[#2f2f2f]"
-                    >
-                      <span>{item}</span>
-                      <ArrowRight className="h-3.5 w-3.5 text-[var(--ae-accent)]" strokeWidth={1.8} />
-                    </button>
-                  ))}
                 </div>
               </div>
             </div>

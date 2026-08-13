@@ -8,7 +8,7 @@
   --ae-muted: #6a6a6a;
   --ae-border: #e7e7e7;
   --ae-border-strong: #dcdcdc;
-  --mainbackground: #FAFAFA;
+  --mainbackground: #fafafa;
 }
 
 * {
@@ -86,7 +86,8 @@ textarea {
 .ae-section-heading {
   font-family: var(--font-playfair-display), Georgia, serif;
   color: var(--foreground);
-  letter-spacing: -0.04em;
+  letter-spacing: 0.1px;
+  word-spacing: 0.06em;
   font-weight: 600;
 }
 
