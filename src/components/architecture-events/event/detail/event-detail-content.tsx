@@ -46,7 +46,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
               </div>
             </section>
 
-            <section>
+            {/* <section>
               <h2 className="ae-serif text-[30px] font-semibold  leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[33px]">
                 {event.agendaHeading}
               </h2>
@@ -103,7 +103,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                   </article>
                 ))}
               </div>
-            </section>
+            </section> */}
 
             <section>
               <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[34px] ] font-semibold">
@@ -133,7 +133,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                 </div>
               </div>
             </section>
-
+{/* 
             <section>
               <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[34px] ] font-semibold">
                 {event.sponsorsHeading}
@@ -148,7 +148,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                   </div>
                 ))}
               </div>
-            </section>
+            </section> */}
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-6">
