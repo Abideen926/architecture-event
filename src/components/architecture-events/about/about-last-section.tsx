@@ -29,7 +29,7 @@ export function AboutLastSection() {
 
         <div className="mt-28 grid gap-16 lg:mt-40 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
           <div>
-            <h2 className="ae-serif text-[52px] font-semibold leading-[1.06] tracking-[-0.045em] text-[#242424] sm:text-[50px]">
+            <h2 className="ae-serif text-[40px] font-semibold leading-[1.06] tracking-[-0.045em] text-[#242424] sm:text-[45px]">
               How the platform works
             </h2>
 
@@ -46,7 +46,7 @@ export function AboutLastSection() {
           </div>
 
           <div>
-            <h2 className="ae-serif text-[52px] font-semibold leading-[1.06] tracking-[-0.045em] text-[#242424] sm:text-[50px]">
+            <h2 className="ae-serif text-[40px] font-semibold leading-[1.06] tracking-[-0.045em] text-[#242424] sm:text-[45px]">
               Get in touch
             </h2>
 
