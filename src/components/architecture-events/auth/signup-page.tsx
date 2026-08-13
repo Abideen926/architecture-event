@@ -7,25 +7,38 @@ import { signupPageContent } from "@/lib/architecture-events/auth/signup-data";
 
 export function SignupPage() {
   const content = signupPageContent;
-  const [selectedCategories, setSelectedCategories] = useState(
-    () => new Set(content.categories.filter((item) => item.selected).map((item) => item.label)),
+
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(
+    () =>
+      new Set(
+        content.categories
+          .filter((item) => item.selected)
+          .map((item) => item.label)
+      )
   );
-  const [selectedCities, setSelectedCities] = useState(
-    () => new Set(content.cities.filter((item) => item.selected).map((item) => item.label)),
+
+  const [selectedCities, setSelectedCities] = useState<Set<string>>(
+    () =>
+      new Set(
+        content.cities.filter((item) => item.selected).map((item) => item.label)
+      )
   );
+
   const [newsletterEnabled, setNewsletterEnabled] = useState(true);
 
   function toggleSelection(
     value: string,
-    setCurrent: Dispatch<SetStateAction<Set<string>>>,
+    setCurrent: Dispatch<SetStateAction<Set<string>>>
   ) {
     setCurrent((prev) => {
       const next = new Set(prev);
+
       if (next.has(value)) {
         next.delete(value);
       } else {
         next.add(value);
       }
+
       return next;
     });
   }
@@ -38,6 +51,7 @@ export function SignupPage() {
             <h1 className="ae-section-heading text-[46px] leading-[1.08] tracking-[-0.02em] text-[#202020]">
               {content.title}
             </h1>
+
             <p className="ae-section-description mt-4 text-[16.5px] leading-[1.75]">
               {content.description}
             </p>
@@ -50,12 +64,15 @@ export function SignupPage() {
                 <AuthField label="Full name">
                   <input type="text" className={fieldClassName} />
                 </AuthField>
+
                 <AuthField label="Email">
                   <input type="email" className={fieldClassName} />
                 </AuthField>
+
                 <AuthField label="Password">
                   <input type="password" className={fieldClassName} />
                 </AuthField>
+
                 <AuthField label="Role">
                   <select
                     defaultValue={content.roles[0]}
@@ -76,7 +93,9 @@ export function SignupPage() {
                   subtitle="optional"
                   items={content.categories}
                   selected={selectedCategories}
-                  onToggle={(label) => toggleSelection(label, setSelectedCategories)}
+                  onToggle={(label) =>
+                    toggleSelection(label, setSelectedCategories)
+                  }
                 />
 
                 <div className="mt-7">
@@ -85,7 +104,9 @@ export function SignupPage() {
                     subtitle="optional"
                     items={content.cities}
                     selected={selectedCities}
-                    onToggle={(label) => toggleSelection(label, setSelectedCities)}
+                    onToggle={(label) =>
+                      toggleSelection(label, setSelectedCities)
+                    }
                   />
                 </div>
 
@@ -93,9 +114,12 @@ export function SignupPage() {
                   <input
                     type="checkbox"
                     checked={newsletterEnabled}
-                    onChange={(event) => setNewsletterEnabled(event.target.checked)}
+                    onChange={(event) =>
+                      setNewsletterEnabled(event.target.checked)
+                    }
                     className="mt-[2px] h-[18px] w-[18px] accent-[#1E1E1E]"
                   />
+
                   <span className="text-[14.5px] leading-[1.7] text-[#3A3A3A]">
                     {content.newsletterLabel}{" "}
                     <span className="block">{content.newsletterNote}</span>
@@ -112,7 +136,10 @@ export function SignupPage() {
 
               <p className="mt-[18px] text-center text-[14.5px] text-[#6A6A6A]">
                 {content.loginPrompt}{" "}
-                <Link href={content.loginCtaHref} className="ae-link-accent font-semibold">
+                <Link
+                  href={content.loginCtaHref}
+                  className="ae-link-accent font-semibold"
+                >
                   {content.loginCtaLabel}
                 </Link>
               </p>
@@ -138,6 +165,7 @@ function AuthField({ label, children }: AuthFieldProps) {
       <span className="mb-[9px] block text-[13.5px] font-semibold text-[#303030]">
         {label}
       </span>
+
       {children}
     </label>
   );
@@ -156,12 +184,19 @@ type PreferenceGroupProps = {
   onToggle: (label: string) => void;
 };
 
-function PreferenceGroup({ title, subtitle, items, selected, onToggle }: PreferenceGroupProps) {
+function PreferenceGroup({
+  title,
+  subtitle,
+  items,
+  selected,
+  onToggle,
+}: PreferenceGroupProps) {
   return (
     <div>
       <h2 className="text-[15px] font-bold text-[#202020]">
         {title} <span className="font-medium text-[#6A6A6A]">— {subtitle}</span>
       </h2>
+
       <div className="mt-4 flex flex-wrap gap-2.5">
         {items.map((item) => {
           const isActive = selected.has(item.label);
