@@ -28,6 +28,7 @@ export const appRoutes = {
     organizers: "/admin/organizers",
     inbox: "/admin/inbox",
     payments: "/admin/payments",
+    advertising: "/admin/advertising",
     reports: "/admin/reports",
   },
 } as const;

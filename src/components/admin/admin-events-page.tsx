@@ -10,8 +10,8 @@ import {
 
 const submissionTabs = [
   "All",
-  "Draft",
-  "Submitted",
+  // "Draft",
+  // "Submitted",
   "Under Review",
   "Published",
   "Rejected",
