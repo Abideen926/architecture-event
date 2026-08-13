@@ -73,7 +73,12 @@ export const adminNavItems = [
   },
   {
     href: appRoutes.admin.payments,
-    label: "Payments & Advertising",
+    label: "Payments",
+    icon: CreditIcon,
+  },
+  {
+    href: appRoutes.admin.advertising,
+    label: "Advertising",
     icon: CreditIcon,
   },
   { href: appRoutes.admin.reports, label: "Reports", icon: ReportsIcon },

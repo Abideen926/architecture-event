@@ -8,7 +8,7 @@ type Organizer = {
   contact: string;
   email: string;
   listings: string;
-  joined: string;
+  // joined: string;
   featured: boolean;
   active: boolean;
 };
@@ -54,7 +54,7 @@ export function AdminOrganizersPage() {
         contact: formData.contactName.trim(),
         email: formData.email.trim(),
         listings: "0",
-        joined: "Aug 2026",
+        // joined: "Aug 2026",
         featured: false,
         active: true,
       },
@@ -154,7 +154,7 @@ export function AdminOrganizersPage() {
           <span>ORGANIZATION</span>
           <span>EMAIL</span>
           <span>LISTINGS</span>
-          <span>JOINED</span>
+          {/* <span>JOINED</span> */}
           <span className="text-right">ACTIONS</span>
         </div>
 
@@ -169,7 +169,7 @@ export function AdminOrganizersPage() {
             </div>
             <div className="text-[13.5px] text-[#3A3A3A]">{row.email}</div>
             <div className="text-[13.5px] text-[#3A3A3A]">{row.listings}</div>
-            <div className="text-[13.5px] text-[#6A6A6A]">{row.joined}</div>
+            {/* <div className="text-[13.5px] text-[#6A6A6A]">{row.joined}</div> */}
             <div className="flex justify-end gap-4 text-[13px]">
               <button
                 type="button"
@@ -178,7 +178,7 @@ export function AdminOrganizersPage() {
                   row.featured ? "font-medium text-[var(--ae-accent)]" : "text-[#6A6A6A]"
                 }`}
               >
-                {row.featured ? "Featured placement ✓" : "Assign featured"}
+                {/* {row.featured ? "Featured placement ✓" : "Assign featured"} */}
               </button>
               <button
                 type="button"
