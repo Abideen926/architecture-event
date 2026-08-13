@@ -1,29 +1,82 @@
-import {
-  BarChart3,
-  CalendarDays,
-  CreditCard,
-  Inbox,
-  LayoutGrid,
-  Users,
-} from "lucide-react";
+import type { SVGProps } from "react";
 import { appRoutes } from "@/lib/routes";
 
+function OverviewIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <rect x="4" y="4" width="7" height="7" rx="1.4" />
+      <rect x="13" y="4" width="7" height="7" rx="1.4" />
+      <rect x="4" y="13" width="7" height="7" rx="1.4" />
+      <rect x="13" y="13" width="7" height="7" rx="1.4" />
+    </svg>
+  );
+}
+
+function EventsIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4" />
+    </svg>
+  );
+}
+
+function OrganizersIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <circle cx="9.5" cy="8.6" r="3.6" />
+      <path d="M3.4 19.6c1-3.2 3.4-4.8 6.1-4.8s5.1 1.6 6.1 4.8M16.4 5.6a3.4 3.4 0 0 1 0 6.4M18.2 19.6c-.4-1.6-1-2.9-1.8-3.9" />
+    </svg>
+  );
+}
+
+function InboxIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3.6 6.4 8.4 6.2 8.4-6.2" />
+    </svg>
+  );
+}
+
+function CreditIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 10h18" />
+      <rect x="6" y="14" width="4" height="2" rx="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function ReportsIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <path d="M4 19V5" />
+      <path d="M4 19h16" />
+      <path d="M8 16V11" />
+      <path d="M12 16V8" />
+      <path d="M16 16V13" />
+    </svg>
+  );
+}
+
 export const adminNavItems = [
-  { href: appRoutes.admin.root, label: "Overview", icon: LayoutGrid },
-  { href: appRoutes.admin.events, label: "Events", icon: CalendarDays },
-  { href: appRoutes.admin.organizers, label: "Organizers", icon: Users },
+  { href: appRoutes.admin.root, label: "Overview", icon: OverviewIcon },
+  { href: appRoutes.admin.events, label: "Events", icon: EventsIcon },
+  { href: appRoutes.admin.organizers, label: "Organizers", icon: OrganizersIcon },
   {
     href: appRoutes.admin.inbox,
     label: "Inbox & Messages",
-    icon: Inbox,
+    icon: InboxIcon,
     badge: "3",
   },
   {
     href: appRoutes.admin.payments,
     label: "Payments & Advertising",
-    icon: CreditCard,
+    icon: CreditIcon,
   },
-  { href: appRoutes.admin.reports, label: "Reports", icon: BarChart3 },
+  { href: appRoutes.admin.reports, label: "Reports", icon: ReportsIcon },
 ] as const;
 
 export const adminOverviewStats = [
@@ -72,7 +125,7 @@ export const adminAttentionItems = [
   },
   {
     title: "1 listing needs a follow-up",
-    meta: "Changes requested Jul 26 - no response yet",
+    meta: "Changes requested Jul 26 — no response yet",
     actionLabel: "View listing",
     href: appRoutes.admin.events,
     tone: "muted",
@@ -93,6 +146,12 @@ export const adminEventRows = [
     category: "Education / CEU",
     submitted: "Jul 22, 2026",
     status: "Under Review",
+    when: "Oct 8, 2026 · 9:00 AM",
+    city: "Chicago, IL",
+    packageName: "Featured Listing — $49",
+    description:
+      "A one-day technical program on glazing selection, daylight modelling, and post-occupancy measurement, with three AIA-accredited sessions and a manufacturer panel.",
+    note: "Repeat of last year’s program with an expanded afternoon track.",
   },
   {
     title: "Mass Timber & Low-Carbon Structures",
@@ -100,6 +159,12 @@ export const adminEventRows = [
     category: "Product Showcase",
     submitted: "Jul 26, 2026",
     status: "Changes Requested",
+    when: "Sep 29, 2026 · 10:00 AM",
+    city: "Portland, OR",
+    packageName: "Basic Listing — Free",
+    description:
+      "Product walkthroughs from six mass timber suppliers, plus a structural detailing clinic for design teams new to the material.",
+    note: "Venue is confirmed; sponsor list still being finalised.",
   },
   {
     title: "AEC Practice Leaders Dinner",
@@ -107,6 +172,12 @@ export const adminEventRows = [
     category: "Networking",
     submitted: "Jul 28, 2026",
     status: "Submitted",
+    when: "Oct 21, 2026 · 6:30 PM",
+    city: "Boston, MA",
+    packageName: "Featured Listing — $49",
+    description:
+      "An invitation-style dinner for principals and studio directors, with a short moderated conversation on practice growth.",
+    note: "Capacity capped at 80 seats.",
   },
   {
     title: "Facade Systems Summit 2026",
@@ -114,6 +185,12 @@ export const adminEventRows = [
     category: "Conference",
     submitted: "Jul 14, 2026",
     status: "Published",
+    when: "Sep 14, 2026 · 8:30 AM",
+    city: "New York, NY",
+    packageName: "Featured Listing — $49",
+    description:
+      "Two days on unitised curtain wall, thermal bridging, and facade retrofit economics, with a supplier exhibition floor.",
+    note: "Registration link points to the organiser’s own platform.",
   },
   {
     title: "Interior Materials Week",
@@ -121,6 +198,12 @@ export const adminEventRows = [
     category: "Exhibition",
     submitted: "Jul 30, 2026",
     status: "Draft",
+    when: "Nov 17, 2026 · Online",
+    city: "Online",
+    packageName: "Basic Listing — Free",
+    description:
+      "A week-long online showcase of interior finishes, acoustics, and circular material sourcing.",
+    note: "Still drafting session titles.",
   },
   {
     title: "Regional Contractors Expo",
@@ -128,6 +211,11 @@ export const adminEventRows = [
     category: "Conference",
     submitted: "Jun 30, 2026",
     status: "Rejected",
+    when: "Aug 19, 2026 · 9:00 AM",
+    city: "Newark, NJ",
+    packageName: "Basic Listing — Free",
+    description: "Trade expo for regional general contractors and subcontractors.",
+    note: "Submitted twice by mistake.",
   },
   {
     title: "BIM / VDC Coordination Forum",
@@ -135,6 +223,12 @@ export const adminEventRows = [
     category: "Conference",
     submitted: "Jul 19, 2026",
     status: "Under Review",
+    when: "Nov 5, 2026 · 9:00 AM",
+    city: "San Diego, CA",
+    packageName: "Basic Listing — Free",
+    description:
+      "Coordination workflows, clash management, and field verification practices for large project teams.",
+    note: "Requesting an early publish date if possible.",
   },
 ] as const;
 
