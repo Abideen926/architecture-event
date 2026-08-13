@@ -10,12 +10,12 @@ export const aboutValues = [
   {
     title: "Mission",
     description:
-      "Create a easy for anyone working in architecture, engineering, and construction to find the events that are genuinely worth their time.",
+      "Make it easy for anyone working in architecture, engineering, and construction to find the events that are genuinely worth their time.",
   },
   {
     title: "Vision",
     description:
-      "A calm, trusted reference for the industry's AEC calendar where organizers, manufacturers, and professionals all find each other without noise.",
+      "A calm, trusted reference for the industry's calendar where organizers, manufacturers, and professionals all find each other without noise.",
   },
   {
     title: "Why It Exists",
@@ -31,7 +31,7 @@ export const platformSteps = [
 ] as const;
 
 export const contactLinks = [
-  "hello@architectureevents.com",
-  "LinkedIn",
-  "Instagram",
+  { label: "hello@architectureevents.com", href: "mailto:hello@architectureevents.com" },
+  { label: "LinkedIn", href: "https://www.linkedin.com" },
+  { label: "Instagram", href: "https://www.instagram.com" },
 ] as const;
