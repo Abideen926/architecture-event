@@ -11,14 +11,14 @@ export function ContactPage() {
   return (
     <div className="ae-shell bg-white">
       <main className="pb-[104px] pt-[22px]">
-        <section className="ae-container max-w-[1000px]">
-          <p className="text-[12px] font-semibold tracking-[0.24em] text-[var(--ae-accent)] mb-7 mt-6">
+        <section className="ae-container max-w-[1000px] !lg:mr-auto !lg:mr-0">
+          <p className="mb-7 mt-6 text-[12px] font-semibold tracking-[0.24em] text-[var(--ae-accent)]">
             CONTACT US
           </p>
-          <h1 className="ae-serif text-[45px] font-semibold leading-[0.92] tracking-[-0.06em] text-[#232323] sm:text-[50px] xl:text-[50px]">
+          <h1 className="ae-serif text-[45px] font-semibold leading-[0.92] tracking-[-0.06em] text-[#202020] sm:text-[50px] xl:text-[50px]">
             {title}
           </h1>
-          <p className="mt-5 max-w-[66ch] text-[18px] leading-[1.7] tracking-[-0.01em] text-[#6f6f6f]">
+          <p className="mt-5 max-w-[66ch] text-[18px] leading-[1.7] tracking-[-0.01em] text-[#707070]">
             {description}
           </p>
 
@@ -72,10 +72,10 @@ export function ContactPage() {
                 key={card.title}
                 className="rounded-[20px] border border-[#e3e3e3] bg-white px-8 py-8"
               >
-                <h2 className="text-[23px] font-semibold tracking-[-0.04em] text-[#242424]">
+                <h2 className="text-[23px] font-semibold tracking-[-0.04em] text-[#202020]">
                   {card.title}
                 </h2>
-                <p className="mt-4 max-w-[34ch] text-[16px] leading-[1.75] tracking-[-0.01em] text-[#6f6f6f]">
+                <p className="mt-4 max-w-[34ch] text-[16px] leading-[1.75] tracking-[-0.01em] text-[#707070]">
                   {card.description}
                 </p>
                 <Link
@@ -89,12 +89,12 @@ export function ContactPage() {
           </div>
 
           <section className="mt-8 rounded-[20px] border border-[#e3e3e3] bg-[#fbfbfa] px-8 py-8">
-            <p className="text-[18px] font-medium leading-[1.55] tracking-[-0.02em] text-[#2f2f2f]">
+            <p className="text-[18px] font-medium leading-[1.55] tracking-[-0.02em] text-[#202020]">
               Most messages are answered within one to two business days.
             </p>
             <a
               href={`mailto:${email}`}
-              className="mt-4 inline-flex text-[16px] font-medium text-[var(--ae-accent)]"
+              className="mt-4 inline-flex text-[16px] font-medium !text-[var(--ae-accent)]"
             >
               {email}
             </a>
@@ -104,7 +104,7 @@ export function ContactPage() {
                 <span key={social.label}>
                   <a
                     href={social.href}
-                    className="text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                    className="!text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -134,7 +134,7 @@ type FormFieldProps = {
 function FormField({ label, children, className }: FormFieldProps) {
   return (
     <label className={className}>
-      <span className="mb-[10px] block text-[14px] font-semibold text-[#2f2f2f]">
+      <span className="mb-[10px] block text-[14px] font-semibold text-[#202020]">
         {label}
       </span>
       {children}
