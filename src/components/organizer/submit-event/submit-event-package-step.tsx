@@ -1,0 +1,76 @@
+"use client";
+
+import type { PackageId } from "./submit-event-types";
+import { organizerPackages } from "@/lib/organizer/organizer-data";
+
+type SubmitEventPackageStepProps = {
+  onSelectPackage: (packageId: PackageId) => void;
+};
+
+export function SubmitEventPackageStep({
+  onSelectPackage,
+}: SubmitEventPackageStepProps) {
+  return (
+    <div className="mt-[28px]">
+      <h3 className="ae-serif text-[26px] font-semibold tracking-[-0.015em] text-[#202020]">
+        Choose a listing package
+      </h3>
+      <p className="mt-2 text-[15px] leading-[1.7] text-[#6A6A6A]">
+        Pick a package to open the submission form. You can change it before
+        you submit.
+      </p>
+
+      <div className="mt-6 grid gap-5 lg:grid-cols-2">
+        {organizerPackages.map((item) => (
+          <div
+            key={item.id}
+            className={`rounded-[20px] border bg-white p-[26px] ${
+              item.id === "featured" ? "border-[#202020]" : "border-[#E7E7E7]"
+            }`}
+          >
+            <div className="flex items-start justify-between gap-5">
+              <div>
+                <p className="text-[11px] font-bold tracking-[0.16em] text-[#6A6A6A]">
+                  {item.name.toUpperCase()}
+                </p>
+                <p className="ae-serif mt-[18px] text-[46px] font-semibold leading-none tracking-[-0.04em] text-[#2C2C2C]">
+                  {item.price}
+                </p>
+              </div>
+              {item.id === "featured" ? (
+                <span className="inline-flex rounded-full bg-[var(--ae-accent)] px-[12px] py-[5px] text-[10px] font-bold tracking-[0.12em] text-white">
+                  FEATURED
+                </span>
+              ) : null}
+            </div>
+
+            <div className="mt-5 border-t border-[#EAEAEA] pt-5" />
+
+            <div className="grid gap-[11px] text-[14.5px] text-[#4B4B4B]">
+              {item.points.map((point) => (
+                <span key={point} className="flex items-start gap-[10px]">
+                  <span className="mt-[2px] text-[13px] font-semibold text-[var(--ae-accent)]">
+                    +
+                  </span>
+                  <span>{point}</span>
+                </span>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => onSelectPackage(item.id)}
+              className={`mt-7 rounded-[12px] px-[20px] py-[13px] text-[15px] font-semibold transition-colors ${
+                item.id === "featured"
+                  ? "bg-[#232323] text-white hover:bg-black"
+                  : "border border-[#202020] bg-white text-[#202020] hover:bg-[#FAFAFA]"
+              }`}
+            >
+              {item.id === "featured" ? "Select Featured" : "Select Basic"}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

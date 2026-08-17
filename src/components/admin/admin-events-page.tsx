@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import {
   adminArchiveRows,
   adminEventCategories,
   adminEventPricing,
   adminEventRows,
 } from "@/lib/admin/dashboard-data";
+import { appRoutes } from "@/lib/routes";
 
 const submissionTabs = [
   "All",
@@ -88,6 +90,12 @@ export function AdminEventsPage() {
         </div>
 
         <div className="flex flex-wrap gap-2">
+          <Link
+            href={`${appRoutes.organizer.submit}?step=form`}
+            className="rounded-full border border-[#1E1E1E] bg-[#1E1E1E] px-[18px] py-[9px] text-[13.5px] font-semibold text-white transition-colors hover:bg-black"
+          >
+            Create Event
+          </Link>
           {topTabs.map((tab) => {
             const active = view === tab;
             return (
