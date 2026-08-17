@@ -92,7 +92,7 @@ export function AdminEventsPage() {
         <div className="flex flex-wrap gap-2">
           <Link
             href={`${appRoutes.admin.createEvent}?step=form`}
-            className="rounded-full border border-[#1E1E1E] bg-[#1E1E1E] px-[18px] py-[9px] text-[13.5px] font-semibold text-white transition-colors hover:bg-black"
+            className="rounded-full border border-[#1E1E1E] bg-[#1E1E1E] px-[18px] py-[9px] text-[13.5px] font-semibold !text-white transition-colors hover:bg-black"
           >
             Create Event
           </Link>
