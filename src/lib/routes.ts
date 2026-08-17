@@ -25,6 +25,7 @@ export const appRoutes = {
   admin: {
     root: "/admin",
     events: "/admin/events",
+    createEvent: "/admin/events/create",
     organizers: "/admin/organizers",
     inbox: "/admin/inbox",
     payments: "/admin/payments",
