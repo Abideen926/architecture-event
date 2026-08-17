@@ -98,7 +98,7 @@ export function AdminReportsPage() {
           </div>
         </section>
 
-        <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+        {/* <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
           <h3 className="ae-serif text-[22px] font-semibold leading-[1.1] tracking-[-0.01em] text-[#202020]">
             SEO monitoring
           </h3>
@@ -124,7 +124,7 @@ export function AdminReportsPage() {
               </article>
             ))}
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );
