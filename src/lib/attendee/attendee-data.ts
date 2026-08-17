@@ -76,14 +76,14 @@ export const attendeeHistoryRows = [
     title: "Adaptive Reuse Symposium",
     date: "May 12, 2026",
     city: "Boston, MA",
-    status: "Registered",
+    status: "Accessed",
   },
   {
     category: "EDUCATION / CEU",
     title: "Envelope Detailing Workshop",
     date: "Apr 24, 2026",
     city: "Chicago, IL",
-    status: "Registered",
+    status: "Accessed",
   },
   {
     category: "NETWORKING",
@@ -104,7 +104,7 @@ export const attendeeHistoryRows = [
     title: "Design Technology Conference",
     date: "Jan 27, 2026",
     city: "San Diego, CA",
-    status: "Registered",
+    status: "Accessed",
   },
 ] as const;
 

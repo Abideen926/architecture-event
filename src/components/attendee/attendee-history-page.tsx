@@ -36,7 +36,7 @@ export function AttendeeHistoryPage({ empty = false }: AttendeeHistoryPageProps)
 
           <div className="divide-y divide-[#F1F1F1]">
             {rows.map((row) => {
-              const registered = row.status === "Registered";
+              const Accessed = row.status === "Accessed";
 
               return (
                 <div
@@ -58,7 +58,7 @@ export function AttendeeHistoryPage({ empty = false }: AttendeeHistoryPageProps)
                   </span>
                   <span
                     className={`justify-self-start whitespace-nowrap rounded-full border px-[15px] py-[7px] text-[12.5px] font-semibold ${
-                      registered
+                      Accessed
                         ? "border-[#202020] bg-[#1E1E1E] text-white"
                         : "border-[#E7E7E7] bg-white text-[#3A3A3A]"
                     }`}
