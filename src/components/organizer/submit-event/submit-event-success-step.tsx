@@ -27,8 +27,8 @@ export function SubmitEventSuccessStep({
       </p>
       {selectedPackage === "featured" ? (
         <p className="mx-auto mt-[18px] max-w-[52ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
-          Payment for the Featured Listing is processed after editorial
-          approval. Nothing has been charged yet.
+          Your Featured Listing request is attached to this submission and will
+          be reviewed alongside your event.
         </p>
       ) : null}
       <div className="mt-[30px] flex flex-wrap justify-center gap-3">

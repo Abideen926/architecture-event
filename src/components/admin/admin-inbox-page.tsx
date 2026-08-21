@@ -59,6 +59,11 @@ export function AdminInboxPage() {
         </p>
       </div>
 
+      <div className="mt-5 rounded-[14px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-5 py-3 text-[13px] leading-[1.6] text-[#6A6A6A]">
+        There&apos;s no messaging/contact-form model in the API yet — this page shows sample
+        data and replies aren&apos;t actually sent anywhere.
+      </div>
+
       <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_1.25fr]">
         <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
           <div className="flex flex-wrap gap-2 border-b border-[#E7E7E7] px-[26px] py-[16px]">

@@ -1,3 +1,8 @@
+"use client";
+
+import type { FormEvent } from "react";
+import { toast } from "sonner";
+
 const interestOptions = [
   "Brand Spotlight",
   "Sponsored Reel",
@@ -6,6 +11,13 @@ const interestOptions = [
 ] as const;
 
 export function AdvertiseContactSection() {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    toast.error("This form isn't connected yet", {
+      description: "Please reach out through the Contact Us page in the meantime.",
+    });
+  }
+
   return (
     <section className=" pb-[96px] pt-[8px]">
       <div className="ae-container">
@@ -27,7 +39,7 @@ export function AdvertiseContactSection() {
             />
           </div>
 
-          <form className="grid gap-[15px]">
+          <form onSubmit={handleSubmit} className="grid gap-[15px]">
             <div className="grid gap-[15px] md:grid-cols-2">
               <FormField label="Name">
                 <input type="text" className={fieldClassName} />

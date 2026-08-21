@@ -1,4 +1,8 @@
+"use client";
+
+import type { FormEvent } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import {
   contactHelpOptions,
   contactPageContent,
@@ -7,6 +11,13 @@ import {
 export function ContactPage() {
   const { description, email, socials, supportCards, title } =
     contactPageContent;
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    toast.error("This form isn't connected yet", {
+      description: `Please email us directly at ${email} in the meantime.`,
+    });
+  }
 
   return (
     <div className="ae-shell bg-white">
@@ -22,7 +33,9 @@ export function ContactPage() {
             {description}
           </p>
 
-          <form className="mt-14 rounded-[20px] border border-[#e3e3e3] bg-white px-5 py-5 shadow-none sm:px-6 sm:py-6 md:px-7 md:py-7 lg:px-8 lg:py-8">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-14 rounded-[20px] border border-[#e3e3e3] bg-white px-5 py-5 shadow-none sm:px-6 sm:py-6 md:px-7 md:py-7 lg:px-8 lg:py-8">
             <div className="grid gap-4 md:grid-cols-2">
               <FormField label="Name">
                 <input type="text" className={fieldClassName} />

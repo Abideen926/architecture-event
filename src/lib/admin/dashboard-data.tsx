@@ -61,6 +61,17 @@ function ReportsIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+function FeaturedIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" {...props}>
+      <path
+        d="M12 3.6l2.55 5.17 5.7.83-4.13 4.02.97 5.68L12 16.6l-5.09 2.7.97-5.68L3.75 9.6l5.7-.83L12 3.6z"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export const adminNavItems = [
   { href: appRoutes.admin.root, label: "Overview", icon: OverviewIcon },
   { href: appRoutes.admin.events, label: "Events", icon: EventsIcon },
@@ -75,6 +86,11 @@ export const adminNavItems = [
     href: appRoutes.admin.payments,
     label: "Payments",
     icon: CreditIcon,
+  },
+  {
+    href: appRoutes.admin.featuredRequests,
+    label: "Featured Requests",
+    icon: FeaturedIcon,
   },
   {
     href: appRoutes.admin.advertising,

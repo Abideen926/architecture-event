@@ -5,9 +5,20 @@ export const signupPageContent = {
   description:
     "Takes a minute. Everything below the password is optional — it just makes your recommendations better.",
   submitLabel: "Create account",
+  organizerSubmitLabel: "Create organizer account",
   loginPrompt: "Already have an account?",
   loginCtaLabel: "Log in",
   loginCtaHref: appRoutes.architectureEvents.login,
+  accountTypeLabel: "I'm signing up as",
+  attendeeToggleLabel: "Attendee",
+  organizerToggleLabel: "Organizer",
+  organizerDescription:
+    "Organizer accounts can submit and manage event listings. You'll verify your email, then request review for each event you submit.",
+  organizationNameLabel: "Organization name",
+  websiteLabel: "Website",
+  websitePlaceholder: "https://yourstudio.com",
+  phoneLabel: "Phone",
+  phonePlaceholder: "+1 555 123 4567",
   roles: [
     "Architect",
     "Engineer",

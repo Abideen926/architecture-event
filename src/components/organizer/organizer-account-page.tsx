@@ -1,10 +1,108 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { appRoutes } from "@/lib/routes";
+import { useGetMeQuery, useLogoutMutation } from "@/features/auth/auth-api";
+import {
+  useGetOrganizerProfileQuery,
+  useUpdateOrganizerProfileMutation,
+} from "@/features/organizer/organizer-api";
+import { useChangeMyPasswordMutation, useUpdateMyProfileMutation } from "@/features/users/users-api";
+import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
+import { useConfirm } from "@/components/ui/modal-provider";
+import { PasswordInput } from "@/components/ui/password-input";
+
+const inputClassName =
+  "h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none focus:border-[#C7B48D]";
 
 export function OrganizerAccountPage() {
+  const router = useRouter();
+  const confirm = useConfirm();
+
+  const { data: me } = useGetMeQuery();
+  const { data: profile } = useGetOrganizerProfileQuery();
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
+  const [changePassword, { isLoading: isChangingPassword }] = useChangeMyPasswordMutation();
+
+  const [fullName, setFullName] = useState("");
+  const [organizationName, setOrganizationName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [phone, setPhone] = useState("");
+  const [orgErrors, setOrgErrors] = useState<Record<string, string>>({});
+  const [updateProfile, { isLoading: isSavingProfile }] = useUpdateMyProfileMutation();
+  const [updateOrgProfile, { isLoading: isSavingOrg }] = useUpdateOrganizerProfileMutation();
+
+  const [logout] = useLogoutMutation();
   const [partnerState, setPartnerState] = useState<"closed" | "open" | "sent">("closed");
+
+  useEffect(() => {
+    if (me) setFullName(me.fullName);
+  }, [me]);
+
+  useEffect(() => {
+    if (profile) {
+      setOrganizationName(profile.organizationName);
+      setWebsite(profile.website ?? "");
+      setPhone(profile.phone ?? "");
+    }
+  }, [profile]);
+
+  async function handleChangePassword() {
+    if (!currentPassword || !newPassword) {
+      setPasswordErrors({
+        ...(currentPassword ? {} : { currentPassword: "Current password is required" }),
+        ...(newPassword ? {} : { newPassword: "New password is required" }),
+      });
+      return;
+    }
+    setPasswordErrors({});
+
+    try {
+      await changePassword({ currentPassword, newPassword }).unwrap();
+      toast.success("Password updated");
+      setCurrentPassword("");
+      setNewPassword("");
+    } catch (error) {
+      setPasswordErrors(getApiFieldErrors(error));
+      toast.error("Couldn't update password", { description: getApiErrorMessage(error) });
+    }
+  }
+
+  async function handleSaveOrganization() {
+    setOrgErrors({});
+    try {
+      await Promise.all([
+        updateProfile({ fullName: fullName.trim() }).unwrap(),
+        updateOrgProfile({
+          organizationName: organizationName.trim(),
+          website: website.trim() || undefined,
+          phone: phone.trim() || undefined,
+        }).unwrap(),
+      ]);
+      toast.success("Changes saved");
+    } catch (error) {
+      setOrgErrors(getApiFieldErrors(error));
+      toast.error("Couldn't save changes", { description: getApiErrorMessage(error) });
+    }
+  }
+
+  async function handleLogout() {
+    const confirmed = await confirm({
+      title: "Log out?",
+      description: "You'll need to sign in again to manage your listings.",
+      confirmLabel: "Log out",
+    });
+    if (!confirmed) return;
+
+    await logout();
+    router.push(appRoutes.architectureEvents.login);
+  }
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
@@ -25,33 +123,48 @@ export function OrganizerAccountPage() {
           <span className="mb-[9px] block text-[13.5px] font-semibold">Email</span>
           <input
             type="email"
-            defaultValue="daniel@northlineforum.com"
-            className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+            value={me?.email ?? ""}
+            disabled
+            className={`${inputClassName} cursor-not-allowed bg-[#FAFAFA] text-[#6A6A6A]`}
           />
         </label>
         <div className="mt-[10px] grid gap-[16px] md:grid-cols-2">
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">Current password</span>
-            <input
-              type="password"
+            <PasswordInput
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="********"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              className={inputClassName}
             />
+            {passwordErrors.currentPassword ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                {passwordErrors.currentPassword}
+              </span>
+            ) : null}
           </label>
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">New password</span>
-            <input
-              type="password"
+            <PasswordInput
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               placeholder="At least 8 characters"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              className={inputClassName}
             />
+            {passwordErrors.newPassword ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                {passwordErrors.newPassword}
+              </span>
+            ) : null}
           </label>
         </div>
         <button
           type="button"
-          className="mt-[14px] rounded-[12px] border border-[#202020] bg-white px-6 py-[14px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA]"
+          onClick={handleChangePassword}
+          disabled={isChangingPassword}
+          className="mt-[14px] rounded-[12px] border border-[#202020] bg-white px-6 py-[14px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Update password
+          {isChangingPassword ? "Updating..." : "Update password"}
         </button>
       </div>
 
@@ -64,40 +177,54 @@ export function OrganizerAccountPage() {
             <span className="mb-[9px] block text-[13.5px] font-semibold">Organization name</span>
             <input
               type="text"
-              defaultValue="Northline Forum"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              value={organizationName}
+              onChange={(e) => setOrganizationName(e.target.value)}
+              className={inputClassName}
             />
+            {orgErrors.organizationName ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                {orgErrors.organizationName}
+              </span>
+            ) : null}
           </label>
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">Website</span>
             <input
               type="url"
-              defaultValue="northlineforum.com"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              className={inputClassName}
             />
           </label>
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">Contact name</span>
             <input
               type="text"
-              defaultValue="Daniel Okafor"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className={inputClassName}
             />
+            {orgErrors.fullName ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">{orgErrors.fullName}</span>
+            ) : null}
           </label>
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">Phone</span>
             <input
               type="tel"
-              defaultValue="(212) 555-0148"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className={inputClassName}
             />
           </label>
         </div>
         <button
           type="button"
-          className="mt-4 rounded-[10px] bg-[#232323] px-[22px] py-[12px] text-[14.5px] font-semibold text-white transition-colors hover:bg-black"
+          onClick={handleSaveOrganization}
+          disabled={isSavingProfile || isSavingOrg}
+          className="mt-4 rounded-[10px] bg-[#232323] px-[22px] py-[12px] text-[14.5px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Save changes
+          {isSavingProfile || isSavingOrg ? "Saving..." : "Save changes"}
         </button>
       </div>
 
@@ -128,16 +255,16 @@ export function OrganizerAccountPage() {
                 <span className="mb-[9px] block text-[13.5px] font-semibold">Your name</span>
                 <input
                   type="text"
-                  defaultValue="Daniel Okafor"
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  defaultValue={fullName}
+                  className={inputClassName}
                 />
               </label>
               <label className="block">
                 <span className="mb-[9px] block text-[13.5px] font-semibold">Company</span>
                 <input
                   type="text"
-                  defaultValue="Northline Forum"
-                  className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+                  defaultValue={organizationName}
+                  className={inputClassName}
                 />
               </label>
             </div>
@@ -182,11 +309,10 @@ export function OrganizerAccountPage() {
       </div>
 
       <div className="mt-[18px] flex flex-wrap items-center justify-between gap-5 border-t border-[#E7E7E7] pt-[16px]">
-        <p className="text-[14.5px] text-[#6A6A6A]">
-          Signed in as daniel@northlineforum.com
-        </p>
+        <p className="text-[14.5px] text-[#6A6A6A]">Signed in as {me?.email}</p>
         <button
           type="button"
+          onClick={handleLogout}
           className="text-[14.5px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
         >
           Log out

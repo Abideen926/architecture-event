@@ -4,6 +4,7 @@ import { Bookmark, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { appRoutes } from "@/lib/routes";
+import { useGetMeQuery } from "@/features/auth/auth-api";
 
 const navItems = [
   { href: appRoutes.architectureEvents.events, label: "Browse Events" },
@@ -13,8 +14,15 @@ const navItems = [
   { href: appRoutes.architectureEvents.contact, label: "Contact Us" },
 ];
 
+const ROLE_HOME: Record<string, string> = {
+  ATTENDEE: appRoutes.attendee.root,
+  ORGANIZER: appRoutes.organizer.root,
+  ADMIN: appRoutes.admin.root,
+};
+
 export function SiteHeader() {
   const pathname = usePathname();
+  const { data: me } = useGetMeQuery();
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-[rgba(255,255,255,0.94)] backdrop-blur-[8px] backdrop-saturate-125">
@@ -43,33 +51,47 @@ export function SiteHeader() {
         </nav>
 
         <div className="ml-auto hidden items-center gap-5 pl-2 md:flex xl:ml-0">
-          <button
-            type="button"
-            aria-label="Saved events"
-            className="flex items-center text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
-          >
-            <Bookmark className="h-[17px] w-[17px]" strokeWidth={1.6} />
-          </button>
-          <Link
-            href={appRoutes.architectureEvents.login}
-            className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
-          >
-            Log In
-          </Link>
-          <Link
-            href={appRoutes.architectureEvents.signup}
-            className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
-          >
-            Sign Up
-          </Link>
+          {me?.role === "ATTENDEE" ? (
+            <Link
+              href={appRoutes.attendee.root}
+              aria-label="Saved events"
+              className="flex items-center text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
+            >
+              <Bookmark className="h-[17px] w-[17px]" strokeWidth={1.6} />
+            </Link>
+          ) : null}
+
+          {me ? (
+            <Link
+              href={ROLE_HOME[me.role] ?? appRoutes.architectureEvents.root}
+              className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+            >
+              My Account
+            </Link>
+          ) : (
+            <>
+              <Link
+                href={appRoutes.architectureEvents.login}
+                className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
+              >
+                Log In
+              </Link>
+              <Link
+                href={appRoutes.architectureEvents.signup}
+                className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="ml-auto flex items-center gap-3 md:hidden">
           <Link
-            href={appRoutes.architectureEvents.signup}
+            href={me ? (ROLE_HOME[me.role] ?? appRoutes.architectureEvents.root) : appRoutes.architectureEvents.signup}
             className="rounded-xl bg-[var(--ae-accent)] px-4 py-2.5 text-[13.5px] font-semibold text-white"
           >
-            Sign Up
+            {me ? "My Account" : "Sign Up"}
           </Link>
           <button
             type="button"

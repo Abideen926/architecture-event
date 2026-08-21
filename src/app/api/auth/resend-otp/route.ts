@@ -1,0 +1,8 @@
+import { NextResponse } from "next/server";
+import { backendFetch } from "@/lib/api/backend";
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const result = await backendFetch("/auth/resend-otp", { method: "POST", body });
+  return NextResponse.json(result.payload, { status: result.status });
+}

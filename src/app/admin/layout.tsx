@@ -3,12 +3,15 @@ import { AdminFooter } from "@/components/admin/admin-footer";
 import { AdminHeader } from "@/components/admin/admin-header";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
+import { requireRole } from "@/lib/auth/session-guard";
 
 type AdminLayoutProps = {
   children: ReactNode;
 };
 
-export default function AdminLayout({ children }: AdminLayoutProps) {
+export default async function AdminLayout({ children }: AdminLayoutProps) {
+  await requireRole("ADMIN");
+
   return (
     <div className="min-h-screen bg-white">
       <AdminHeader />

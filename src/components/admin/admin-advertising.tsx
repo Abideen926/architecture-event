@@ -90,6 +90,11 @@ export function AdminAdvertising() {
         </p>
       </div>
 
+      <div className="rounded-[14px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-5 py-3 text-[13px] leading-[1.6] text-[#6A6A6A]">
+        There&apos;s no advertising/sponsorship model in the API yet — this page shows sample
+        data and isn&apos;t connected to the backend.
+      </div>
+
       <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
         <div className="px-[26px] py-5">
           <h3 className="ae-serif text-[22px] font-semibold leading-[1.1] tracking-[-0.01em] text-[#202020]">

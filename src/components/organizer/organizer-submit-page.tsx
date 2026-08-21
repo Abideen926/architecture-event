@@ -1,10 +1,9 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Suspense, useState } from "react";
-import {
-  organizerDefaultForm,
-} from "@/lib/organizer/organizer-data";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { appRoutes } from "@/lib/routes";
+import { useGetOrganizerEventQuery } from "@/features/organizer/organizer-api";
 import type { PackageId, SubmitStep } from "./submit-event/submit-event-types";
 import { SubmitEventFormStep } from "./submit-event/submit-event-form-step";
 import { SubmitEventPackageStep } from "./submit-event/submit-event-package-step";
@@ -22,68 +21,58 @@ function OrganizerSubmitPageFallback() {
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
       <div className="border-b border-[#E7E7E7] pb-5">
-        <h2 className="ae-serif text-[30px] font-semibold tracking-[-0.015em] text-[#202020]">
+        <h2 className="ae-serif text-[28px] font-semibold tracking-[-0.015em] text-[#202020]">
           Submit New Event
         </h2>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
-          Step 1 of 2 - choose your listing package
-        </p>
+        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">Loading...</p>
       </div>
     </div>
   );
 }
 
 function OrganizerSubmitPageContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const initialStep: SubmitStep =
-    searchParams.get("step") === "form" ? "form" : "package";
+  const eventId = searchParams.get("id");
+
+  const { data: existingEvent, isLoading: isLoadingEvent } =
+    useGetOrganizerEventQuery(eventId ?? "", { skip: !eventId });
+
+  const initialStep: SubmitStep = eventId
+    ? "form"
+    : searchParams.get("step") === "form"
+      ? "form"
+      : "package";
   const [step, setStep] = useState<SubmitStep>(initialStep);
   const [selectedPackage, setSelectedPackage] = useState<PackageId>("featured");
-  const [thumbnailIndex, setThumbnailIndex] = useState(0);
 
-  // FIX: Explicitly type all form states as <string> to allow updates from inputs
-  const [eventName, setEventName] = useState<string>(
-    organizerDefaultForm.eventName
-  );
-  const [eventDate, setEventDate] = useState<string>(
-    organizerDefaultForm.eventDate
-  );
-  const [city, setCity] = useState<string>(organizerDefaultForm.city);
-  const [venue, setVenue] = useState<string>(organizerDefaultForm.venue);
-  const [category, setCategory] = useState<string>(
-    organizerDefaultForm.category
-  );
-  const [registrationUrl, setRegistrationUrl] = useState<string>(
-    organizerDefaultForm.registrationUrl
-  );
-  const [description, setDescription] = useState<string>(
-    organizerDefaultForm.description
-  );
-  const [notes, setNotes] = useState<string>(organizerDefaultForm.notes);
-  const [contactName, setContactName] = useState<string>(
-    organizerDefaultForm.contactName
-  );
-  const [contactEmail, setContactEmail] = useState<string>(
-    organizerDefaultForm.contactEmail
-  );
-  const [phone, setPhone] = useState<string>(organizerDefaultForm.phone);
-  const [organization, setOrganization] = useState<string>(
-    organizerDefaultForm.organization
-  );
+  useEffect(() => {
+    if (existingEvent?.isFeatured) setSelectedPackage("featured");
+  }, [existingEvent]);
 
   const selectedPackageLabel =
     selectedPackage === "featured"
-      ? "Featured Listing - $49"
-      : "Basic Listing - Free";
+      ? "Featured Listing — $49"
+      : "Basic Listing — Free";
+
+  if (eventId && isLoadingEvent) {
+    return <OrganizerSubmitPageFallback />;
+  }
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
       <div className="border-b border-[#E7E7E7] pb-5">
         <h2 className="ae-serif text-[30px] font-semibold tracking-[-0.015em] text-[#202020]">
-          Submit New Event
+          {eventId ? "Edit Event" : "Submit New Event"}
         </h2>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
-          Step 1 of 2 - choose your listing package
+          {step === "package"
+            ? "Step 1 of 2 — choose your listing package"
+            : step === "form"
+              ? eventId
+                ? "Update your event details below"
+                : "Step 2 of 2 — fill in your event details"
+              : "Submitted"}
         </p>
       </div>
 
@@ -99,40 +88,30 @@ function OrganizerSubmitPageContent() {
       {step === "form" ? (
         <SubmitEventFormStep
           selectedPackageLabel={selectedPackageLabel}
-          eventName={eventName}
-          setEventName={setEventName}
-          category={category}
-          setCategory={setCategory}
-          registrationUrl={registrationUrl}
-          setRegistrationUrl={setRegistrationUrl}
-          description={description}
-          setDescription={setDescription}
-          eventDate={eventDate}
-          setEventDate={setEventDate}
-          city={city}
-          setCity={setCity}
-          venue={venue}
-          setVenue={setVenue}
-          thumbnailIndex={thumbnailIndex}
-          setThumbnailIndex={setThumbnailIndex}
-          notes={notes}
-          setNotes={setNotes}
-          contactName={contactName}
-          setContactName={setContactName}
-          contactEmail={contactEmail}
-          setContactEmail={setContactEmail}
-          phone={phone}
-          setPhone={setPhone}
-          organization={organization}
-          setOrganization={setOrganization}
-          onSubmitReview={() => setStep("done")}
+          requestFeatured={selectedPackage === "featured"}
+          initialEvent={existingEvent}
+          onChangePackage={() => setStep("package")}
+          onSavedDraft={(event) => {
+            if (!eventId) {
+              router.replace(
+                `${appRoutes.organizer.submit}?step=form&id=${event.id}`,
+              );
+            }
+          }}
+          onSubmittedForReview={(_event, checkoutUrl) => {
+            if (checkoutUrl) {
+              window.location.href = checkoutUrl;
+              return;
+            }
+            setStep("done");
+          }}
         />
       ) : null}
 
       {step === "done" ? (
         <SubmitEventSuccessStep
           selectedPackage={selectedPackage}
-          onBackToListings={() => setStep("package")}
+          onBackToListings={() => router.push(appRoutes.organizer.root)}
         />
       ) : null}
     </div>

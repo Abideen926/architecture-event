@@ -1,98 +1,187 @@
 "use client";
 
 import Link from "next/link";
-import {
-  adminAttentionItems,
-  adminOverviewStats,
-} from "@/lib/admin/dashboard-data";
+import { appRoutes } from "@/lib/routes";
+import { useGetAdminOverviewStatsQuery } from "@/features/admin/admin-stats-api";
+import { EVENT_STATUS_LABELS } from "@/features/events/event-types";
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+type AttentionItem = {
+  title: string;
+  meta: string;
+  actionLabel: string;
+  href: string;
+  tone: "accent" | "muted";
+};
 
 export function AdminOverviewPage() {
+  const { data: stats, isLoading, isError, refetch } = useGetAdminOverviewStatsQuery();
+
+  const attentionItems: AttentionItem[] = [];
+  if (stats) {
+    const { eventsAwaitingReview, changesRequested, pendingFeatureRequests } = stats.attention;
+
+    if (eventsAwaitingReview.count > 0) {
+      attentionItems.push({
+        title: `${eventsAwaitingReview.count} event${eventsAwaitingReview.count === 1 ? "" : "s"} awaiting review`,
+        meta: eventsAwaitingReview.oldest
+          ? `Oldest: "${eventsAwaitingReview.oldest.title}", submitted ${dateFormatter.format(new Date(eventsAwaitingReview.oldest.submittedAt))}`
+          : "",
+        actionLabel: "Review queue",
+        href: appRoutes.admin.events,
+        tone: "accent",
+      });
+    }
+
+    if (changesRequested.count > 0) {
+      attentionItems.push({
+        title: `${changesRequested.count} listing${changesRequested.count === 1 ? "" : "s"} in changes requested`,
+        meta: "Awaiting organizer follow-up",
+        actionLabel: "View listings",
+        href: appRoutes.admin.events,
+        tone: "muted",
+      });
+    }
+
+    if (pendingFeatureRequests.count > 0) {
+      attentionItems.push({
+        title: `${pendingFeatureRequests.count} Featured Listing request${pendingFeatureRequests.count === 1 ? "" : "s"} pending review`,
+        meta: "Awaiting admin decision",
+        actionLabel: "Open Payments",
+        href: appRoutes.admin.payments,
+        tone: "accent",
+      });
+    }
+  }
+
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
       <section className="border-b border-[#E7E7E7] pb-5">
         <h2 className="ae-serif text-[30px] font-semibold leading-[1.08] tracking-[-0.015em] text-[#202020]">
           Overview
         </h2>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">Friday, July 31, 2026</p>
+        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+          A live snapshot of events, accounts, and Featured Listing requests.
+        </p>
       </section>
 
-      <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {adminOverviewStats.map((stat) => (
-          <article
-            key={stat.label}
-            className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]"
+      {isLoading ? (
+        <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {[0, 1, 2, 3].map((key) => (
+            <div key={key} className="h-[190px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+          ))}
+        </section>
+      ) : isError || !stats ? (
+        <section className="mt-6 rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
+          <p className="text-[15px] text-[#6A6A6A]">Couldn&apos;t load overview stats.</p>
+          <button
+            type="button"
+            onClick={() => refetch()}
+            className="mt-4 rounded-[10px] border border-[#202020] bg-white px-5 py-2 text-[13.5px] font-semibold text-[#202020]"
           >
-            <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
-              {stat.label.toUpperCase()}
-            </p>
-            <p
-              className={`mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] ${
-                "accent" in stat && stat.accent
-                  ? "text-[var(--ae-accent)]"
-                  : "text-[#202020]"
-              }`}
-            >
-              {stat.value}
-            </p>
-
-            {"rows" in stat ? (
+            Try again
+          </button>
+        </section>
+      ) : (
+        <>
+          <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">TOTAL EVENTS</p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[#202020]">
+                {stats.events.total}
+              </p>
               <div className="mt-4 border-t border-[#E7E7E7] pt-4">
                 <div className="space-y-2.5">
-                  {stat.rows.map((row) => (
+                  {(["UNDER_REVIEW", "CHANGES_REQUESTED", "PUBLISHED"] as const).map((status) => (
                     <div
-                      key={row.label}
+                      key={status}
                       className="flex items-center justify-between gap-3 text-[13.5px] text-[#6A6A6A]"
                     >
-                      <span>{row.label}</span>
-                      <span className="font-semibold text-[#202020]">{row.value}</span>
+                      <span>{EVENT_STATUS_LABELS[status]}</span>
+                      <span className="font-semibold text-[#202020]">{stats.events.byStatus[status]}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            ) : (
+            </article>
+
+            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">ORGANIZERS</p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[#202020]">
+                {stats.organizers.total}
+              </p>
               <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">{stat.detail}</p>
+                <p className="text-[13.5px] text-[#6A6A6A]">Registered organizer accounts</p>
+              </div>
+            </article>
+
+            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">ATTENDEES</p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[#202020]">
+                {stats.attendees.total}
+              </p>
+              <div className="mt-4 border-t border-[#E7E7E7] pt-4">
+                <p className="text-[13.5px] text-[#6A6A6A]">Registered attendee accounts</p>
+              </div>
+            </article>
+
+            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+                FEATURED LISTING REQUESTS
+              </p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[var(--ae-accent)]">
+                {stats.featureRequests.pendingReview}
+              </p>
+              <div className="mt-4 border-t border-[#E7E7E7] pt-4">
+                <p className="text-[13.5px] text-[#6A6A6A]">Awaiting admin review</p>
+              </div>
+            </article>
+          </section>
+
+          <section className="mt-7 overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
+            <div className="flex items-center justify-between gap-4 border-b border-[#E7E7E7] px-[26px] py-5">
+              <h2 className="ae-serif text-[22px] font-semibold leading-[1.08] tracking-[-0.01em] text-[#202020]">
+                Needs your attention
+              </h2>
+              <p className="text-[13.5px] text-[#6A6A6A]">{attentionItems.length} items</p>
+            </div>
+
+            {attentionItems.length > 0 ? (
+              <div>
+                {attentionItems.map((item, index) => (
+                  <article
+                    key={item.title}
+                    className={`flex items-center gap-4 px-[26px] py-5 ${
+                      index < attentionItems.length - 1 ? "border-b border-[#F1F1F1]" : ""
+                    }`}
+                  >
+                    <span
+                      className={`mt-1 h-2 w-2 flex-none rounded-full ${
+                        item.tone === "accent" ? "bg-[var(--ae-accent)]" : "bg-[#6A6A6A]"
+                      }`}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-[15.5px] font-semibold text-[#202020]">{item.title}</h3>
+                      <p className="text-[13.5px] leading-[1.6] text-[#6A6A6A]">{item.meta}</p>
+                    </div>
+                    <Link
+                      href={item.href}
+                      className="text-[13.5px] font-semibold whitespace-nowrap !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                    >
+                      {item.actionLabel} →
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="px-[26px] py-10 text-center text-[14.5px] text-[#6A6A6A]">
+                Nothing needs your attention right now.
               </div>
             )}
-          </article>
-        ))}
-      </section>
-
-      <section className="mt-7 overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
-        <div className="flex items-center justify-between gap-4 border-b border-[#E7E7E7] px-[26px] py-5">
-          <h2 className="ae-serif text-[22px] font-semibold leading-[1.08] tracking-[-0.01em] text-[#202020]">
-            Needs your attention
-          </h2>
-          <p className="text-[13.5px] text-[#6A6A6A]">{adminAttentionItems.length} items</p>
-        </div>
-
-        <div>
-          {adminAttentionItems.map((item, index) => (
-            <article
-              key={item.title}
-              className={`flex items-center gap-4 px-[26px] py-5 ${
-                index < adminAttentionItems.length - 1 ? "border-b border-[#F1F1F1]" : ""
-              }`}
-            >
-              <span
-                className={`mt-1 h-2 w-2 flex-none rounded-full ${
-                  item.tone === "accent" ? "bg-[var(--ae-accent)]" : "bg-[#6A6A6A]"
-                }`}
-              />
-              <div className="min-w-0 flex-1">
-                <h3 className="text-[15.5px] font-semibold text-[#202020]">{item.title}</h3>
-                <p className="text-[13.5px] leading-[1.6] text-[#6A6A6A]">{item.meta}</p>
-              </div>
-              <Link
-                href={item.href}
-                className="text-[13.5px] font-semibold whitespace-nowrap !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
-              >
-                {item.actionLabel} →
-              </Link>
-            </article>
-          ))}
-        </div>
-      </section>
+          </section>
+        </>
+      )}
     </div>
   );
 }

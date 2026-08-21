@@ -1,37 +1,127 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { attendeeRegionOptions, attendeeRoleOptions } from "@/lib/attendee/attendee-data";
+import { appRoutes } from "@/lib/routes";
+import { useGetMeQuery, useLogoutMutation } from "@/features/auth/auth-api";
 import {
-  attendeeCategoryOptions,
-  attendeeDefaultProfile,
-  attendeeRegionOptions,
-  attendeeRoleOptions,
-} from "@/lib/attendee/attendee-data";
+  useGetAttendeeProfileQuery,
+  useUpdateAttendeeProfileMutation,
+} from "@/features/attendee/attendee-api";
+import { useGetCategoriesQuery } from "@/features/public/public-api";
+import { useChangeMyPasswordMutation, useUpdateMyProfileMutation } from "@/features/users/users-api";
+import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
+import { useConfirm } from "@/components/ui/modal-provider";
+import { PasswordInput } from "@/components/ui/password-input";
 
 function toggleInList(current: string[], value: string) {
-  return current.includes(value)
-    ? current.filter((entry) => entry !== value)
-    : [...current, value];
+  return current.includes(value) ? current.filter((entry) => entry !== value) : [...current, value];
 }
 
-export function AttendeeProfilePage() {
-  const [fullName, setFullName] = useState<string>(attendeeDefaultProfile.fullName);
-  const [email, setEmail] = useState<string>(attendeeDefaultProfile.email);
-  const [role, setRole] = useState<string>(attendeeDefaultProfile.role);
-  const [categories, setCategories] = useState<string[]>([
-    ...attendeeDefaultProfile.categories,
-  ]);
-  const [regions, setRegions] = useState<string[]>([...attendeeDefaultProfile.regions]);
-  const [newsletter, setNewsletter] = useState<boolean>(attendeeDefaultProfile.newsletter);
+const inputClassName =
+  "h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none focus:border-[#C7B48D]";
 
-  const resetProfile = () => {
-    setFullName(attendeeDefaultProfile.fullName);
-    setEmail(attendeeDefaultProfile.email);
-    setRole(attendeeDefaultProfile.role);
-    setCategories([...attendeeDefaultProfile.categories]);
-    setRegions([...attendeeDefaultProfile.regions]);
-    setNewsletter(attendeeDefaultProfile.newsletter);
-  };
+export function AttendeeProfilePage() {
+  const router = useRouter();
+  const confirm = useConfirm();
+
+  const { data: me } = useGetMeQuery();
+  const { data: profile } = useGetAttendeeProfileQuery();
+  const { data: categories } = useGetCategoriesQuery();
+
+  const [fullName, setFullName] = useState("");
+  const [role, setRole] = useState<string>(attendeeRoleOptions[0]);
+  const [categoryIds, setCategoryIds] = useState<string[]>([]);
+  const [regions, setRegions] = useState<string[]>([]);
+  const [newsletter, setNewsletter] = useState(true);
+  const [profileErrors, setProfileErrors] = useState<Record<string, string>>({});
+
+  const [updateMyProfile, { isLoading: isSavingName }] = useUpdateMyProfileMutation();
+  const [updateAttendeeProfile, { isLoading: isSavingProfile }] = useUpdateAttendeeProfileMutation();
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
+  const [changePassword, { isLoading: isChangingPassword }] = useChangeMyPasswordMutation();
+
+  const [logout] = useLogoutMutation();
+
+  useEffect(() => {
+    if (me) setFullName(me.fullName);
+  }, [me]);
+
+  useEffect(() => {
+    if (profile) {
+      setRole(profile.professionalRole || attendeeRoleOptions[0]);
+      setCategoryIds(profile.followedCategories.map((category) => category.id));
+      setRegions(profile.followedLocations);
+      setNewsletter(profile.newsletterOptIn);
+    }
+  }, [profile]);
+
+  function resetProfile() {
+    if (me) setFullName(me.fullName);
+    if (profile) {
+      setRole(profile.professionalRole || attendeeRoleOptions[0]);
+      setCategoryIds(profile.followedCategories.map((category) => category.id));
+      setRegions(profile.followedLocations);
+      setNewsletter(profile.newsletterOptIn);
+    }
+  }
+
+  async function handleSave() {
+    setProfileErrors({});
+    try {
+      await Promise.all([
+        updateMyProfile({ fullName: fullName.trim() }).unwrap(),
+        updateAttendeeProfile({
+          professionalRole: role,
+          followedCategoryIds: categoryIds,
+          followedLocations: regions,
+          newsletterOptIn: newsletter,
+        }).unwrap(),
+      ]);
+      toast.success("Profile updated");
+    } catch (error) {
+      setProfileErrors(getApiFieldErrors(error));
+      toast.error("Couldn't save profile", { description: getApiErrorMessage(error) });
+    }
+  }
+
+  async function handleChangePassword() {
+    if (!currentPassword || !newPassword) {
+      setPasswordErrors({
+        ...(currentPassword ? {} : { currentPassword: "Current password is required" }),
+        ...(newPassword ? {} : { newPassword: "New password is required" }),
+      });
+      return;
+    }
+    setPasswordErrors({});
+
+    try {
+      await changePassword({ currentPassword, newPassword }).unwrap();
+      toast.success("Password updated");
+      setCurrentPassword("");
+      setNewPassword("");
+    } catch (error) {
+      setPasswordErrors(getApiFieldErrors(error));
+      toast.error("Couldn't update password", { description: getApiErrorMessage(error) });
+    }
+  }
+
+  async function handleLogout() {
+    const confirmed = await confirm({
+      title: "Log out?",
+      description: "You'll need to sign in again to see your saved events.",
+      confirmLabel: "Log out",
+    });
+    if (!confirmed) return;
+
+    await logout();
+    router.push(appRoutes.architectureEvents.login);
+  }
 
   return (
     <div className="animate-[fadeIn_0.35s_ease] max-w-[780px]">
@@ -53,16 +143,21 @@ export function AttendeeProfilePage() {
               type="text"
               value={fullName}
               onChange={(event) => setFullName(event.target.value)}
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              className={inputClassName}
             />
+            {profileErrors.fullName ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                {profileErrors.fullName}
+              </span>
+            ) : null}
           </label>
           <label className="block">
             <span className="mb-[9px] block text-[13.5px] font-semibold">Email</span>
             <input
               type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              value={me?.email ?? ""}
+              disabled
+              className={`${inputClassName} cursor-not-allowed bg-[#FAFAFA] text-[#6A6A6A]`}
             />
           </label>
         </div>
@@ -88,28 +183,27 @@ export function AttendeeProfilePage() {
 
         <div className="mt-[32px] border-t border-[#E7E7E7] pt-[28px]">
           <h3 className="m-0 text-[15px] font-bold text-[#202020]">
-            Categories you follow{" "}
-            <span className="font-medium text-[#6A6A6A]">— optional</span>
+            Categories you follow <span className="font-medium text-[#6A6A6A]">— optional</span>
           </h3>
           <p className="mt-[8px] text-[14px] text-[#6A6A6A]">
-            Tap to add or remove. Changes save as you go.
+            Tap to add or remove. Changes save when you hit &quot;Save changes&quot;.
           </p>
           <div className="mt-[16px] flex flex-wrap gap-[10px]">
-            {attendeeCategoryOptions.map((option) => {
-              const active = categories.includes(option);
+            {(categories ?? []).map((category) => {
+              const active = categoryIds.includes(category.id);
 
               return (
                 <button
-                  key={option}
+                  key={category.id}
                   type="button"
-                  onClick={() => setCategories((current) => toggleInList(current, option))}
+                  onClick={() => setCategoryIds((current) => toggleInList(current, category.id))}
                   className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
                       ? "border-[#202020] bg-[#1E1E1E] text-white"
                       : "border-[#E7E7E7] bg-white text-[#202020] hover:border-[#202020]"
                   }`}
                 >
-                  {option}
+                  {category.name}
                 </button>
               );
             })}
@@ -145,9 +239,7 @@ export function AttendeeProfilePage() {
 
         <div className="mt-[30px] flex items-start justify-between gap-6 rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] p-[22px]">
           <div>
-            <p className="m-0 text-[15px] font-semibold text-[#202020]">
-              Monthly newsletter
-            </p>
+            <p className="m-0 text-[15px] font-semibold text-[#202020]">Monthly newsletter</p>
             <p className="mt-[7px] max-w-[52ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
               A curated round-up of upcoming events. Unsubscribe anytime.
             </p>
@@ -157,25 +249,21 @@ export function AttendeeProfilePage() {
             title="Toggle newsletter"
             onClick={() => setNewsletter((current) => !current)}
             className={`flex h-[30px] w-[52px] flex-none rounded-full border p-[3px] transition-colors ${
-              newsletter
-                ? "justify-end border-[#202020] bg-[#1E1E1E]"
-                : "justify-start border-[#E7E7E7] bg-white"
+              newsletter ? "justify-end border-[#202020] bg-[#1E1E1E]" : "justify-start border-[#E7E7E7] bg-white"
             }`}
           >
-            <span
-              className={`block h-[22px] w-[22px] rounded-full ${
-                newsletter ? "bg-white" : "bg-[#C9C9C9]"
-              }`}
-            />
+            <span className={`block h-[22px] w-[22px] rounded-full ${newsletter ? "bg-white" : "bg-[#C9C9C9]"}`} />
           </button>
         </div>
 
         <div className="mt-[34px] flex flex-wrap gap-3">
           <button
             type="button"
-            className="rounded-[12px] bg-[#1E1E1E] px-[26px] py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-black"
+            onClick={handleSave}
+            disabled={isSavingName || isSavingProfile}
+            className="rounded-[12px] bg-[#1E1E1E] px-[26px] py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Save changes
+            {isSavingName || isSavingProfile ? "Saving..." : "Save changes"}
           </button>
           <button
             type="button"
@@ -193,38 +281,47 @@ export function AttendeeProfilePage() {
         </h3>
         <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">
-              Current password
-            </span>
-            <input
-              type="password"
+            <span className="mb-[9px] block text-[13.5px] font-semibold">Current password</span>
+            <PasswordInput
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="********"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              className={inputClassName}
             />
+            {passwordErrors.currentPassword ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                {passwordErrors.currentPassword}
+              </span>
+            ) : null}
           </label>
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">
-              New password
-            </span>
-            <input
-              type="password"
+            <span className="mb-[9px] block text-[13.5px] font-semibold">New password</span>
+            <PasswordInput
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               placeholder="At least 8 characters"
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none"
+              className={inputClassName}
             />
+            {passwordErrors.newPassword ? (
+              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                {passwordErrors.newPassword}
+              </span>
+            ) : null}
           </label>
         </div>
         <button
           type="button"
-          className="mt-[22px] rounded-[12px] border border-[#202020] bg-white px-6 py-[14px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA]"
+          onClick={handleChangePassword}
+          disabled={isChangingPassword}
+          className="mt-[22px] rounded-[12px] border border-[#202020] bg-white px-6 py-[14px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Update password
+          {isChangingPassword ? "Updating..." : "Update password"}
         </button>
         <div className="mt-[26px] flex flex-wrap items-center justify-between gap-5 border-t border-[#E7E7E7] pt-[22px]">
-          <p className="text-[14.5px] text-[#6A6A6A]">
-            Signed in as maya@reyesstudio.com
-          </p>
+          <p className="text-[14.5px] text-[#6A6A6A]">Signed in as {me?.email}</p>
           <button
             type="button"
+            onClick={handleLogout}
             className="text-[14.5px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
           >
             Log out

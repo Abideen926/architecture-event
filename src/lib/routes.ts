@@ -11,6 +11,9 @@ export const appRoutes = {
     contact: `${architectureEventsBase}/contact`,
     login: `${architectureEventsBase}/login`,
     signup: `${architectureEventsBase}/signup`,
+    forgotPassword: `${architectureEventsBase}/forgot-password`,
+    resetPassword: `${architectureEventsBase}/reset-password`,
+    verifyEmail: `${architectureEventsBase}/verify-email`,
   },
   attendee: {
     root: "/attendee",
@@ -21,6 +24,8 @@ export const appRoutes = {
     root: "/organizer",
     submit: "/organizer/submit",
     account: "/organizer/account",
+    featureSuccess: "/organizer/feature/success",
+    featureCancelled: "/organizer/feature/cancelled",
   },
   admin: {
     root: "/admin",
@@ -29,6 +34,8 @@ export const appRoutes = {
     organizers: "/admin/organizers",
     inbox: "/admin/inbox",
     payments: "/admin/payments",
+    featuredRequests: "/admin/payments/featured-requests",
+    eventDetail: (id: string) => `/admin/events/${id}`,
     advertising: "/admin/advertising",
     reports: "/admin/reports",
   },
