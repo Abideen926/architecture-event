@@ -27,9 +27,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-[rgba(255,255,255,0.94)] backdrop-blur-[8px] backdrop-saturate-125">
       <div className="ae-container flex h-[76px] items-center gap-12">
-        <Link href={appRoutes.architectureEvents.root} className="flex items-center gap-3">
-          <span className="ae-serif ae-accent-text text-[34px] leading-none">A</span>
-          <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-[#202020]">
+        <Link
+          href={appRoutes.architectureEvents.root}
+          className="flex items-center gap-3"
+        >
+          <span className="ae-serif ae-accent-text text-[34px] leading-none">
+            A
+          </span>
+          <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-foreground">
             ARCHITECTURE
             <br />
             EVENTS
@@ -55,7 +60,7 @@ export function SiteHeader() {
             <Link
               href={appRoutes.attendee.root}
               aria-label="Saved events"
-              className="flex items-center text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
+              className="flex items-center text-foreground transition-colors hover:text-[var(--ae-accent)]"
             >
               <Bookmark className="h-[17px] w-[17px]" strokeWidth={1.6} />
             </Link>
@@ -72,7 +77,7 @@ export function SiteHeader() {
             <>
               <Link
                 href={appRoutes.architectureEvents.login}
-                className="text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)]"
+                className="text-[14.5px] font-medium text-foreground transition-colors hover:text-[var(--ae-accent)]"
               >
                 Log In
               </Link>
@@ -88,7 +93,11 @@ export function SiteHeader() {
 
         <div className="ml-auto flex items-center gap-3 md:hidden">
           <Link
-            href={me ? (ROLE_HOME[me.role] ?? appRoutes.architectureEvents.root) : appRoutes.architectureEvents.signup}
+            href={
+              me
+                ? (ROLE_HOME[me.role] ?? appRoutes.architectureEvents.root)
+                : appRoutes.architectureEvents.signup
+            }
             className="rounded-xl bg-[var(--ae-accent)] px-4 py-2.5 text-[13.5px] font-semibold text-white"
           >
             {me ? "My Account" : "Sign Up"}
@@ -96,7 +105,7 @@ export function SiteHeader() {
           <button
             type="button"
             aria-label="Open navigation"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#E7E7E7] bg-white text-[#202020]"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#E7E7E7] bg-white text-foreground"
           >
             <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />
           </button>

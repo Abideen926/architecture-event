@@ -13,7 +13,14 @@ type ModalProps = {
   footer?: React.ReactNode;
 };
 
-export function Modal({ open, onClose, title, description, children, footer }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  title,
+  description,
+  children,
+  footer,
+}: ModalProps) {
   useEffect(() => {
     if (!open) return;
 
@@ -54,29 +61,33 @@ export function Modal({ open, onClose, title, description, children, footer }: M
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-5 top-5 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8A8A8A] transition-colors hover:bg-[#FAFAFA] hover:text-[#202020]"
+          className="absolute right-5 top-5 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8A8A8A] transition-colors hover:bg-[#FAFAFA] hover:text-foreground"
         >
           <X className="h-4 w-4" />
         </button>
 
         <h2
           id="ae-modal-title"
-          className="ae-section-heading pr-8 text-[22px] leading-[1.25] text-[#202020]"
+          className="ae-section-heading pr-8 text-[22px] leading-[1.25] text-foreground"
         >
           {title}
         </h2>
 
         {description ? (
-          <p className="mt-2.5 text-[14.5px] leading-[1.7] text-[#6A6A6A]">{description}</p>
+          <p className="mt-2.5 text-[14.5px] leading-[1.7] text-[#6A6A6A]">
+            {description}
+          </p>
         ) : null}
 
         {children ? <div className="mt-5">{children}</div> : null}
 
         {footer ? (
-          <div className="mt-7 flex flex-wrap items-center justify-end gap-3">{footer}</div>
+          <div className="mt-7 flex flex-wrap items-center justify-end gap-3">
+            {footer}
+          </div>
         ) : null}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }

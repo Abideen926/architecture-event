@@ -1,11 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { appRoutes } from "@/lib/routes";
 import { useGetAdminOverviewStatsQuery } from "@/features/admin/admin-stats-api";
 import { EVENT_STATUS_LABELS } from "@/features/events/event-types";
+import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 
 type AttentionItem = {
   title: string;
@@ -16,11 +21,17 @@ type AttentionItem = {
 };
 
 export function AdminOverviewPage() {
-  const { data: stats, isLoading, isError, refetch } = useGetAdminOverviewStatsQuery();
+  const {
+    data: stats,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetAdminOverviewStatsQuery();
 
   const attentionItems: AttentionItem[] = [];
   if (stats) {
-    const { eventsAwaitingReview, changesRequested, pendingFeatureRequests } = stats.attention;
+    const { eventsAwaitingReview, changesRequested, pendingFeatureRequests } =
+      stats.attention;
 
     if (eventsAwaitingReview.count > 0) {
       attentionItems.push({
@@ -58,9 +69,7 @@ export function AdminOverviewPage() {
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
       <section className="border-b border-[#E7E7E7] pb-5">
-        <h2 className="ae-serif text-[30px] font-semibold leading-[1.08] tracking-[-0.015em] text-[#202020]">
-          Overview
-        </h2>
+        <Heading level="page">Overview</Heading>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
           A live snapshot of events, accounts, and Featured Listing requests.
         </p>
@@ -69,37 +78,49 @@ export function AdminOverviewPage() {
       {isLoading ? (
         <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {[0, 1, 2, 3].map((key) => (
-            <div key={key} className="h-[190px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+            <div
+              key={key}
+              className="h-[190px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]"
+            />
           ))}
         </section>
       ) : isError || !stats ? (
         <section className="mt-6 rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-          <p className="text-[15px] text-[#6A6A6A]">Couldn&apos;t load overview stats.</p>
-          <button
-            type="button"
+          <p className="text-[15px] text-[#6A6A6A]">
+            Couldn&apos;t load overview stats.
+          </p>
+          <Button
+            variant="secondary"
+            size="sm"
+            className="mt-4"
             onClick={() => refetch()}
-            className="mt-4 rounded-[10px] border border-[#202020] bg-white px-5 py-2 text-[13.5px] font-semibold text-[#202020]"
           >
             Try again
-          </button>
+          </Button>
         </section>
       ) : (
         <>
           <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">TOTAL EVENTS</p>
-              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[#202020]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+                TOTAL EVENTS
+              </p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-foreground">
                 {stats.events.total}
               </p>
               <div className="mt-4 border-t border-[#E7E7E7] pt-4">
                 <div className="space-y-2.5">
-                  {(["UNDER_REVIEW", "CHANGES_REQUESTED", "PUBLISHED"] as const).map((status) => (
+                  {(
+                    ["UNDER_REVIEW", "CHANGES_REQUESTED", "PUBLISHED"] as const
+                  ).map((status) => (
                     <div
                       key={status}
                       className="flex items-center justify-between gap-3 text-[13.5px] text-[#6A6A6A]"
                     >
                       <span>{EVENT_STATUS_LABELS[status]}</span>
-                      <span className="font-semibold text-[#202020]">{stats.events.byStatus[status]}</span>
+                      <span className="font-semibold text-foreground">
+                        {stats.events.byStatus[status]}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -107,22 +128,30 @@ export function AdminOverviewPage() {
             </article>
 
             <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">ORGANIZERS</p>
-              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[#202020]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+                ORGANIZERS
+              </p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-foreground">
                 {stats.organizers.total}
               </p>
               <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">Registered organizer accounts</p>
+                <p className="text-[13.5px] text-[#6A6A6A]">
+                  Registered organizer accounts
+                </p>
               </div>
             </article>
 
             <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">ATTENDEES</p>
-              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[#202020]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+                ATTENDEES
+              </p>
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-foreground">
                 {stats.attendees.total}
               </p>
               <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">Registered attendee accounts</p>
+                <p className="text-[13.5px] text-[#6A6A6A]">
+                  Registered attendee accounts
+                </p>
               </div>
             </article>
 
@@ -134,17 +163,21 @@ export function AdminOverviewPage() {
                 {stats.featureRequests.pendingReview}
               </p>
               <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">Awaiting admin review</p>
+                <p className="text-[13.5px] text-[#6A6A6A]">
+                  Awaiting admin review
+                </p>
               </div>
             </article>
           </section>
 
           <section className="mt-7 overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
             <div className="flex items-center justify-between gap-4 border-b border-[#E7E7E7] px-[26px] py-5">
-              <h2 className="ae-serif text-[22px] font-semibold leading-[1.08] tracking-[-0.01em] text-[#202020]">
+              <Heading level="card" as="h2">
                 Needs your attention
-              </h2>
-              <p className="text-[13.5px] text-[#6A6A6A]">{attentionItems.length} items</p>
+              </Heading>
+              <p className="text-[13.5px] text-[#6A6A6A]">
+                {attentionItems.length} items
+              </p>
             </div>
 
             {attentionItems.length > 0 ? (
@@ -153,24 +186,34 @@ export function AdminOverviewPage() {
                   <article
                     key={item.title}
                     className={`flex items-center gap-4 px-[26px] py-5 ${
-                      index < attentionItems.length - 1 ? "border-b border-[#F1F1F1]" : ""
+                      index < attentionItems.length - 1
+                        ? "border-b border-[#F1F1F1]"
+                        : ""
                     }`}
                   >
                     <span
                       className={`mt-1 h-2 w-2 flex-none rounded-full ${
-                        item.tone === "accent" ? "bg-[var(--ae-accent)]" : "bg-[#6A6A6A]"
+                        item.tone === "accent"
+                          ? "bg-[var(--ae-accent)]"
+                          : "bg-[#6A6A6A]"
                       }`}
                     />
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-[15.5px] font-semibold text-[#202020]">{item.title}</h3>
-                      <p className="text-[13.5px] leading-[1.6] text-[#6A6A6A]">{item.meta}</p>
+                      <h3 className="text-[15.5px] font-semibold text-foreground">
+                        {item.title}
+                      </h3>
+                      <p className="text-[13.5px] leading-[1.6] text-[#6A6A6A]">
+                        {item.meta}
+                      </p>
                     </div>
-                    <Link
+                    <Button
                       href={item.href}
-                      className="text-[13.5px] font-semibold whitespace-nowrap !text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                      variant="ghost"
+                      size="text"
+                      className="text-[13.5px] font-semibold whitespace-nowrap !text-[var(--ae-accent)]"
                     >
                       {item.actionLabel} →
-                    </Link>
+                    </Button>
                   </article>
                 ))}
               </div>

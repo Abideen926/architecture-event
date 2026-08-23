@@ -12,11 +12,12 @@ export function AttendeeShell({ children }: AttendeeShellProps) {
         <p className="mb-[7px] text-[11.5px] font-bold tracking-[0.16em] text-[var(--ae-accent)]">
           MY ACCOUNT
         </p>
-        <h1 className="ae-serif text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#202020] md:text-[46px]">
+        <h1 className="ae-serif text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] text-foreground md:text-[46px]">
           Your dashboard
         </h1>
         <p className="mt-[10px] max-w-[60ch] text-[16.5px] leading-[1.6] text-[#6A6A6A]">
-          Save events, view your registration history, and manage your preferences.
+          Save events, view your registration history, and manage your
+          preferences.
         </p>
       </div>
 

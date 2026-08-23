@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { attendeeRegionOptions, attendeeRoleOptions } from "@/lib/attendee/attendee-data";
+import {
+  attendeeRegionOptions,
+  attendeeRoleOptions,
+} from "@/lib/attendee/attendee-data";
 import { appRoutes } from "@/lib/routes";
 import { useGetMeQuery, useLogoutMutation } from "@/features/auth/auth-api";
 import {
@@ -11,17 +14,24 @@ import {
   useUpdateAttendeeProfileMutation,
 } from "@/features/attendee/attendee-api";
 import { useGetCategoriesQuery } from "@/features/public/public-api";
-import { useChangeMyPasswordMutation, useUpdateMyProfileMutation } from "@/features/users/users-api";
+import {
+  useChangeMyPasswordMutation,
+  useUpdateMyProfileMutation,
+} from "@/features/users/users-api";
 import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Input, inputFieldClassName } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
 
 function toggleInList(current: string[], value: string) {
-  return current.includes(value) ? current.filter((entry) => entry !== value) : [...current, value];
+  return current.includes(value)
+    ? current.filter((entry) => entry !== value)
+    : [...current, value];
 }
 
-const inputClassName =
-  "h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none focus:border-[#C7B48D]";
+const inputClassName = inputFieldClassName();
 
 export function AttendeeProfilePage() {
   const router = useRouter();
@@ -36,15 +46,22 @@ export function AttendeeProfilePage() {
   const [categoryIds, setCategoryIds] = useState<string[]>([]);
   const [regions, setRegions] = useState<string[]>([]);
   const [newsletter, setNewsletter] = useState(true);
-  const [profileErrors, setProfileErrors] = useState<Record<string, string>>({});
+  const [profileErrors, setProfileErrors] = useState<Record<string, string>>(
+    {},
+  );
 
-  const [updateMyProfile, { isLoading: isSavingName }] = useUpdateMyProfileMutation();
-  const [updateAttendeeProfile, { isLoading: isSavingProfile }] = useUpdateAttendeeProfileMutation();
+  const [updateMyProfile, { isLoading: isSavingName }] =
+    useUpdateMyProfileMutation();
+  const [updateAttendeeProfile, { isLoading: isSavingProfile }] =
+    useUpdateAttendeeProfileMutation();
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
-  const [changePassword, { isLoading: isChangingPassword }] = useChangeMyPasswordMutation();
+  const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>(
+    {},
+  );
+  const [changePassword, { isLoading: isChangingPassword }] =
+    useChangeMyPasswordMutation();
 
   const [logout] = useLogoutMutation();
 
@@ -86,14 +103,18 @@ export function AttendeeProfilePage() {
       toast.success("Profile updated");
     } catch (error) {
       setProfileErrors(getApiFieldErrors(error));
-      toast.error("Couldn't save profile", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't save profile", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
   async function handleChangePassword() {
     if (!currentPassword || !newPassword) {
       setPasswordErrors({
-        ...(currentPassword ? {} : { currentPassword: "Current password is required" }),
+        ...(currentPassword
+          ? {}
+          : { currentPassword: "Current password is required" }),
         ...(newPassword ? {} : { newPassword: "New password is required" }),
       });
       return;
@@ -107,7 +128,9 @@ export function AttendeeProfilePage() {
       setNewPassword("");
     } catch (error) {
       setPasswordErrors(getApiFieldErrors(error));
-      toast.error("Couldn't update password", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't update password", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -126,51 +149,41 @@ export function AttendeeProfilePage() {
   return (
     <div className="animate-[fadeIn_0.35s_ease] max-w-[780px]">
       <div style={{ paddingBottom: 20, borderBottom: "1px solid #E7E7E7" }}>
-        <h2 className="ae-serif m-0 text-[30px] font-semibold tracking-[-0.015em] text-[#202020]">
-          Profile
-        </h2>
+        <Heading level="page">Profile</Heading>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
-          Only your name and email are needed. Everything else is optional and just
-          sharpens your recommendations.
+          Only your name and email are needed. Everything else is optional and
+          just sharpens your recommendations.
         </p>
       </div>
 
       <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-[36px]">
         <div className="grid gap-[18px] md:grid-cols-2">
-          <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">Full name</span>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
-              className={inputClassName}
-            />
-            {profileErrors.fullName ? (
-              <span className="mt-[7px] block text-[13px] text-[#B3261E]">
-                {profileErrors.fullName}
-              </span>
-            ) : null}
-          </label>
-          <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">Email</span>
-            <input
-              type="email"
-              value={me?.email ?? ""}
-              disabled
-              className={`${inputClassName} cursor-not-allowed bg-[#FAFAFA] text-[#6A6A6A]`}
-            />
-          </label>
+          <Input
+            label="Full name"
+            error={profileErrors.fullName}
+            type="text"
+            value={fullName}
+            onChange={(event) => setFullName(event.target.value)}
+          />
+          <Input
+            label="Email"
+            type="email"
+            value={me?.email ?? ""}
+            disabled
+            className="cursor-not-allowed bg-[#FAFAFA] text-[#6A6A6A]"
+          />
         </div>
 
         <div className="mt-[26px]">
           <label className="block max-w-[380px]">
             <span className="mb-[9px] block text-[13.5px] font-semibold">
-              Role <span className="font-medium text-[#6A6A6A]">— optional</span>
+              Role{" "}
+              <span className="font-medium text-[#6A6A6A]">— optional</span>
             </span>
             <select
               value={role}
               onChange={(event) => setRole(event.target.value)}
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] bg-white px-[14px] text-[15px] text-[#202020] outline-none"
+              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] bg-white px-[14px] text-[15px] text-foreground outline-none"
             >
               {attendeeRoleOptions.map((option) => (
                 <option key={option} value={option}>
@@ -182,11 +195,13 @@ export function AttendeeProfilePage() {
         </div>
 
         <div className="mt-[32px] border-t border-[#E7E7E7] pt-[28px]">
-          <h3 className="m-0 text-[15px] font-bold text-[#202020]">
-            Categories you follow <span className="font-medium text-[#6A6A6A]">— optional</span>
+          <h3 className="m-0 text-[15px] font-bold text-foreground">
+            Categories you follow{" "}
+            <span className="font-medium text-[#6A6A6A]">— optional</span>
           </h3>
           <p className="mt-[8px] text-[14px] text-[#6A6A6A]">
-            Tap to add or remove. Changes save when you hit &quot;Save changes&quot;.
+            Tap to add or remove. Changes save when you hit &quot;Save
+            changes&quot;.
           </p>
           <div className="mt-[16px] flex flex-wrap gap-[10px]">
             {(categories ?? []).map((category) => {
@@ -196,11 +211,15 @@ export function AttendeeProfilePage() {
                 <button
                   key={category.id}
                   type="button"
-                  onClick={() => setCategoryIds((current) => toggleInList(current, category.id))}
+                  onClick={() =>
+                    setCategoryIds((current) =>
+                      toggleInList(current, category.id),
+                    )
+                  }
                   className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
-                      ? "border-[#202020] bg-[#1E1E1E] text-white"
-                      : "border-[#E7E7E7] bg-white text-[#202020] hover:border-[#202020]"
+                      ? "border-foreground bg-[#1E1E1E] text-white"
+                      : "border-[#E7E7E7] bg-white text-foreground hover:border-foreground"
                   }`}
                 >
                   {category.name}
@@ -211,7 +230,7 @@ export function AttendeeProfilePage() {
         </div>
 
         <div className="mt-[28px]">
-          <h3 className="m-0 text-[15px] font-bold text-[#202020]">
+          <h3 className="m-0 text-[15px] font-bold text-foreground">
             Regions and cities you follow{" "}
             <span className="font-medium text-[#6A6A6A]">— optional</span>
           </h3>
@@ -223,11 +242,13 @@ export function AttendeeProfilePage() {
                 <button
                   key={option}
                   type="button"
-                  onClick={() => setRegions((current) => toggleInList(current, option))}
+                  onClick={() =>
+                    setRegions((current) => toggleInList(current, option))
+                  }
                   className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
-                      ? "border-[#202020] bg-[#1E1E1E] text-white"
-                      : "border-[#E7E7E7] bg-white text-[#202020] hover:border-[#202020]"
+                      ? "border-foreground bg-[#1E1E1E] text-white"
+                      : "border-[#E7E7E7] bg-white text-foreground hover:border-foreground"
                   }`}
                 >
                   {option}
@@ -239,7 +260,9 @@ export function AttendeeProfilePage() {
 
         <div className="mt-[30px] flex items-start justify-between gap-6 rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] p-[22px]">
           <div>
-            <p className="m-0 text-[15px] font-semibold text-[#202020]">Monthly newsletter</p>
+            <p className="m-0 text-[15px] font-semibold text-foreground">
+              Monthly newsletter
+            </p>
             <p className="mt-[7px] max-w-[52ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
               A curated round-up of upcoming events. Unsubscribe anytime.
             </p>
@@ -249,39 +272,40 @@ export function AttendeeProfilePage() {
             title="Toggle newsletter"
             onClick={() => setNewsletter((current) => !current)}
             className={`flex h-[30px] w-[52px] flex-none rounded-full border p-[3px] transition-colors ${
-              newsletter ? "justify-end border-[#202020] bg-[#1E1E1E]" : "justify-start border-[#E7E7E7] bg-white"
+              newsletter
+                ? "justify-end border-foreground bg-[#1E1E1E]"
+                : "justify-start border-[#E7E7E7] bg-white"
             }`}
           >
-            <span className={`block h-[22px] w-[22px] rounded-full ${newsletter ? "bg-white" : "bg-[#C9C9C9]"}`} />
+            <span
+              className={`block h-[22px] w-[22px] rounded-full ${newsletter ? "bg-white" : "bg-[#C9C9C9]"}`}
+            />
           </button>
         </div>
 
         <div className="mt-[34px] flex flex-wrap gap-3">
-          <button
-            type="button"
+          <Button
             onClick={handleSave}
-            disabled={isSavingName || isSavingProfile}
-            className="rounded-[12px] bg-[#1E1E1E] px-[26px] py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+            isLoading={isSavingName || isSavingProfile}
+            loadingLabel="Saving..."
           >
-            {isSavingName || isSavingProfile ? "Saving..." : "Save changes"}
-          </button>
-          <button
-            type="button"
-            onClick={resetProfile}
-            className="rounded-[12px] border border-[#202020] bg-white px-[26px] py-[15px] text-[15px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA]"
-          >
+            Save changes
+          </Button>
+          <Button variant="secondary" onClick={resetProfile}>
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
 
       <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] p-[36px]">
-        <h3 className="ae-serif m-0 text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
+        <Heading level="card" as="h3">
           Account settings
-        </h3>
+        </Heading>
         <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">Current password</span>
+            <span className="mb-[9px] block text-[13.5px] font-semibold">
+              Current password
+            </span>
             <PasswordInput
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
@@ -295,7 +319,9 @@ export function AttendeeProfilePage() {
             ) : null}
           </label>
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">New password</span>
+            <span className="mb-[9px] block text-[13.5px] font-semibold">
+              New password
+            </span>
             <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -309,23 +335,28 @@ export function AttendeeProfilePage() {
             ) : null}
           </label>
         </div>
-        <button
-          type="button"
+        <Button
+          variant="secondary"
+          size="md"
+          className="mt-[22px]"
           onClick={handleChangePassword}
-          disabled={isChangingPassword}
-          className="mt-[22px] rounded-[12px] border border-[#202020] bg-white px-6 py-[14px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA] disabled:cursor-not-allowed disabled:opacity-60"
+          isLoading={isChangingPassword}
+          loadingLabel="Updating..."
         >
-          {isChangingPassword ? "Updating..." : "Update password"}
-        </button>
+          Update password
+        </Button>
         <div className="mt-[26px] flex flex-wrap items-center justify-between gap-5 border-t border-[#E7E7E7] pt-[22px]">
-          <p className="text-[14.5px] text-[#6A6A6A]">Signed in as {me?.email}</p>
-          <button
-            type="button"
+          <p className="text-[14.5px] text-[#6A6A6A]">
+            Signed in as {me?.email}
+          </p>
+          <Button
+            variant="ghost"
+            size="text"
+            className="text-[14.5px] font-semibold"
             onClick={handleLogout}
-            className="text-[14.5px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
           >
             Log out
-          </button>
+          </Button>
         </div>
       </div>
     </div>

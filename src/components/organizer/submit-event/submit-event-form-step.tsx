@@ -19,11 +19,22 @@ import {
   useUpdateOrganizerEventMutation,
 } from "@/features/organizer/organizer-api";
 import { uploadToCloudinary } from "@/features/organizer/cloudinary-upload";
-import { detectBrowserTimezone, formatDateInZone, formatTimeInZone } from "@/features/organizer/datetime";
+import {
+  detectBrowserTimezone,
+  formatDateInZone,
+  formatTimeInZone,
+} from "@/features/organizer/datetime";
 import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { FeaturedBadge } from "@/components/ui/featured-badge";
-import { isEventEditableByOrganizer, isEventFeaturableByOrganizer } from "@/features/events/event-types";
+import { Input, inputFieldClassName } from "@/components/ui/input";
+import { Textarea, textareaFieldClassName } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import {
+  isEventEditableByOrganizer,
+  isEventFeaturableByOrganizer,
+} from "@/features/events/event-types";
 import type { EventRecord } from "@/features/events/event-types";
 
 type EventFormState = {
@@ -82,7 +93,9 @@ function formStateFromEvent(event: EventRecord): EventFormState {
     categoryId: event.categoryId,
     industryId: event.industryId ?? "",
     isFree: event.isFree,
-    priceFrom: event.priceFromCents ? (event.priceFromCents / 100).toFixed(2) : "",
+    priceFrom: event.priceFromCents
+      ? (event.priceFromCents / 100).toFixed(2)
+      : "",
     startDate: formatDateInZone(event.startAt, event.timezone),
     startTime: formatTimeInZone(event.startAt, event.timezone),
     endDate: event.endAt ? formatDateInZone(event.endAt, event.timezone) : "",
@@ -99,10 +112,8 @@ function formStateFromEvent(event: EventRecord): EventFormState {
   };
 }
 
-const fieldClassName =
-  "h-[52px] w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none focus:border-[#C7B48D]";
-const textareaClassName =
-  "w-full resize-y rounded-[12px] border border-[#E7E7E7] px-4 py-[14px] text-[15px] leading-[1.7] outline-none focus:border-[#C7B48D]";
+const fieldClassName = inputFieldClassName();
+const textareaClassName = textareaFieldClassName;
 
 type SubmitEventFormStepProps = {
   selectedPackageLabel: string;
@@ -122,7 +133,7 @@ export function SubmitEventFormStep({
   onSubmittedForReview,
 }: SubmitEventFormStepProps) {
   const [form, setForm] = useState<EventFormState>(() =>
-    initialEvent ? formStateFromEvent(initialEvent) : emptyFormState()
+    initialEvent ? formStateFromEvent(initialEvent) : emptyFormState(),
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [event, setEvent] = useState<EventRecord | undefined>(initialEvent);
@@ -130,17 +141,24 @@ export function SubmitEventFormStep({
   const { data: categories } = useGetCategoriesQuery();
   const { data: industries } = useGetIndustriesQuery();
 
-  const [createEvent, { isLoading: isCreating }] = useCreateOrganizerEventMutation();
-  const [updateEvent, { isLoading: isUpdating }] = useUpdateOrganizerEventMutation();
-  const [submitEvent, { isLoading: isSubmitting }] = useSubmitOrganizerEventMutation();
+  const [createEvent, { isLoading: isCreating }] =
+    useCreateOrganizerEventMutation();
+  const [updateEvent, { isLoading: isUpdating }] =
+    useUpdateOrganizerEventMutation();
+  const [submitEvent, { isLoading: isSubmitting }] =
+    useSubmitOrganizerEventMutation();
   const [getUploadSignature] = useGetMediaUploadSignatureMutation();
   const [attachMedia] = useAttachEventMediaMutation();
   const [setThumbnail] = useSetEventThumbnailMutation();
   const [deleteMedia] = useDeleteEventMediaMutation();
   const [resubmitEvent] = useResubmitOrganizerEventMutation();
-  const [createFeatureRequest, { isLoading: isRequestingFeatured }] = useCreateFeatureRequestMutation();
-  const [retryFeaturePayment, { isLoading: isRetryingPayment }] = useRetryFeatureRequestPaymentMutation();
-  const { data: myFeatureRequests } = useListMyFeatureRequestsQuery(undefined, { skip: !event });
+  const [createFeatureRequest, { isLoading: isRequestingFeatured }] =
+    useCreateFeatureRequestMutation();
+  const [retryFeaturePayment, { isLoading: isRetryingPayment }] =
+    useRetryFeatureRequestPaymentMutation();
+  const { data: myFeatureRequests } = useListMyFeatureRequestsQuery(undefined, {
+    skip: !event,
+  });
   const confirm = useConfirm();
 
   const [uploadingCount, setUploadingCount] = useState(0);
@@ -148,7 +166,10 @@ export function SubmitEventFormStep({
   const isEditableStatus = !event || isEventEditableByOrganizer(event.status);
   const isBusy = isCreating || isUpdating || isSubmitting;
 
-  function setField<K extends keyof EventFormState>(key: K, value: EventFormState[K]) {
+  function setField<K extends keyof EventFormState>(
+    key: K,
+    value: EventFormState[K],
+  ) {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
@@ -192,16 +213,20 @@ export function SubmitEventFormStep({
 
   function validate(): boolean {
     const next: Record<string, string> = {};
-    if (form.title.trim().length < 3) next.title = "Title must be at least 3 characters";
-    if (form.description.trim().length < 10) next.description = "Description must be at least 10 characters";
+    if (form.title.trim().length < 3)
+      next.title = "Title must be at least 3 characters";
+    if (form.description.trim().length < 10)
+      next.description = "Description must be at least 10 characters";
     if (!form.registrationUrl.trim()) {
       next.registrationUrl = "Registration URL is required";
     } else if (!isValidUrl(form.registrationUrl.trim())) {
-      next.registrationUrl = "Enter a valid URL, e.g. https://example.com/register";
+      next.registrationUrl =
+        "Enter a valid URL, e.g. https://example.com/register";
     }
     if (!form.categoryId) next.categoryId = "Choose a category";
     if (!form.industryId) next.industryId = "Choose an industry";
-    if (!form.isFree && !form.priceFrom) next.priceFrom = "Enter a starting price, or mark this event free";
+    if (!form.isFree && !form.priceFrom)
+      next.priceFrom = "Enter a starting price, or mark this event free";
     if (!form.isFree && form.priceFrom && Number(form.priceFrom) <= 0) {
       next.priceFrom = "Price must be greater than 0";
     }
@@ -221,15 +246,19 @@ export function SubmitEventFormStep({
         form.startTime &&
         form.endTime < form.startTime
       ) {
-        next.endTime = "End time can't be before the start time on the same day";
+        next.endTime =
+          "End time can't be before the start time on the same day";
       }
     }
 
     if (!form.isOnline) {
-      if (!form.city.trim()) next.city = "City is required for in-person events";
-      if (!form.state.trim()) next.state = "State is required for in-person events";
+      if (!form.city.trim())
+        next.city = "City is required for in-person events";
+      if (!form.state.trim())
+        next.state = "State is required for in-person events";
     }
-    if (form.contactName.trim().length < 2) next.contactName = "Contact name is required";
+    if (form.contactName.trim().length < 2)
+      next.contactName = "Contact name is required";
     if (!form.contactEmail.trim()) {
       next.contactEmail = "Contact email is required";
     } else if (!EMAIL_RULE.test(form.contactEmail.trim())) {
@@ -252,11 +281,15 @@ export function SubmitEventFormStep({
         ? await updateEvent({ id: event.id, body: payload }).unwrap()
         : await createEvent(payload).unwrap();
       setEvent(saved);
-      toast.success("Draft saved", { description: "Add images or continue editing anytime." });
+      toast.success("Draft saved", {
+        description: "Add images or continue editing anytime.",
+      });
       onSavedDraft(saved);
     } catch (error) {
       setErrors(getApiFieldErrors(error));
-      toast.error("Couldn't save draft", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't save draft", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -275,8 +308,13 @@ export function SubmitEventFormStep({
         current = await createEvent(payload).unwrap();
         setEvent(current);
 
-        const result = await submitEvent({ id: current.id, requestFeatured }).unwrap();
-        toast.success("Submitted for review", { description: "Editorial will review it shortly." });
+        const result = await submitEvent({
+          id: current.id,
+          requestFeatured,
+        }).unwrap();
+        toast.success("Submitted for review", {
+          description: "Editorial will review it shortly.",
+        });
         onSubmittedForReview(result.event, result.featureRequest?.checkoutUrl);
         return;
       }
@@ -291,26 +329,37 @@ export function SubmitEventFormStep({
       }
 
       if (current.status === "DRAFT") {
-        const result = await submitEvent({ id: current.id, requestFeatured }).unwrap();
-        toast.success("Submitted for review", { description: "Editorial will review it shortly." });
+        const result = await submitEvent({
+          id: current.id,
+          requestFeatured,
+        }).unwrap();
+        toast.success("Submitted for review", {
+          description: "Editorial will review it shortly.",
+        });
         onSubmittedForReview(result.event, result.featureRequest?.checkoutUrl);
         return;
       }
 
       if (current.status === "CHANGES_REQUESTED") {
         const resubmitted = await resubmitEvent(current.id).unwrap();
-        toast.success("Resubmitted for review", { description: "Editorial will take another look shortly." });
+        toast.success("Resubmitted for review", {
+          description: "Editorial will take another look shortly.",
+        });
         onSubmittedForReview(resubmitted);
         return;
       }
 
       // Already Under Review: nothing left to transition — the PATCH above
       // already saved the edits.
-      toast.success("Changes saved", { description: "Your event is still under review." });
+      toast.success("Changes saved", {
+        description: "Your event is still under review.",
+      });
       onSavedDraft(current);
     } catch (error) {
       setErrors(getApiFieldErrors(error));
-      toast.error("Couldn't submit event", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't submit event", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -318,7 +367,8 @@ export function SubmitEventFormStep({
     if (!files || files.length === 0) return;
     if (!event) {
       toast.error("Save your details first", {
-        description: "Save this event as a draft before adding images or video.",
+        description:
+          "Save this event as a draft before adding images or video.",
       });
       return;
     }
@@ -328,7 +378,10 @@ export function SubmitEventFormStep({
     try {
       for (const file of Array.from(files)) {
         const resourceType = file.type.startsWith("video/") ? "VIDEO" : "IMAGE";
-        const signature = await getUploadSignature({ id: event.id, resourceType }).unwrap();
+        const signature = await getUploadSignature({
+          id: event.id,
+          resourceType,
+        }).unwrap();
         const uploaded = await uploadToCloudinary(file, signature);
         const media = await attachMedia({
           id: event.id,
@@ -339,12 +392,14 @@ export function SubmitEventFormStep({
         }).unwrap();
 
         setEvent((prev) =>
-          prev ? { ...prev, media: [...(prev.media ?? []), media] } : prev
+          prev ? { ...prev, media: [...(prev.media ?? []), media] } : prev,
         );
       }
       toast.success("Media uploaded");
     } catch (error) {
-      toast.error("Upload failed", { description: getApiErrorMessage(error, "Please try again.") });
+      toast.error("Upload failed", {
+        description: getApiErrorMessage(error, "Please try again."),
+      });
     } finally {
       setUploadingCount(0);
     }
@@ -358,12 +413,17 @@ export function SubmitEventFormStep({
         prev
           ? {
               ...prev,
-              media: prev.media?.map((item) => ({ ...item, isThumbnail: item.id === mediaId })),
+              media: prev.media?.map((item) => ({
+                ...item,
+                isThumbnail: item.id === mediaId,
+              })),
             }
-          : prev
+          : prev,
       );
     } catch (error) {
-      toast.error("Couldn't update thumbnail", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't update thumbnail", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -371,7 +431,8 @@ export function SubmitEventFormStep({
     if (!event) return;
     const confirmed = await confirm({
       title: "Remove this media?",
-      description: "This will permanently delete the image or video from this listing.",
+      description:
+        "This will permanently delete the image or video from this listing.",
       confirmLabel: "Remove",
       tone: "danger",
     });
@@ -380,11 +441,18 @@ export function SubmitEventFormStep({
     try {
       await deleteMedia({ id: event.id, mediaId }).unwrap();
       setEvent((prev) =>
-        prev ? { ...prev, media: prev.media?.filter((item) => item.id !== mediaId) } : prev
+        prev
+          ? {
+              ...prev,
+              media: prev.media?.filter((item) => item.id !== mediaId),
+            }
+          : prev,
       );
       toast.success("Media removed");
     } catch (error) {
-      toast.error("Couldn't remove media", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't remove media", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -392,11 +460,13 @@ export function SubmitEventFormStep({
     ? myFeatureRequests?.items.find(
         (fr) =>
           fr.eventId === event.id &&
-          (fr.status === "PENDING_PAYMENT" || fr.status === "PAYMENT_FAILED")
+          (fr.status === "PENDING_PAYMENT" || fr.status === "PAYMENT_FAILED"),
       )
     : undefined;
   const reviewFeatureRequest = event
-    ? myFeatureRequests?.items.find((fr) => fr.eventId === event.id && fr.status === "PENDING_REVIEW")
+    ? myFeatureRequests?.items.find(
+        (fr) => fr.eventId === event.id && fr.status === "PENDING_REVIEW",
+      )
     : undefined;
 
   async function handleMakeFeatured() {
@@ -415,14 +485,18 @@ export function SubmitEventFormStep({
         window.location.href = result.checkoutUrl;
       }
     } catch (error) {
-      toast.error("Couldn't start Featured checkout", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't start Featured checkout", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
   async function handleRetryFeaturedPayment() {
     if (!pendingFeatureRequest) return;
     try {
-      const result = await retryFeaturePayment(pendingFeatureRequest.id).unwrap();
+      const result = await retryFeaturePayment(
+        pendingFeatureRequest.id,
+      ).unwrap();
       if (result.checkoutUrl) {
         window.location.href = result.checkoutUrl;
         return;
@@ -433,7 +507,9 @@ export function SubmitEventFormStep({
         description: "This request is now waiting on editorial approval.",
       });
     } catch (error) {
-      toast.error("Couldn't restart payment", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't restart payment", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -450,36 +526,38 @@ export function SubmitEventFormStep({
         <div>
           <span className="font-semibold">Package:</span> {selectedPackageLabel}
         </div>
-        <button
-          type="button"
+        <Button
+          variant="ghost"
+          size="text"
+          className="text-[13.5px] font-semibold"
           onClick={onChangePackage}
-          className="text-[13.5px] font-semibold text-[var(--ae-accent)]"
         >
           Change package
-        </button>
+        </Button>
       </div>
 
       {!isEditableStatus ? (
         <div className="mt-[18px] rounded-[14px] border border-[#E7E7E7] bg-[#F1EEE8] px-5 py-4 text-[14px] text-[#3A3A3A]">
-          This event is {event?.status.replace("_", " ").toLowerCase()} and can no longer be edited here.
+          This event is {event?.status.replace("_", " ").toLowerCase()} and can
+          no longer be edited here.
         </div>
       ) : null}
 
       <fieldset disabled={!isEditableStatus || isBusy} className="contents">
         <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
           <div className="mt-8">
-            <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
+            <Heading level="card" as="h3">
               Event details
-            </h3>
+            </Heading>
             <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
-              <Field label="Event name" error={errors.title} className="md:col-span-2">
-                <input
-                  type="text"
-                  value={form.title}
-                  onChange={(e) => setField("title", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
+              <Input
+                label="Event name"
+                error={errors.title}
+                wrapperClassName="md:col-span-2"
+                type="text"
+                value={form.title}
+                onChange={(e) => setField("title", e.target.value)}
+              />
 
               <Field label="Category" error={errors.categoryId}>
                 <select
@@ -511,17 +589,18 @@ export function SubmitEventFormStep({
                 </select>
               </Field>
 
-              <Field label="Registration URL" error={errors.registrationUrl}>
-                <input
-                  type="url"
-                  value={form.registrationUrl}
-                  onChange={(e) => setField("registrationUrl", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
+              <Input
+                label="Registration URL"
+                error={errors.registrationUrl}
+                type="url"
+                value={form.registrationUrl}
+                onChange={(e) => setField("registrationUrl", e.target.value)}
+              />
 
               <div className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">Pricing</span>
+                <span className="mb-[9px] block text-[13.5px] font-semibold">
+                  Pricing
+                </span>
                 <div className="flex h-[52px] items-center gap-4 rounded-[12px] border border-[#E7E7E7] px-4">
                   <label className="flex items-center gap-2 text-[14px]">
                     <input
@@ -545,56 +624,57 @@ export function SubmitEventFormStep({
                   ) : null}
                 </div>
                 {errors.priceFrom ? (
-                  <span className="mt-[7px] block text-[13px] text-[#B3261E]">{errors.priceFrom}</span>
+                  <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+                    {errors.priceFrom}
+                  </span>
                 ) : null}
               </div>
 
-              <Field label="Description" className="md:col-span-2" error={errors.description}>
-                <textarea
-                  rows={5}
-                  value={form.description}
-                  onChange={(e) => setField("description", e.target.value)}
-                  className={textareaClassName}
-                />
-              </Field>
+              <Textarea
+                label="Description"
+                wrapperClassName="md:col-span-2"
+                error={errors.description}
+                rows={5}
+                value={form.description}
+                onChange={(e) => setField("description", e.target.value)}
+              />
 
-              <Field label="Start date" error={errors.startDate}>
-                <input
-                  type="date"
-                  value={form.startDate}
-                  onChange={(e) => setField("startDate", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
-              <Field label="Start time" error={errors.startTime}>
-                <input
-                  type="time"
-                  value={form.startTime}
-                  onChange={(e) => setField("startTime", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
-              <Field label="End date (optional)" error={errors.endDate}>
-                <input
-                  type="date"
-                  value={form.endDate}
-                  min={form.startDate || undefined}
-                  onChange={(e) => setField("endDate", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
-              <Field label="End time (optional)" error={errors.endTime}>
-                <input
-                  type="time"
-                  value={form.endTime}
-                  onChange={(e) => setField("endTime", e.target.value)}
-                  disabled={!form.endDate}
-                  className={`${fieldClassName} disabled:cursor-not-allowed disabled:opacity-50`}
-                />
-              </Field>
+              <Input
+                label="Start date"
+                error={errors.startDate}
+                type="date"
+                value={form.startDate}
+                onChange={(e) => setField("startDate", e.target.value)}
+              />
+              <Input
+                label="Start time"
+                error={errors.startTime}
+                type="time"
+                value={form.startTime}
+                onChange={(e) => setField("startTime", e.target.value)}
+              />
+              <Input
+                label="End date (optional)"
+                error={errors.endDate}
+                type="date"
+                value={form.endDate}
+                min={form.startDate || undefined}
+                onChange={(e) => setField("endDate", e.target.value)}
+              />
+              <Input
+                label="End time (optional)"
+                error={errors.endTime}
+                type="time"
+                value={form.endTime}
+                onChange={(e) => setField("endTime", e.target.value)}
+                disabled={!form.endDate}
+                className="disabled:cursor-not-allowed disabled:opacity-50"
+              />
 
               <div className="md:col-span-2 mt-[14px] border-t border-[#E7E7E7] pt-7">
-                <h3 className="m-0 text-[15px] font-bold text-[#202020]">Location</h3>
+                <h3 className="m-0 text-[15px] font-bold text-foreground">
+                  Location
+                </h3>
 
                 <label className="mt-[16px] inline-flex items-center gap-2 text-[14px] text-[#3A3A3A]">
                   <input
@@ -608,41 +688,42 @@ export function SubmitEventFormStep({
 
                 {!form.isOnline ? (
                   <div className="mt-[16px] grid gap-[18px] md:grid-cols-2">
-                    <Field label="City" error={errors.city}>
-                      <input
-                        type="text"
-                        value={form.city}
-                        onChange={(e) => setField("city", e.target.value)}
-                        className={fieldClassName}
-                      />
-                    </Field>
-                    <Field label="State" error={errors.state}>
-                      <input
-                        type="text"
-                        value={form.state}
-                        onChange={(e) => setField("state", e.target.value)}
-                        className={fieldClassName}
-                      />
-                    </Field>
+                    <Input
+                      label="City"
+                      error={errors.city}
+                      type="text"
+                      value={form.city}
+                      onChange={(e) => setField("city", e.target.value)}
+                    />
+                    <Input
+                      label="State"
+                      error={errors.state}
+                      type="text"
+                      value={form.state}
+                      onChange={(e) => setField("state", e.target.value)}
+                    />
                     <Field label="Venue name">
                       <span className="flex h-[52px] items-center gap-[10px] rounded-[12px] border border-[#E7E7E7] bg-white px-4">
-                        <MapPin className="h-4 w-4 flex-none text-[#6A6A6A]" strokeWidth={1.7} />
+                        <MapPin
+                          className="h-4 w-4 flex-none text-[#6A6A6A]"
+                          strokeWidth={1.7}
+                        />
                         <input
                           type="text"
                           value={form.venueName}
-                          onChange={(e) => setField("venueName", e.target.value)}
+                          onChange={(e) =>
+                            setField("venueName", e.target.value)
+                          }
                           className="w-full border-0 bg-transparent text-[15px] outline-none"
                         />
                       </span>
                     </Field>
-                    <Field label="Address">
-                      <input
-                        type="text"
-                        value={form.address}
-                        onChange={(e) => setField("address", e.target.value)}
-                        className={fieldClassName}
-                      />
-                    </Field>
+                    <Input
+                      label="Address"
+                      type="text"
+                      value={form.address}
+                      onChange={(e) => setField("address", e.target.value)}
+                    />
                   </div>
                 ) : null}
               </div>
@@ -650,7 +731,7 @@ export function SubmitEventFormStep({
           </div>
 
           <div className="mt-8 border-t border-[#E7E7E7] pt-8">
-            <h3 className="ae-serif text-[16px] font-semibold tracking-[-0.01em] text-[#202020]">
+            <h3 className="ae-serif text-[16px] font-semibold tracking-[-0.01em] text-foreground">
               Images and video
             </h3>
             <span className="mb-5 font-medium text-[#6A6A6A]">
@@ -663,11 +744,13 @@ export function SubmitEventFormStep({
               <div className="pt-6">
                 <div className="flex h-[142px] w-full flex-col items-center justify-center rounded-[17px] border border-dashed border-[#D1D1D1] bg-white">
                   <p className="mb-[14px] text-[14px] font-normal leading-[20px] text-[#444444]">
-                    {uploadingCount > 0 ? "Uploading..." : "Drop files here, or"}
+                    {uploadingCount > 0
+                      ? "Uploading..."
+                      : "Drop files here, or"}
                   </p>
                   <label
                     htmlFor="file-upload"
-                    className="flex h-[44px] w-[129px] cursor-pointer items-center justify-center rounded-[12px] border border-[#202020] bg-white text-[15px] font-semibold leading-none text-[#202020]"
+                    className="flex h-[44px] w-[129px] cursor-pointer items-center justify-center rounded-[12px] border border-foreground bg-white text-[15px] font-semibold leading-none text-foreground"
                   >
                     Choose files
                   </label>
@@ -687,7 +770,9 @@ export function SubmitEventFormStep({
                       <div
                         key={media.id}
                         className={`overflow-hidden rounded-[18px] border ${
-                          media.isThumbnail ? "border-[#202020]" : "border-[#E7E7E7]"
+                          media.isThumbnail
+                            ? "border-foreground"
+                            : "border-[#E7E7E7]"
                         }`}
                       >
                         <div className="relative h-[182px] bg-[#F1F1F1]">
@@ -722,7 +807,9 @@ export function SubmitEventFormStep({
                                 : "bg-white text-[#3A3A3A] hover:bg-[#FAFAFA]"
                             }`}
                           >
-                            {media.isThumbnail ? "THUMBNAIL" : "SET AS THUMBNAIL"}
+                            {media.isThumbnail
+                              ? "THUMBNAIL"
+                              : "SET AS THUMBNAIL"}
                           </button>
                         ) : null}
                       </div>
@@ -734,65 +821,53 @@ export function SubmitEventFormStep({
           </div>
 
           <div className="mt-10 border-t border-[#E7E7E7] pt-10">
-            <Field label="Internal notes — optional">
-              <textarea
-                rows={3}
-                value={form.internalNotes}
-                onChange={(e) => setField("internalNotes", e.target.value)}
-                className={textareaClassName}
-              />
-            </Field>
+            <Textarea
+              label="Internal notes — optional"
+              rows={3}
+              value={form.internalNotes}
+              onChange={(e) => setField("internalNotes", e.target.value)}
+            />
           </div>
 
           <div className="mt-8 border-t border-[#E7E7E7] pt-8">
-            <h3 className="ae-serif text-[22px] font-semibold tracking-[-0.01em] text-[#202020]">
+            <Heading level="card" as="h3">
               Organizer contact
-            </h3>
+            </Heading>
             <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
-              <Field label="Contact name" error={errors.contactName}>
-                <input
-                  type="text"
-                  value={form.contactName}
-                  onChange={(e) => setField("contactName", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
-              <Field label="Contact email" error={errors.contactEmail}>
-                <input
-                  type="email"
-                  value={form.contactEmail}
-                  onChange={(e) => setField("contactEmail", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
-              <Field label="Phone — optional">
-                <input
-                  type="tel"
-                  value={form.contactPhone}
-                  onChange={(e) => setField("contactPhone", e.target.value)}
-                  className={fieldClassName}
-                />
-              </Field>
+              <Input
+                label="Contact name"
+                error={errors.contactName}
+                type="text"
+                value={form.contactName}
+                onChange={(e) => setField("contactName", e.target.value)}
+              />
+              <Input
+                label="Contact email"
+                error={errors.contactEmail}
+                type="email"
+                value={form.contactEmail}
+                onChange={(e) => setField("contactEmail", e.target.value)}
+              />
+              <Input
+                label="Phone — optional"
+                type="tel"
+                value={form.contactPhone}
+                onChange={(e) => setField("contactPhone", e.target.value)}
+              />
             </div>
           </div>
 
           <div className="mt-[34px] flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={handleSubmitForReview}
-              disabled={isBusy}
-              className="rounded-[12px] bg-[#1E1E1E] px-[28px] py-[15px] text-[15px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              {isBusy ? "Please wait..." : submitLabel}
-            </button>
-            <button
-              type="button"
+            <Button onClick={handleSubmitForReview} isLoading={isBusy}>
+              {submitLabel}
+            </Button>
+            <Button
+              variant="secondary"
               onClick={handleSaveDraft}
               disabled={isBusy}
-              className="rounded-[12px] border border-[#202020] bg-white px-[26px] py-[15px] text-[15px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {event ? "Save changes" : "Save as Draft"}
-            </button>
+            </Button>
           </div>
         </div>
       </fieldset>
@@ -801,9 +876,9 @@ export function SubmitEventFormStep({
         <div className="mt-[22px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] p-6 md:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h3 className="ae-serif text-[19px] font-semibold tracking-[-0.01em] text-[#202020]">
+              <Heading level="subsection" as="h3">
                 Featured Listing
-              </h3>
+              </Heading>
               <p className="mt-[6px] max-w-[54ch] text-[14px] leading-[1.7] text-[#6A6A6A]">
                 {event.isFeatured
                   ? "This event is featured and appears near the top of the Events page."
@@ -811,8 +886,8 @@ export function SubmitEventFormStep({
                     ? "Your payment was received — this request is now waiting on editorial approval."
                     : pendingFeatureRequest
                       ? pendingFeatureRequest.status === "PAYMENT_FAILED"
-                        ? "Your last payment attempt didn't go through. You can try again below."
-                        : "A Featured checkout is in progress. If you already paid, retrying below will confirm it instead of charging you again — if you didn't, it opens a fresh checkout."
+                        ? "Your last payment attempt didn't go through. Retry payment below — if a previous attempt actually went through on Stripe's side, this confirms it instead of charging you again; otherwise it opens a new checkout."
+                        : "A Featured checkout is already open for this event. Retry payment below — if you already paid, this confirms it instead of charging you again; if you haven't, it takes you back to checkout."
                       : "Get placement near the top of the Events page and a Featured badge, for a one-time $49 fee."}
               </p>
             </div>
@@ -824,23 +899,24 @@ export function SubmitEventFormStep({
                 Pending review
               </span>
             ) : pendingFeatureRequest ? (
-              <button
-                type="button"
+              <Button
+                variant="secondary"
+                size="md"
+                className="whitespace-nowrap"
                 onClick={handleRetryFeaturedPayment}
-                disabled={isRetryingPayment}
-                className="whitespace-nowrap rounded-[12px] border border-[#202020] bg-white px-[24px] py-[13px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:bg-[#FAFAFA] disabled:cursor-not-allowed disabled:opacity-60"
+                isLoading={isRetryingPayment}
               >
-                {isRetryingPayment ? "Please wait..." : "Retry payment — $49"}
-              </button>
+                Retry payment — $49
+              </Button>
             ) : (
-              <button
-                type="button"
+              <Button
+                size="md"
+                className="whitespace-nowrap"
                 onClick={handleMakeFeatured}
-                disabled={isRequestingFeatured}
-                className="whitespace-nowrap rounded-[12px] bg-[#1E1E1E] px-[24px] py-[13px] text-[14.5px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+                isLoading={isRequestingFeatured}
               >
-                {isRequestingFeatured ? "Please wait..." : "Make Featured — $49"}
-              </button>
+                Make Featured — $49
+              </Button>
             )}
           </div>
         </div>
@@ -859,9 +935,15 @@ type FieldProps = {
 function Field({ label, children, error, className }: FieldProps) {
   return (
     <label className={`block ${className ?? ""}`}>
-      <span className="mb-[9px] block text-[13.5px] font-semibold">{label}</span>
+      <span className="mb-[9px] block text-[13.5px] font-semibold">
+        {label}
+      </span>
       {children}
-      {error ? <span className="mt-[7px] block text-[13px] text-[#B3261E]">{error}</span> : null}
+      {error ? (
+        <span className="mt-[7px] block text-[13px] text-[#B3261E]">
+          {error}
+        </span>
+      ) : null}
     </label>
   );
 }

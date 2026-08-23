@@ -12,12 +12,12 @@ export function OrganizerShell({ children }: OrganizerShellProps) {
         <p className="mb-[7px] text-[11.5px] font-bold tracking-[0.16em] text-[var(--ae-accent)]">
           ORGANIZER ACCOUNT
         </p>
-        <h1 className="ae-serif text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#202020] md:text-[46px]">
+        <h1 className="ae-serif text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] text-foreground md:text-[46px]">
           Your listings
         </h1>
         <p className="mt-[10px] max-w-[68ch] text-[16.5px] leading-[1.6] text-[#6A6A6A]">
-          Submit and manage your events, track their status, and keep your organization
-          details up to date.
+          Submit and manage your events, track their status, and keep your
+          organization details up to date.
         </p>
       </div>
 

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function AboutFounderSection() {
   return (
-    <section className="bg-[#FFFFFF] py-[78px] md:py-[102px]">
+    <section className="bg-background py-[78px] md:py-[102px]">
       <div className="ae-container">
         <div className="mx-auto max-w-[1280px]">
           <div className="border-t border-[#252525]" />
@@ -25,8 +25,8 @@ export function AboutFounderSection() {
 
               <div className="pt-[10px] text-[16px] leading-[1.9] tracking-[-0.01em] text-[#252525] md:text-[17px]">
                 <p className="max-w-[50ch]">
-                  After spending more than 15 years working in the AEC industry, I
-                  experienced firsthand how difficult it was to keep up with
+                  After spending more than 15 years working in the AEC industry,
+                  I experienced firsthand how difficult it was to keep up with
                   industry events. Great networking opportunities were often
                   hidden across dozens of organizations, websites, and email
                   lists.
@@ -40,13 +40,13 @@ export function AboutFounderSection() {
 
                 <div className="space-y-6">
                   <p className="max-w-[72ch]">
-                    My goal is simple: make it easier for our industry to connect,
-                    learn from one another, and build stronger professional
-                    relationships.
+                    My goal is simple: make it easier for our industry to
+                    connect, learn from one another, and build stronger
+                    professional relationships.
                   </p>
                   <p className="max-w-[72ch] text-[#757575]">
-                    Thank you for being part of the community. We&apos;re just getting
-                    started.
+                    Thank you for being part of the community. We&apos;re just
+                    getting started.
                   </p>
                 </div>
               </div>

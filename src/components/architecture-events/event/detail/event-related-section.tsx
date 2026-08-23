@@ -11,9 +11,18 @@ type EventRelatedSectionProps = {
   categoryId: string;
 };
 
-export function EventRelatedSection({ currentEventId, categoryId }: EventRelatedSectionProps) {
-  const { data } = useListPublicEventsQuery({ categoryId, limit: 4, sort: "soonest" });
-  const related = (data?.items ?? []).filter((event) => event.id !== currentEventId).slice(0, 3);
+export function EventRelatedSection({
+  currentEventId,
+  categoryId,
+}: EventRelatedSectionProps) {
+  const { data } = useListPublicEventsQuery({
+    categoryId,
+    limit: 4,
+    sort: "soonest",
+  });
+  const related = (data?.items ?? [])
+    .filter((event) => event.id !== currentEventId)
+    .slice(0, 3);
 
   if (related.length === 0) return null;
 
@@ -21,7 +30,7 @@ export function EventRelatedSection({ currentEventId, categoryId }: EventRelated
     <section className="border-y border-[#E7E7E7] bg-[#FAFAFA] py-10 md:py-23 mt-15">
       <div className="ae-container">
         <div className="flex items-end justify-between gap-6">
-          <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-[#202020] md:text-[33px] font-semibold mb-4">
+          <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-foreground md:text-[33px] font-semibold mb-4">
             Related events
           </h2>
           <Link
@@ -59,7 +68,7 @@ export function EventRelatedSection({ currentEventId, categoryId }: EventRelated
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7F7F7F]">
                     {event.category?.name ?? "EVENT"}
                   </p>
-                  <h3 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-[#202020]">
+                  <h3 className="mt-2 text-[18px] font-semibold tracking-[-0.02em] text-foreground">
                     {event.title}
                   </h3>
                   <p className="mt-3 text-[13px] leading-[1.55] text-[#7A7A7A]">
@@ -69,7 +78,7 @@ export function EventRelatedSection({ currentEventId, categoryId }: EventRelated
                       year: "numeric",
                     })}{" "}
                     <span aria-hidden="true">{String.fromCharCode(183)}</span>{" "}
-                    {event.isOnline ? "Online" : event.city ?? "—"}
+                    {event.isOnline ? "Online" : (event.city ?? "—")}
                   </p>
                 </div>
               </Link>

@@ -48,7 +48,11 @@ function HeroSection() {
     if (keyword.trim()) params.set("search", keyword.trim());
     if (location.trim()) params.set("city", location.trim());
     const query = params.toString();
-    router.push(query ? `${appRoutes.architectureEvents.events}?${query}` : appRoutes.architectureEvents.events);
+    router.push(
+      query
+        ? `${appRoutes.architectureEvents.events}?${query}`
+        : appRoutes.architectureEvents.events,
+    );
   }
 
   return (
@@ -89,7 +93,7 @@ function HeroSection() {
                 onChange={(event) => setKeyword(event.target.value)}
                 onKeyDown={(event) => event.key === "Enter" && handleSearch()}
                 placeholder="Search events, topics, brands, or venues"
-                className="w-full border-0 bg-transparent text-[15px] text-[#202020] outline-none placeholder:text-[#6A6A6A]"
+                className="w-full border-0 bg-transparent text-[15px] text-foreground outline-none placeholder:text-[#6A6A6A]"
               />
             </HeroField>
 
@@ -123,7 +127,7 @@ function HeroSection() {
                 onChange={(event) => setLocation(event.target.value)}
                 onKeyDown={(event) => event.key === "Enter" && handleSearch()}
                 placeholder="Any city"
-                className="w-full border-0 bg-transparent text-[15px] text-[#202020] outline-none placeholder:text-[#6A6A6A]"
+                className="w-full border-0 bg-transparent text-[15px] text-foreground outline-none placeholder:text-[#6A6A6A]"
               />
             </HeroField>
 
@@ -144,7 +148,7 @@ function HeroSection() {
               <Link
                 key={tag.label}
                 href={`${appRoutes.architectureEvents.events}?search=${encodeURIComponent(tag.label)}`}
-                className="text-[12.5px] text-[#202020] underline underline-offset-[3px] transition-colors hover:text-[var(--ae-accent)]"
+                className="text-[12.5px] text-foreground underline underline-offset-[3px] transition-colors hover:text-[var(--ae-accent)]"
               >
                 {tag.label}
               </Link>
@@ -172,7 +176,7 @@ function BrandSpotlightSection() {
             </p>
             <Link
               href={appRoutes.architectureEvents.events}
-              className="mt-[32px] inline-flex items-center gap-[12px] rounded-[12px] border border-[#E7E7E7] bg-white px-[22px] py-[13px] text-[14.5px] font-semibold text-[#202020] transition-colors hover:border-[#202020]"
+              className="mt-[32px] inline-flex items-center gap-[12px] rounded-[12px] border border-[#E7E7E7] bg-white px-[22px] py-[13px] text-[14.5px] font-semibold text-foreground transition-colors hover:border-foreground"
             >
               View all brands
               <ArrowRight className="h-[15px] w-[15px]" strokeWidth={1.7} />
@@ -219,7 +223,7 @@ function BrandSpotlightSection() {
                         {brand.token}
                       </span>
                     )}
-                    <span className="mt-3 text-center text-[9.5px] font-bold tracking-[0.1em] text-[#202020]">
+                    <span className="mt-3 text-center text-[9.5px] font-bold tracking-[0.1em] text-foreground">
                       {brand.name === "Company Name" ? (
                         <>
                           <span className="block">COMPANY</span>
@@ -231,7 +235,7 @@ function BrandSpotlightSection() {
                     </span>
                   </div>
 
-                  <h3 className="m-0 text-[20px] font-bold tracking-[-0.01em] text-[#202020]">
+                  <h3 className="m-0 text-[20px] font-bold tracking-[-0.01em] text-foreground">
                     {brand.name}
                   </h3>
                   <p className="mt-[10px] max-w-[23ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
@@ -333,11 +337,12 @@ function FeaturedEventsSection() {
                   <p className="m-0 text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
                     {event.category?.name.toUpperCase() ?? "EVENT"}
                   </p>
-                  <h3 className="mt-2 text-[17px] font-bold leading-[1.32] tracking-[-0.01em] text-[#202020]">
+                  <h3 className="mt-2 text-[17px] font-bold leading-[1.32] tracking-[-0.01em] text-foreground">
                     {event.title}
                   </h3>
                   <p className="mt-3 flex items-center gap-[7px] text-[13.5px] leading-[1.45] text-[#6A6A6A]">
-                    <MapPin size={14} strokeWidth={1.7} /> {event.isOnline ? "Online" : event.city ?? "—"}
+                    <MapPin size={14} strokeWidth={1.7} />{" "}
+                    {event.isOnline ? "Online" : (event.city ?? "—")}
                   </p>
                   <button
                     type="button"
@@ -347,10 +352,15 @@ function FeaturedEventsSection() {
                     }}
                     aria-pressed={saved}
                     className={`relative z-30 mt-4 flex items-center gap-[8px] border-t border-[#F1F1F1] pt-[14px] text-[13px] transition-colors ${
-                      saved ? "text-[var(--ae-accent)]" : "text-[#6A6A6A] hover:text-[#202020]"
+                      saved
+                        ? "text-[var(--ae-accent)]"
+                        : "text-[#6A6A6A] hover:text-foreground"
                     }`}
                   >
-                    <Bookmark className={`h-[14px] w-[14px] ${saved ? "fill-current" : ""}`} strokeWidth={1.6} />
+                    <Bookmark
+                      className={`h-[14px] w-[14px] ${saved ? "fill-current" : ""}`}
+                      strokeWidth={1.6}
+                    />
                     {saved ? "Saved" : "Save"}
                   </button>
                 </div>
@@ -378,30 +388,30 @@ function ValueSection() {
               {index === 0 ? (
                 <CalendarIcon
                   size={24}
-                  className="mt-[2px] flex-none text-[#202020]"
+                  className="mt-[2px] flex-none text-foreground"
                   strokeWidth={1.5}
                 />
               ) : index === 1 ? (
                 <Users
                   size={24}
-                  className="mt-[2px] flex-none text-[#202020]"
+                  className="mt-[2px] flex-none text-foreground"
                   strokeWidth={1.5}
                 />
               ) : index === 2 ? (
                 <Bookmark
                   size={24}
-                  className="mt-[2px] flex-none text-[#202020]"
+                  className="mt-[2px] flex-none text-foreground"
                   strokeWidth={1.5}
                 />
               ) : (
                 <Mail
                   size={24}
-                  className="mt-[2px] flex-none text-[#202020]"
+                  className="mt-[2px] flex-none text-foreground"
                   strokeWidth={1.5}
                 />
               )}
               <div>
-                <h3 className="m-0 text-[15px] font-bold text-[#202020]">
+                <h3 className="m-0 text-[15px] font-bold text-foreground">
                   {point.title}
                 </h3>
                 <p className="mt-[7px] max-w-[24ch] text-[13.5px] leading-[1.65] text-[#6A6A6A]">
@@ -425,7 +435,8 @@ function NewsletterSection() {
       return;
     }
     toast.error("Newsletter signup isn't available yet", {
-      description: "Create an attendee account to opt into the monthly newsletter from your profile.",
+      description:
+        "Create an attendee account to opt into the monthly newsletter from your profile.",
     });
   }
 

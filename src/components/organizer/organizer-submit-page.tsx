@@ -8,6 +8,7 @@ import type { PackageId, SubmitStep } from "./submit-event/submit-event-types";
 import { SubmitEventFormStep } from "./submit-event/submit-event-form-step";
 import { SubmitEventPackageStep } from "./submit-event/submit-event-package-step";
 import { SubmitEventSuccessStep } from "./submit-event/submit-event-success-step";
+import { Heading } from "@/components/ui/heading";
 
 export function OrganizerSubmitPage() {
   return (
@@ -21,9 +22,7 @@ function OrganizerSubmitPageFallback() {
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
       <div className="border-b border-[#E7E7E7] pb-5">
-        <h2 className="ae-serif text-[28px] font-semibold tracking-[-0.015em] text-[#202020]">
-          Submit New Event
-        </h2>
+        <Heading level="page">Submit New Event</Heading>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">Loading...</p>
       </div>
     </div>
@@ -62,9 +61,7 @@ function OrganizerSubmitPageContent() {
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
       <div className="border-b border-[#E7E7E7] pb-5">
-        <h2 className="ae-serif text-[30px] font-semibold tracking-[-0.015em] text-[#202020]">
-          {eventId ? "Edit Event" : "Submit New Event"}
-        </h2>
+        <Heading level="page">{eventId ? "Edit Event" : "Submit New Event"}</Heading>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
           {step === "package"
             ? "Step 1 of 2 — choose your listing package"

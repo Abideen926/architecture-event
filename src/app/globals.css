@@ -10,7 +10,16 @@
   --ae-border-strong: #dcdcdc;
   --mainbackground: #fafafa;
 }
-
+@theme{
+  --color-background: #ffffff;
+  --color-foreground: #202020;
+  --color-ae-accent: #b08a45;
+  --color-ae-accent-strong: #94733a;
+  --color-ae-muted: #6a6a6a;
+  --color-ae-border: #e7e7e7;
+  --color-ae-border-strong: #dcdcdc;
+  --color-mainbackground: #fafafa;
+}
 * {
   box-sizing: border-box;
 }

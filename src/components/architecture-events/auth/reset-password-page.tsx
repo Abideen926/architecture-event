@@ -15,6 +15,8 @@ import {
 } from "@/features/auth/auth-api";
 import { getApiErrorMessage } from "@/lib/store/api-error";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Input, inputFieldClassName } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const PASSWORD_RULE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,72}$/;
 
@@ -31,8 +33,10 @@ export function ResetPasswordPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [cooldown, setCooldown] = useState(0);
 
-  const [verifyResetOtp, { isLoading: isVerifying }] = useVerifyResetOtpMutation();
-  const [resetPassword, { isLoading: isResetting }] = useResetPasswordMutation();
+  const [verifyResetOtp, { isLoading: isVerifying }] =
+    useVerifyResetOtpMutation();
+  const [resetPassword, { isLoading: isResetting }] =
+    useResetPasswordMutation();
   const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
 
   useEffect(() => {
@@ -55,7 +59,9 @@ export function ResetPasswordPage() {
       await verifyResetOtp({ email, otp: otp.trim() }).unwrap();
       setStage("password");
     } catch (submitError) {
-      toast.error("Code didn't verify", { description: getApiErrorMessage(submitError) });
+      toast.error("Code didn't verify", {
+        description: getApiErrorMessage(submitError),
+      });
     }
   }
 
@@ -80,20 +86,28 @@ export function ResetPasswordPage() {
 
     try {
       await resetPassword({ newPassword }).unwrap();
-      toast.success("Password reset", { description: "You can now log in with your new password." });
+      toast.success("Password reset", {
+        description: "You can now log in with your new password.",
+      });
       router.push(appRoutes.architectureEvents.login);
     } catch (submitError) {
-      toast.error("Couldn't reset password", { description: getApiErrorMessage(submitError) });
+      toast.error("Couldn't reset password", {
+        description: getApiErrorMessage(submitError),
+      });
     }
   }
 
   async function handleResend() {
     try {
       await resendOtp({ email, purpose: "PASSWORD_RESET" }).unwrap();
-      toast.success("Code sent", { description: "Check your email for the new code." });
+      toast.success("Code sent", {
+        description: "Check your email for the new code.",
+      });
       setCooldown(content.resendCooldownSeconds);
     } catch (resendError) {
-      toast.error("Couldn't resend code", { description: getApiErrorMessage(resendError) });
+      toast.error("Couldn't resend code", {
+        description: getApiErrorMessage(resendError),
+      });
     }
   }
 
@@ -102,7 +116,7 @@ export function ResetPasswordPage() {
       <div className="bg-white">
         <main className="flex min-h-[calc(100vh-76px)] items-center justify-center px-6 py-14 text-center">
           <div className="max-w-[420px]">
-            <h1 className="ae-section-heading text-[32px] text-[#202020]">
+            <h1 className="ae-section-heading text-[32px] text-foreground">
               {content.missingEmailMessage}
             </h1>
             <Link
@@ -122,7 +136,7 @@ export function ResetPasswordPage() {
       <main className="grid min-h-[calc(100vh-76px)] animate-[fadeIn_0.4s_ease_both] xl:grid-cols-[1fr_1fr]">
         <section className="flex items-center justify-center px-6 py-14 sm:px-10 lg:px-16 xl:p-[80px]">
           <div className="w-full max-w-[400px]">
-            <h1 className="ae-section-heading text-[40px] leading-none tracking-[-0.02em] text-[#202020]">
+            <h1 className="ae-section-heading text-[40px] leading-none tracking-[-0.02em] text-foreground">
               {content.title}
             </h1>
             <p className="ae-section-description mt-[14px] text-[15.5px] leading-[1.75]">
@@ -133,31 +147,33 @@ export function ResetPasswordPage() {
 
             {stage === "otp" ? (
               <>
-                <form className="mt-[34px] grid gap-[18px]" onSubmit={handleVerifyOtp} noValidate>
-                  <label className="block">
-                    <span className="mb-[9px] block text-[13.5px] font-semibold text-[#303030]">
-                      Verification code
-                    </span>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={otp}
-                      onChange={(event) => setOtp(event.target.value)}
-                      placeholder={content.otpPlaceholder}
-                      className={`${fieldClassName} tracking-[0.3em]`}
-                    />
-                    {errors.otp ? (
-                      <span className="mt-[7px] block text-[13px] text-[#B3261E]">{errors.otp}</span>
-                    ) : null}
-                  </label>
+                <form
+                  className="mt-[34px] grid gap-[18px]"
+                  onSubmit={handleVerifyOtp}
+                  noValidate
+                >
+                  <Input
+                    label="Verification code"
+                    labelClassName="text-[#303030]"
+                    error={errors.otp}
+                    inputSize="lg"
+                    tone="auth"
+                    type="text"
+                    inputMode="numeric"
+                    value={otp}
+                    onChange={(event) => setOtp(event.target.value)}
+                    placeholder={content.otpPlaceholder}
+                    className="tracking-[0.3em]"
+                  />
 
-                  <button
+                  <Button
                     type="submit"
-                    disabled={isVerifying}
-                    className="inline-flex h-[54px] w-full items-center justify-center rounded-[12px] bg-[#1E1E1E] text-[15.5px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+                    size="lg"
+                    isLoading={isVerifying}
+                    loadingLabel="Verifying..."
                   >
-                    {isVerifying ? "Verifying..." : content.verifyLabel}
-                  </button>
+                    {content.verifyLabel}
+                  </Button>
                 </form>
 
                 <p className="mt-[22px] text-[14.5px] leading-[1.75] text-[#6A6A6A]">
@@ -168,12 +184,18 @@ export function ResetPasswordPage() {
                     disabled={isResending || cooldown > 0}
                     className="ae-link-accent font-semibold disabled:cursor-not-allowed disabled:text-[#B0A588]"
                   >
-                    {cooldown > 0 ? `${content.resendLabel} (${cooldown}s)` : content.resendLabel}
+                    {cooldown > 0
+                      ? `${content.resendLabel} (${cooldown}s)`
+                      : content.resendLabel}
                   </button>
                 </p>
               </>
             ) : (
-              <form className="mt-[34px] grid gap-[18px]" onSubmit={handleResetPassword} noValidate>
+              <form
+                className="mt-[34px] grid gap-[18px]"
+                onSubmit={handleResetPassword}
+                noValidate
+              >
                 <label className="block">
                   <span className="mb-[9px] block text-[13.5px] font-semibold text-[#303030]">
                     {content.newPasswordLabel}
@@ -208,13 +230,14 @@ export function ResetPasswordPage() {
                   ) : null}
                 </label>
 
-                <button
+                <Button
                   type="submit"
-                  disabled={isResetting}
-                  className="inline-flex h-[54px] w-full items-center justify-center rounded-[12px] bg-[#1E1E1E] text-[15.5px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+                  size="lg"
+                  isLoading={isResetting}
+                  loadingLabel="Saving..."
                 >
-                  {isResetting ? "Saving..." : content.submitLabel}
-                </button>
+                  {content.submitLabel}
+                </Button>
               </form>
             )}
           </div>
@@ -240,5 +263,4 @@ export function ResetPasswordPage() {
   );
 }
 
-const fieldClassName =
-  "h-[54px] w-full rounded-[12px] border border-[#E7E7E7] bg-white px-[16px] text-[15px] text-[#202020] outline-none transition-colors placeholder:text-[#8A8A8A] focus:border-[#C7B48D]";
+const fieldClassName = inputFieldClassName("lg", "auth");

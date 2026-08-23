@@ -15,7 +15,8 @@ export function AdminHeader() {
   async function handleLogout() {
     const confirmed = await confirm({
       title: "Log out?",
-      description: "You'll need to sign in again to access the admin dashboard.",
+      description:
+        "You'll need to sign in again to access the admin dashboard.",
       confirmLabel: "Log out",
     });
     if (!confirmed) return;
@@ -27,9 +28,14 @@ export function AdminHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-white/95 backdrop-blur-[8px]">
       <div className="mx-auto flex h-[76px] w-full max-w-[1600px] items-center gap-8 px-7 lg:px-16">
-        <Link href={appRoutes.architectureEvents.root} className="flex items-center gap-3">
-          <span className="ae-serif text-[34px] leading-none text-[var(--ae-accent)]">A</span>
-          <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-[#202020]">
+        <Link
+          href={appRoutes.architectureEvents.root}
+          className="flex items-center gap-3"
+        >
+          <span className="ae-serif text-[34px] leading-none text-[var(--ae-accent)]">
+            A
+          </span>
+          <span className="text-left text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-foreground">
             ARCHITECTURE
             <br />
             EVENTS
@@ -43,7 +49,7 @@ export function AdminHeader() {
         <div className="ml-auto flex items-center gap-5">
           <Link
             href={appRoutes.architectureEvents.root}
-            className="hidden text-[14.5px] font-medium text-[#202020] transition-colors hover:text-[var(--ae-accent)] md:inline-flex"
+            className="hidden text-[14.5px] font-medium text-foreground transition-colors hover:text-[var(--ae-accent)] md:inline-flex"
           >
             View public site
           </Link>
@@ -52,7 +58,7 @@ export function AdminHeader() {
             <span className="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-[#E7E7E7] bg-[#F1EEE8] text-[12.5px] font-bold text-[#3A3A3A]">
               {me?.fullName?.[0]?.toUpperCase() ?? "…"}
             </span>
-            <span className="hidden text-[14.5px] font-semibold text-[#202020] md:inline">
+            <span className="hidden text-[14.5px] font-semibold text-foreground md:inline">
               {me?.fullName ?? "Loading…"}
             </span>
           </div>

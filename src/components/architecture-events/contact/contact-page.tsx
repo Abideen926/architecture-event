@@ -26,7 +26,7 @@ export function ContactPage() {
           <p className="mb-7 mt-6 text-[12px] font-semibold tracking-[0.24em] text-[var(--ae-accent)]">
             CONTACT US
           </p>
-          <h1 className="ae-serif text-[45px] font-semibold leading-[0.92] tracking-[-0.06em] text-[#202020] sm:text-[50px] xl:text-[50px]">
+          <h1 className="ae-serif text-[45px] font-semibold leading-[0.92] tracking-[-0.06em] text-foreground sm:text-[50px] xl:text-[50px]">
             {title}
           </h1>
           <p className="mt-5 max-w-[66ch] text-[18px] leading-[1.7] tracking-[-0.01em] text-[#707070]">
@@ -35,7 +35,8 @@ export function ContactPage() {
 
           <form
             onSubmit={handleSubmit}
-            className="mt-14 rounded-[20px] border border-[#e3e3e3] bg-white px-5 py-5 shadow-none sm:px-6 sm:py-6 md:px-7 md:py-7 lg:px-8 lg:py-8">
+            className="mt-14 rounded-[20px] border border-[#e3e3e3] bg-white px-5 py-5 shadow-none sm:px-6 sm:py-6 md:px-7 md:py-7 lg:px-8 lg:py-8"
+          >
             <div className="grid gap-4 md:grid-cols-2">
               <FormField label="Name">
                 <input type="text" className={fieldClassName} />
@@ -85,7 +86,7 @@ export function ContactPage() {
                 key={card.title}
                 className="rounded-[20px] border border-[#e3e3e3] bg-white px-8 py-8"
               >
-                <h2 className="text-[23px] font-semibold tracking-[-0.04em] text-[#202020]">
+                <h2 className="text-[23px] font-semibold tracking-[-0.04em] text-foreground">
                   {card.title}
                 </h2>
                 <p className="mt-4 max-w-[34ch] text-[16px] leading-[1.75] tracking-[-0.01em] text-[#707070]">
@@ -102,7 +103,7 @@ export function ContactPage() {
           </div>
 
           <section className="mt-8 rounded-[20px] border border-[#e3e3e3] bg-[#fbfbfa] px-8 py-8">
-            <p className="text-[18px] font-medium leading-[1.55] tracking-[-0.02em] text-[#202020]">
+            <p className="text-[18px] font-medium leading-[1.55] tracking-[-0.02em] text-foreground">
               Most messages are answered within one to two business days.
             </p>
             <a
@@ -147,7 +148,7 @@ type FormFieldProps = {
 function FormField({ label, children, className }: FormFieldProps) {
   return (
     <label className={className}>
-      <span className="mb-[10px] block text-[14px] font-semibold text-[#202020]">
+      <span className="mb-[10px] block text-[14px] font-semibold text-foreground">
         {label}
       </span>
       {children}

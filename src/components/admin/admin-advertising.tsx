@@ -7,6 +7,7 @@ import {
   spotlightSlots as initialSpotlightSlots,
   stripePayments,
 } from "@/lib/admin/dashboard-data";
+import { Heading } from "@/components/ui/heading";
 
 type SpotlightSlot = {
   slot: string;
@@ -23,10 +24,10 @@ type LedgerEntry = {
 
 export function AdminAdvertising() {
   const [spotlightSlots, setSpotlightSlots] = useState<SpotlightSlot[]>(
-    initialSpotlightSlots.map((slot) => ({ ...slot }))
+    initialSpotlightSlots.map((slot) => ({ ...slot })),
   );
   const [ledgerEntries, setLedgerEntries] = useState<LedgerEntry[]>(
-    initialLedgerEntries.map((entry) => ({ ...entry }))
+    initialLedgerEntries.map((entry) => ({ ...entry })),
   );
   const [ledgerFormOpen, setLedgerFormOpen] = useState(false);
   const [ledgerForm, setLedgerForm] = useState({
@@ -74,32 +75,30 @@ export function AdminAdvertising() {
       current.map((slot) =>
         slot.slot === slotName
           ? { ...slot, company: "New Company", until: "Pending assignment" }
-          : slot
-      )
+          : slot,
+      ),
     );
   }
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-5">
       <div className="border-b border-[#E7E7E7] pb-5">
-        <h2 className="ae-serif text-[30px] font-semibold leading-[1.08] tracking-[-0.015em] text-[#202020]">
-          Advertising
-        </h2>
+        <Heading level="page">Advertising</Heading>
         <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
           Sponsorship placements, package holders, and the internal ledger.
         </p>
       </div>
 
       <div className="rounded-[14px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-5 py-3 text-[13px] leading-[1.6] text-[#6A6A6A]">
-        There&apos;s no advertising/sponsorship model in the API yet — this page shows sample
-        data and isn&apos;t connected to the backend.
+        There&apos;s no advertising/sponsorship model in the API yet — this page
+        shows sample data and isn&apos;t connected to the backend.
       </div>
 
       <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
         <div className="px-[26px] py-5">
-          <h3 className="ae-serif text-[22px] font-semibold leading-[1.1] tracking-[-0.01em] text-[#202020]">
+          <Heading level="card" as="h3">
             Advertising packages
-          </h3>
+          </Heading>
         </div>
         <div className="grid grid-cols-[1.2fr_0.8fr_1.15fr_0.8fr] gap-[22px] border-y border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
           <span>PACKAGE</span>
@@ -116,7 +115,7 @@ export function AdminAdvertising() {
                 : ""
             }`}
           >
-            <div className="text-[15px] font-semibold text-[#202020]">
+            <div className="text-[15px] font-semibold text-foreground">
               {item.name}
             </div>
             <div className="text-[14px] text-[#3A3A3A]">{item.price}</div>

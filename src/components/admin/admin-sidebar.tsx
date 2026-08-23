@@ -20,7 +20,7 @@ export function AdminSidebar() {
               href={item.href}
               className={`inline-flex items-center gap-3 rounded-[12px] px-4 py-3 text-[14.5px] transition-colors ${
                 active
-                  ? "bg-[#F1EEE8] font-semibold text-[#202020]"
+                  ? "bg-[#F1EEE8] font-semibold text-foreground"
                   : "font-medium text-[#6A6A6A] hover:bg-[#F1EEE8]"
               }`}
             >

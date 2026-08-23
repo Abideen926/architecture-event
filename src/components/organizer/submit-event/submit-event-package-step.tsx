@@ -2,6 +2,7 @@
 
 import type { PackageId } from "./submit-event-types";
 import { organizerPackages } from "@/lib/organizer/organizer-data";
+import { Heading } from "@/components/ui/heading";
 
 type SubmitEventPackageStepProps = {
   onSelectPackage: (packageId: PackageId) => void;
@@ -12,12 +13,12 @@ export function SubmitEventPackageStep({
 }: SubmitEventPackageStepProps) {
   return (
     <div className="mt-[28px]">
-      <h3 className="ae-serif text-[26px] font-semibold tracking-[-0.015em] text-[#202020]">
+      <Heading level="section" as="h3">
         Choose a listing package
-      </h3>
+      </Heading>
       <p className="mt-2 text-[15px] leading-[1.7] text-[#6A6A6A]">
-        Pick a package to open the submission form. You can change it before
-        you submit.
+        Pick a package to open the submission form. You can change it before you
+        submit.
       </p>
 
       <div className="mt-6 grid gap-5 lg:grid-cols-2">
@@ -25,7 +26,7 @@ export function SubmitEventPackageStep({
           <div
             key={item.id}
             className={`rounded-[20px] border bg-white p-[26px] ${
-              item.id === "featured" ? "border-[#202020]" : "border-[#E7E7E7]"
+              item.id === "featured" ? "border-foreground" : "border-[#E7E7E7]"
             }`}
           >
             <div className="flex items-start justify-between gap-5">
@@ -63,7 +64,7 @@ export function SubmitEventPackageStep({
               className={`mt-7 rounded-[12px] px-[20px] py-[13px] text-[15px] font-semibold transition-colors ${
                 item.id === "featured"
                   ? "bg-[#232323] text-white hover:bg-black"
-                  : "border border-[#202020] bg-white text-[#202020] hover:bg-[#FAFAFA]"
+                  : "border border-foreground bg-white text-foreground hover:bg-[#FAFAFA]"
               }`}
             >
               {item.id === "featured" ? "Select Featured" : "Select Basic"}

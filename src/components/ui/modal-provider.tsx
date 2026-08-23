@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import { Modal } from "./modal";
+import { Button } from "./button";
 
 type ModalTone = "default" | "danger";
 
@@ -25,15 +26,6 @@ type ModalContextValue = {
 };
 
 const ModalContext = createContext<ModalContextValue | null>(null);
-
-const primaryButtonClassName =
-  "inline-flex h-[46px] items-center justify-center rounded-[12px] bg-[#1E1E1E] px-6 text-[14.5px] font-semibold text-white transition-colors hover:bg-black";
-
-const dangerButtonClassName =
-  "inline-flex h-[46px] items-center justify-center rounded-[12px] bg-[#B3261E] px-6 text-[14.5px] font-semibold text-white transition-colors hover:bg-[#8f1e18]";
-
-const secondaryButtonClassName =
-  "inline-flex h-[46px] items-center justify-center rounded-[12px] border border-[#E7E7E7] px-6 text-[14.5px] font-semibold text-[#3A3A3A] transition-colors hover:border-[#202020]";
 
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [request, setRequest] = useState<PendingRequest | null>(null);
@@ -67,9 +59,6 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(() => ({ confirm, alertDialog }), [confirm, alertDialog]);
 
-  const primaryClassName =
-    request?.options.tone === "danger" ? dangerButtonClassName : primaryButtonClassName;
-
   return (
     <ModalContext.Provider value={value}>
       {children}
@@ -83,18 +72,18 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
           request ? (
             <>
               {request.kind === "confirm" ? (
-                <button
-                  type="button"
-                  onClick={() => settle(false)}
-                  className={secondaryButtonClassName}
-                >
+                <Button variant="outline" size="md" onClick={() => settle(false)}>
                   {request.options.cancelLabel ?? "Cancel"}
-                </button>
+                </Button>
               ) : null}
 
-              <button type="button" onClick={() => settle(true)} className={primaryClassName}>
+              <Button
+                variant={request.options.tone === "danger" ? "danger" : "primary"}
+                size="md"
+                onClick={() => settle(true)}
+              >
                 {request.options.confirmLabel ?? (request.kind === "confirm" ? "Confirm" : "OK")}
-              </button>
+              </Button>
             </>
           ) : null
         }

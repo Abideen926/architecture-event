@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { toast } from "sonner";
 import { appRoutes } from "@/lib/routes";
 import {
@@ -21,6 +20,9 @@ import type { EventRecord, EventStatus } from "@/features/events/event-types";
 import { getApiErrorMessage } from "@/lib/store/api-error";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { Modal } from "@/components/ui/modal";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
 
 const submissionTabs: (EventStatus | "All")[] = [
   "All",
@@ -41,7 +43,11 @@ const dateTimeFormatter = new Intl.DateTimeFormat("en-US", {
   hour: "numeric",
   minute: "2-digit",
 });
-const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" });
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 
 export function AdminEventsPage() {
   const [view, setView] = useState<EventsView>("Submissions");
@@ -55,13 +61,15 @@ export function AdminEventsPage() {
     limit: 50,
     sort: "recent",
   });
-  const { data: archiveData, isLoading: isArchiveLoading } = useListAdminEventsQuery(
-    { status: "ARCHIVED", limit: 50 },
-    { skip: view !== "Archive" }
-  );
+  const { data: archiveData, isLoading: isArchiveLoading } =
+    useListAdminEventsQuery(
+      { status: "ARCHIVED", limit: 50 },
+      { skip: view !== "Archive" },
+    );
 
   const [approveEvent, { isLoading: isApproving }] = useApproveEventMutation();
-  const [requestChanges, { isLoading: isRequestingChanges }] = useRequestEventChangesMutation();
+  const [requestChanges, { isLoading: isRequestingChanges }] =
+    useRequestEventChangesMutation();
   const [rejectEvent, { isLoading: isRejecting }] = useRejectEventMutation();
   const confirm = useConfirm();
 
@@ -89,7 +97,9 @@ export function AdminEventsPage() {
       await approveEvent(event.id).unwrap();
       toast.success("Event approved and published");
     } catch (error) {
-      toast.error("Couldn't approve event", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't approve event", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -102,16 +112,24 @@ export function AdminEventsPage() {
 
     try {
       if (noteModal === "changes") {
-        await requestChanges({ id: selectedRow.id, note: noteValue.trim() }).unwrap();
+        await requestChanges({
+          id: selectedRow.id,
+          note: noteValue.trim(),
+        }).unwrap();
         toast.success("Changes requested");
       } else if (noteModal === "reject") {
-        await rejectEvent({ id: selectedRow.id, reason: noteValue.trim() }).unwrap();
+        await rejectEvent({
+          id: selectedRow.id,
+          reason: noteValue.trim(),
+        }).unwrap();
         toast.success("Event rejected");
       }
       setNoteModal(null);
       setNoteValue("");
     } catch (error) {
-      toast.error("Couldn't submit decision", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't submit decision", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -119,9 +137,7 @@ export function AdminEventsPage() {
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
       <div className="flex flex-col gap-5 border-b border-[#E7E7E7] pb-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <h2 className="ae-serif text-[30px] font-semibold leading-[1.08] tracking-[-0.015em] text-[#202020]">
-            Events
-          </h2>
+          <Heading level="page">Events</Heading>
           <p className="mt-2 text-[14.5px] text-[#6A6A6A]">{subtitle}</p>
         </div>
 
@@ -136,7 +152,7 @@ export function AdminEventsPage() {
                 className={`rounded-full border px-[18px] py-[9px] text-[13.5px] font-semibold transition-colors ${
                   active
                     ? "border-[#1E1E1E] bg-[#1E1E1E] text-white"
-                    : "border-[#E7E7E7] bg-white text-[#202020]"
+                    : "border-[#E7E7E7] bg-white text-foreground"
                 }`}
               >
                 {tab}
@@ -174,19 +190,25 @@ export function AdminEventsPage() {
           {isLoading ? (
             <div className="grid gap-[10px]">
               {[0, 1, 2].map((key) => (
-                <div key={key} className="h-[70px] animate-pulse rounded-[16px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+                <div
+                  key={key}
+                  className="h-[70px] animate-pulse rounded-[16px] border border-[#E7E7E7] bg-[#F5F5F5]"
+                />
               ))}
             </div>
           ) : isError ? (
             <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-              <p className="text-[15px] text-[#6A6A6A]">Couldn&apos;t load events.</p>
-              <button
-                type="button"
+              <p className="text-[15px] text-[#6A6A6A]">
+                Couldn&apos;t load events.
+              </p>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="mt-4"
                 onClick={() => refetch()}
-                className="mt-4 rounded-[10px] border border-[#202020] bg-white px-5 py-2 text-[13.5px] font-semibold text-[#202020]"
               >
                 Try again
-              </button>
+              </Button>
             </div>
           ) : rows.length === 0 ? (
             <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center text-[15px] text-[#6A6A6A]">
@@ -212,15 +234,23 @@ export function AdminEventsPage() {
                       selectedRow?.id === row.id ? "bg-[#F7F3EC]" : "bg-white"
                     }`}
                   >
-                    <div className="text-[15px] font-semibold leading-[1.45] text-[#202020]">
+                    <div className="text-[15px] font-semibold leading-[1.45] text-foreground">
                       {row.title}
                     </div>
-                    <div className="text-[14.5px] text-[#3A3A3A]">{row.organizer?.fullName ?? "—"}</div>
-                    <div className="text-[14.5px] text-[#3A3A3A]">{row.category?.name ?? "—"}</div>
-                    <div className="text-[14px] text-[#6A6A6A]">
-                      {row.submittedAt ? dateFormatter.format(new Date(row.submittedAt)) : "—"}
+                    <div className="text-[14.5px] text-[#3A3A3A]">
+                      {row.organizer?.fullName ?? "—"}
                     </div>
-                    <div className="flex justify-end">{renderStatus(row.status)}</div>
+                    <div className="text-[14.5px] text-[#3A3A3A]">
+                      {row.category?.name ?? "—"}
+                    </div>
+                    <div className="text-[14px] text-[#6A6A6A]">
+                      {row.submittedAt
+                        ? dateFormatter.format(new Date(row.submittedAt))
+                        : "—"}
+                    </div>
+                    <div className="flex justify-end">
+                      {renderStatus(row.status)}
+                    </div>
                   </button>
                 ))}
               </section>
@@ -231,56 +261,66 @@ export function AdminEventsPage() {
                     <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
                       {EVENT_STATUS_LABELS[selectedRow.status].toUpperCase()}
                     </p>
-                    <Link
+                    <Button
                       href={appRoutes.admin.eventDetail(selectedRow.id)}
-                      className="whitespace-nowrap text-[12.5px] font-semibold text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                      variant="ghost"
+                      size="text"
+                      className="whitespace-nowrap text-[12.5px] font-semibold"
                     >
                       Review full details →
-                    </Link>
+                    </Button>
                   </div>
-                  <h3 className="mt-3 ae-serif text-[22px] font-semibold leading-[1.1] tracking-[-0.01em] text-[#202020]">
+                  <Heading level="card" as="h3" className="mt-3">
                     {selectedRow.title}
-                  </h3>
+                  </Heading>
                   <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
-                    {selectedRow.organizer?.fullName ?? "—"} · {selectedRow.category?.name ?? "—"}
+                    {selectedRow.organizer?.fullName ?? "—"} ·{" "}
+                    {selectedRow.category?.name ?? "—"}
                   </p>
 
                   <div className="mt-5 space-y-4 border-t border-[#E7E7E7] pt-5 text-[14.5px] leading-[1.8] text-[#4E4E4E]">
                     <p>{selectedRow.description}</p>
-                    {selectedRow.latestAdminNote ? <p>{selectedRow.latestAdminNote}</p> : null}
+                    {selectedRow.latestAdminNote ? (
+                      <p>{selectedRow.latestAdminNote}</p>
+                    ) : null}
                   </div>
 
                   <div className="mt-5 grid gap-3 border-t border-[#E7E7E7] pt-5 text-[14px] text-[#3A3A3A]">
                     <div className="flex items-start justify-between gap-4">
                       <span className="text-[#6A6A6A]">When</span>
-                      <span className="text-right font-medium text-[#202020]">
-                        {dateTimeFormatter.format(new Date(selectedRow.startAt))}
+                      <span className="text-right font-medium text-foreground">
+                        {dateTimeFormatter.format(
+                          new Date(selectedRow.startAt),
+                        )}
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <span className="text-[#6A6A6A]">Location</span>
-                      <span className="text-right font-medium text-[#202020]">
-                        {selectedRow.isOnline ? "Online" : selectedRow.city ?? "—"}
+                      <span className="text-right font-medium text-foreground">
+                        {selectedRow.isOnline
+                          ? "Online"
+                          : (selectedRow.city ?? "—")}
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-4">
                       <span className="text-[#6A6A6A]">Package</span>
-                      <span className="text-right font-medium text-[#202020]">
-                        {selectedRow.isFeatured ? "Featured Listing — $49" : "Basic Listing — Free"}
+                      <span className="text-right font-medium text-foreground">
+                        {selectedRow.isFeatured
+                          ? "Featured Listing — $49"
+                          : "Basic Listing — Free"}
                       </span>
                     </div>
                   </div>
 
                   <div className="mt-6 border-t border-[#E7E7E7] pt-5">
                     <div className="flex flex-wrap gap-2.5">
-                      <button
-                        type="button"
+                      <Button
+                        size="sm"
                         onClick={() => handleApprove(selectedRow)}
                         disabled={isApproving}
-                        className="rounded-[10px] bg-[#1E1E1E] px-4 py-1.5 text-[13.5px] font-semibold text-white disabled:opacity-60"
                       >
                         Approve
-                      </button>
+                      </Button>
                       <button
                         type="button"
                         onClick={() => setNoteModal("changes")}
@@ -312,7 +352,9 @@ export function AdminEventsPage() {
 
       {view === "Archive" ? (
         <div className="mt-6 space-y-5">
-          <p className="text-[14.5px] text-[#6A6A6A]">Past events, read-only.</p>
+          <p className="text-[14.5px] text-[#6A6A6A]">
+            Past events, read-only.
+          </p>
 
           {isArchiveLoading ? (
             <div className="h-[200px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
@@ -336,10 +378,18 @@ export function AdminEventsPage() {
                     index === 0 ? "border-t-0" : ""
                   }`}
                 >
-                  <div className="text-[15px] font-semibold leading-[1.45] text-[#202020]">{row.title}</div>
-                  <div className="text-[14.5px] text-[#3A3A3A]">{row.organizer?.fullName ?? "—"}</div>
-                  <div className="text-[14.5px] text-[#3A3A3A]">{row.category?.name ?? "—"}</div>
-                  <div className="text-[14px] text-[#6A6A6A]">{dateFormatter.format(new Date(row.startAt))}</div>
+                  <div className="text-[15px] font-semibold leading-[1.45] text-foreground">
+                    {row.title}
+                  </div>
+                  <div className="text-[14.5px] text-[#3A3A3A]">
+                    {row.organizer?.fullName ?? "—"}
+                  </div>
+                  <div className="text-[14.5px] text-[#3A3A3A]">
+                    {row.category?.name ?? "—"}
+                  </div>
+                  <div className="text-[14px] text-[#6A6A6A]">
+                    {dateFormatter.format(new Date(row.startAt))}
+                  </div>
                 </div>
               ))}
             </section>
@@ -363,33 +413,31 @@ export function AdminEventsPage() {
         }
         footer={
           <>
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="md"
               onClick={() => {
                 setNoteModal(null);
                 setNoteValue("");
               }}
-              className="inline-flex h-[46px] items-center justify-center rounded-[12px] border border-[#E7E7E7] px-6 text-[14.5px] font-semibold text-[#3A3A3A]"
             >
               Cancel
-            </button>
-            <button
-              type="button"
+            </Button>
+            <Button
+              size="md"
               onClick={handleSubmitNote}
               disabled={isRequestingChanges || isRejecting}
-              className="inline-flex h-[46px] items-center justify-center rounded-[12px] bg-[#1E1E1E] px-6 text-[14.5px] font-semibold text-white disabled:opacity-60"
             >
               {noteModal === "changes" ? "Send to organizer" : "Reject event"}
-            </button>
+            </Button>
           </>
         }
       >
-        <textarea
+        <Textarea
           rows={4}
           value={noteValue}
           onChange={(e) => setNoteValue(e.target.value)}
           placeholder="Explain the decision..."
-          className="w-full resize-y rounded-[12px] border border-[#E7E7E7] px-4 py-[12px] text-[15px] leading-[1.6] outline-none focus:border-[#C7B48D]"
         />
       </Modal>
     </div>
@@ -439,7 +487,9 @@ function TaxonomySettings() {
       await createCategory({ name: trimmed }).unwrap();
       setNewCategory("");
     } catch (error) {
-      toast.error("Couldn't add category", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't add category", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -447,16 +497,18 @@ function TaxonomySettings() {
     try {
       await updateCategory({ id, isActive: !isActive }).unwrap();
     } catch (error) {
-      toast.error("Couldn't update category", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't update category", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
   return (
     <div className="mt-6 max-w-[780px] space-y-5">
       <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[32px] py-[32px]">
-        <h3 className="ae-serif text-[22px] font-semibold leading-[1.1] tracking-[-0.01em] text-[#202020]">
+        <Heading level="card" as="h3">
           Event categories
-        </h3>
+        </Heading>
         <p className="mt-4 text-[14.5px] leading-[1.75] text-[#6A6A6A]">
           These drive the public filters and the organizer submission form.
         </p>
@@ -466,8 +518,14 @@ function TaxonomySettings() {
             <button
               key={category.id}
               type="button"
-              onClick={() => handleToggleCategory(category.id, category.isActive)}
-              title={category.isActive ? "Click to deactivate" : "Click to reactivate"}
+              onClick={() =>
+                handleToggleCategory(category.id, category.isActive)
+              }
+              title={
+                category.isActive
+                  ? "Click to deactivate"
+                  : "Click to reactivate"
+              }
               className={`inline-flex h-[36px] items-center rounded-full border px-[14px] text-[14px] ${
                 category.isActive
                   ? "border-[#E7E7E7] text-[#444444]"
@@ -485,7 +543,7 @@ function TaxonomySettings() {
             value={newCategory}
             onChange={(event) => setNewCategory(event.target.value)}
             placeholder="New category name"
-            className="h-[40px] flex-1 rounded-[12px] border border-[#E7E7E7] px-4 text-[14px] text-[#202020] outline-none"
+            className="h-[40px] flex-1 rounded-[12px] border border-[#E7E7E7] px-4 text-[14px] text-foreground outline-none"
           />
           <button
             type="button"
@@ -498,9 +556,9 @@ function TaxonomySettings() {
       </section>
 
       <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[32px] py-[32px]">
-        <h3 className="ae-serif text-[22px] font-semibold leading-[1.1] tracking-[-0.01em] text-[#202020]">
+        <Heading level="card" as="h3">
           Industries
-        </h3>
+        </Heading>
         <p className="mt-4 text-[14.5px] leading-[1.75] text-[#6A6A6A]">
           The industry an event is targeted at, shown alongside its category.
         </p>
@@ -509,7 +567,9 @@ function TaxonomySettings() {
             <span
               key={industry.id}
               className={`inline-flex h-[36px] items-center rounded-full border px-[14px] text-[14px] ${
-                industry.isActive ? "border-[#E7E7E7] text-[#444444]" : "border-[#E7E7E7] bg-[#F1F1F1] text-[#9A9A9A]"
+                industry.isActive
+                  ? "border-[#E7E7E7] text-[#444444]"
+                  : "border-[#E7E7E7] bg-[#F1F1F1] text-[#9A9A9A]"
               }`}
             >
               {industry.name}
@@ -520,9 +580,10 @@ function TaxonomySettings() {
 
       <section className="rounded-[20px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-[32px] py-[26px]">
         <p className="text-[13.5px] leading-[1.7] text-[#6A6A6A]">
-          Featured Listing and Brand Spotlight pricing management is not yet available — the
-          backend doesn&apos;t expose a settings endpoint for these values yet. The Featured
-          Listing price is currently fixed at $49 in the API configuration.
+          Featured Listing and Brand Spotlight pricing management is not yet
+          available — the backend doesn&apos;t expose a settings endpoint for
+          these values yet. The Featured Listing price is currently fixed at $49
+          in the API configuration.
         </p>
       </section>
     </div>

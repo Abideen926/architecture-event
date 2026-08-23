@@ -15,6 +15,7 @@ import { appRoutes } from "@/lib/routes";
 import { useGetCategoriesQuery, useGetIndustriesQuery, useListPublicEventsQuery } from "@/features/public/public-api";
 import { useSaveToggle } from "@/features/attendee/use-save-toggle";
 import { FeaturedBadge } from "@/components/ui/featured-badge";
+import { Button } from "@/components/ui/button";
 
 const sortOptions = [
   { value: "soonest", label: "Soonest" },
@@ -189,13 +190,9 @@ export function BrowseMainSection() {
             ) : isError ? (
               <div className="mt-7 rounded-[18px] border border-[#DEDEDE] bg-[#FAFAFA] px-10 py-16 text-center">
                 <p className="text-[15px] text-[#6A6A6A]">Couldn&apos;t load events.</p>
-                <button
-                  type="button"
-                  onClick={() => refetch()}
-                  className="mt-4 rounded-[10px] border border-[#202020] bg-white px-5 py-2 text-[13.5px] font-semibold text-[#202020]"
-                >
+                <Button variant="secondary" size="sm" className="mt-4" onClick={() => refetch()}>
                   Try again
-                </button>
+                </Button>
               </div>
             ) : events.length === 0 ? (
               <div className="mt-7 rounded-[18px] border border-[#DEDEDE] bg-[#FAFAFA] px-10 py-16 text-center text-[15px] text-[#6A6A6A]">

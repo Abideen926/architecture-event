@@ -11,6 +11,8 @@ import { appRoutes } from "@/lib/routes";
 import { useLoginMutation } from "@/features/auth/auth-api";
 import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Input, inputFieldClassName } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const ROLE_HOME: Record<string, string> = {
   ATTENDEE: appRoutes.attendee.root,
@@ -44,16 +46,23 @@ export function LoginPage() {
 
     try {
       const user = await login({ email: trimmedEmail, password }).unwrap();
-      toast.success("Welcome back", { description: `Signed in as ${user.fullName}.` });
+      toast.success("Welcome back", {
+        description: `Signed in as ${user.fullName}.`,
+      });
 
       const redirect = searchParams.get("redirect");
       const target =
-        redirect && redirect.startsWith("/") ? redirect : ROLE_HOME[user.role] ?? "/";
+        redirect && redirect.startsWith("/")
+          ? redirect
+          : (ROLE_HOME[user.role] ?? "/");
       router.push(target);
     } catch (error) {
       setFieldErrors(getApiFieldErrors(error));
       toast.error("Couldn't sign you in", {
-        description: getApiErrorMessage(error, "Check your email and password and try again."),
+        description: getApiErrorMessage(
+          error,
+          "Check your email and password and try again.",
+        ),
       });
     }
   }
@@ -63,24 +72,30 @@ export function LoginPage() {
       <main className="grid min-h-[calc(100vh-76px)] animate-[fadeIn_0.4s_ease_both] xl:grid-cols-[1fr_1fr]">
         <section className="flex items-center justify-center px-6 py-14 sm:px-10 lg:px-16 xl:p-[80px]">
           <div className="w-full max-w-[400px]">
-            <h1 className="ae-section-heading text-[40px] leading-none tracking-[-0.02em] text-[#202020]">
+            <h1 className="ae-section-heading text-[40px] leading-none tracking-[-0.02em] text-foreground">
               {content.title}
             </h1>
             <p className="ae-section-description mt-[14px] text-[15.5px] leading-[1.75]">
               {content.description}
             </p>
 
-            <form className="mt-[34px] grid gap-[18px]" onSubmit={handleSubmit} noValidate>
-              <AuthField label="Email" error={fieldErrors.email}>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  placeholder={content.emailPlaceholder}
-                  autoComplete="email"
-                  className={fieldClassName}
-                />
-              </AuthField>
+            <form
+              className="mt-[34px] grid gap-[18px]"
+              onSubmit={handleSubmit}
+              noValidate
+            >
+              <Input
+                label="Email"
+                labelClassName="text-[#303030]"
+                error={fieldErrors.email}
+                inputSize="lg"
+                tone="auth"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder={content.emailPlaceholder}
+                autoComplete="email"
+              />
 
               <label className="block">
                 <span className="mb-[9px] flex items-center justify-between text-[13.5px] font-semibold text-[#303030]">
@@ -106,13 +121,14 @@ export function LoginPage() {
                 ) : null}
               </label>
 
-              <button
+              <Button
                 type="submit"
-                disabled={isLoading}
-                className="inline-flex h-[54px] w-full items-center justify-center rounded-[12px] bg-[#1E1E1E] text-[15.5px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
+                size="lg"
+                isLoading={isLoading}
+                loadingLabel="Signing in..."
               >
-                {isLoading ? "Signing in..." : content.submitLabel}
-              </button>
+                {content.submitLabel}
+              </Button>
             </form>
 
             <p className="mt-[26px] text-[14.5px] leading-[1.75] text-[#6A6A6A]">
@@ -150,21 +166,4 @@ export function LoginPage() {
   );
 }
 
-const fieldClassName =
-  "h-[54px] w-full rounded-[12px] border border-[#E7E7E7] bg-white px-[16px] text-[15px] text-[#202020] outline-none transition-colors placeholder:text-[#8A8A8A] focus:border-[#C7B48D]";
-
-type AuthFieldProps = {
-  label: string;
-  children: React.ReactNode;
-  error?: string;
-};
-
-function AuthField({ label, children, error }: AuthFieldProps) {
-  return (
-    <label className="block">
-      <span className="mb-[9px] block text-[13.5px] font-semibold text-[#303030]">{label}</span>
-      <div>{children}</div>
-      {error ? <span className="mt-[7px] block text-[13px] text-[#B3261E]">{error}</span> : null}
-    </label>
-  );
-}
+const fieldClassName = inputFieldClassName("lg", "auth");
