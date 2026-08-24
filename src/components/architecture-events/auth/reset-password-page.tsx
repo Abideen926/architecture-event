@@ -176,7 +176,7 @@ export function ResetPasswordPage() {
                   </Button>
                 </form>
 
-                <p className="mt-[22px] text-[14.5px] leading-[1.75] text-[#6A6A6A]">
+                <p className="mt-[22px] text-[14.5px] leading-[1.75] text-ae-muted">
                   Didn&apos;t get a code?{" "}
                   <button
                     type="button"
@@ -243,7 +243,7 @@ export function ResetPasswordPage() {
           </div>
         </section>
 
-        <section className="relative hidden overflow-hidden bg-[#1E1E1E] xl:block">
+        <section className="relative hidden overflow-hidden bg-foreground xl:block">
           <Image
             src={content.image}
             alt="Modern building facade"

@@ -8,9 +8,9 @@ export function AboutHeroSection() {
           <div className="relative z-10 flex items-start px-6 pb-24 pt-16 sm:px-8 sm:pt-20 lg:px-16 lg:pb-28 lg:pt-18 xl:px-20">
             <div className="max-w-[650px]">
               <div className="flex gap-4 mb-8">
-                <div className="w-[55px] h-[1px] bg-[var(--ae-accent)] mt-[8px] shrink-0"></div>
+                <div className="w-[55px] h-[1px] bg-ae-accent mt-[8px] shrink-0"></div>
 
-                <p className="text-[12px] font-semibold tracking-[0.26em] text-[var(--ae-accent)] mb-4">
+                <p className="text-[12px] font-semibold tracking-[0.26em] text-ae-accent mb-4">
                   ABOUT
                 </p>
               </div>
@@ -19,7 +19,7 @@ export function AboutHeroSection() {
                 <br />
                 Community
                 <br />
-                <span className="italic font-normal text-[var(--ae-accent)]">
+                <span className="italic font-normal text-ae-accent">
                   Connects
                 </span>
               </h1>

@@ -150,13 +150,13 @@ export function AttendeeProfilePage() {
     <div className="animate-[fadeIn_0.35s_ease] max-w-[780px]">
       <div style={{ paddingBottom: 20, borderBottom: "1px solid #E7E7E7" }}>
         <Heading level="page">Profile</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           Only your name and email are needed. Everything else is optional and
           just sharpens your recommendations.
         </p>
       </div>
 
-      <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-[36px]">
+      <div className="mt-[30px] rounded-[20px] border border-ae-border p-[36px]">
         <div className="grid gap-[18px] md:grid-cols-2">
           <Input
             label="Full name"
@@ -170,20 +170,19 @@ export function AttendeeProfilePage() {
             type="email"
             value={me?.email ?? ""}
             disabled
-            className="cursor-not-allowed bg-[#FAFAFA] text-[#6A6A6A]"
+            className="cursor-not-allowed bg-mainbackground text-ae-muted"
           />
         </div>
 
         <div className="mt-[26px]">
           <label className="block max-w-[380px]">
             <span className="mb-[9px] block text-[13.5px] font-semibold">
-              Role{" "}
-              <span className="font-medium text-[#6A6A6A]">— optional</span>
+              Role <span className="font-medium text-ae-muted">— optional</span>
             </span>
             <select
               value={role}
               onChange={(event) => setRole(event.target.value)}
-              className="h-[52px] w-full rounded-[12px] border border-[#E7E7E7] bg-white px-[14px] text-[15px] text-foreground outline-none"
+              className="h-[52px] w-full rounded-[12px] border border-ae-border bg-white px-[14px] text-[15px] text-foreground outline-none"
             >
               {attendeeRoleOptions.map((option) => (
                 <option key={option} value={option}>
@@ -194,12 +193,12 @@ export function AttendeeProfilePage() {
           </label>
         </div>
 
-        <div className="mt-[32px] border-t border-[#E7E7E7] pt-[28px]">
+        <div className="mt-[32px] border-t border-ae-border pt-[28px]">
           <h3 className="m-0 text-[15px] font-bold text-foreground">
             Categories you follow{" "}
-            <span className="font-medium text-[#6A6A6A]">— optional</span>
+            <span className="font-medium text-ae-muted">— optional</span>
           </h3>
-          <p className="mt-[8px] text-[14px] text-[#6A6A6A]">
+          <p className="mt-[8px] text-[14px] text-ae-muted">
             Tap to add or remove. Changes save when you hit &quot;Save
             changes&quot;.
           </p>
@@ -218,8 +217,8 @@ export function AttendeeProfilePage() {
                   }
                   className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
-                      ? "border-foreground bg-[#1E1E1E] text-white"
-                      : "border-[#E7E7E7] bg-white text-foreground hover:border-foreground"
+                      ? "border-foreground bg-foreground text-white"
+                      : "border-ae-border bg-white text-foreground hover:border-foreground"
                   }`}
                 >
                   {category.name}
@@ -232,7 +231,7 @@ export function AttendeeProfilePage() {
         <div className="mt-[28px]">
           <h3 className="m-0 text-[15px] font-bold text-foreground">
             Regions and cities you follow{" "}
-            <span className="font-medium text-[#6A6A6A]">— optional</span>
+            <span className="font-medium text-ae-muted">— optional</span>
           </h3>
           <div className="mt-[16px] flex flex-wrap gap-[10px]">
             {attendeeRegionOptions.map((option) => {
@@ -247,8 +246,8 @@ export function AttendeeProfilePage() {
                   }
                   className={`rounded-full border px-[18px] py-[6px] text-[14px] transition-colors ${
                     active
-                      ? "border-foreground bg-[#1E1E1E] text-white"
-                      : "border-[#E7E7E7] bg-white text-foreground hover:border-foreground"
+                      ? "border-foreground bg-foreground text-white"
+                      : "border-ae-border bg-white text-foreground hover:border-foreground"
                   }`}
                 >
                   {option}
@@ -258,12 +257,12 @@ export function AttendeeProfilePage() {
           </div>
         </div>
 
-        <div className="mt-[30px] flex items-start justify-between gap-6 rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] p-[22px]">
+        <div className="mt-[30px] flex items-start justify-between gap-6 rounded-[16px] border border-ae-border bg-mainbackground p-[22px]">
           <div>
             <p className="m-0 text-[15px] font-semibold text-foreground">
               Monthly newsletter
             </p>
-            <p className="mt-[7px] max-w-[52ch] text-[14.5px] leading-[1.7] text-[#6A6A6A]">
+            <p className="mt-[7px] max-w-[52ch] text-[14.5px] leading-[1.7] text-ae-muted">
               A curated round-up of upcoming events. Unsubscribe anytime.
             </p>
           </div>
@@ -273,8 +272,8 @@ export function AttendeeProfilePage() {
             onClick={() => setNewsletter((current) => !current)}
             className={`flex h-[30px] w-[52px] flex-none rounded-full border p-[3px] transition-colors ${
               newsletter
-                ? "justify-end border-foreground bg-[#1E1E1E]"
-                : "justify-start border-[#E7E7E7] bg-white"
+                ? "justify-end border-foreground bg-foreground"
+                : "justify-start border-ae-border bg-white"
             }`}
           >
             <span
@@ -297,7 +296,7 @@ export function AttendeeProfilePage() {
         </div>
       </div>
 
-      <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] p-[36px]">
+      <div className="mt-[26px] rounded-[20px] border border-ae-border p-[36px]">
         <Heading level="card" as="h3">
           Account settings
         </Heading>
@@ -345,8 +344,8 @@ export function AttendeeProfilePage() {
         >
           Update password
         </Button>
-        <div className="mt-[26px] flex flex-wrap items-center justify-between gap-5 border-t border-[#E7E7E7] pt-[22px]">
-          <p className="text-[14.5px] text-[#6A6A6A]">
+        <div className="mt-[26px] flex flex-wrap items-center justify-between gap-5 border-t border-ae-border pt-[22px]">
+          <p className="text-[14.5px] text-ae-muted">
             Signed in as {me?.email}
           </p>
           <Button

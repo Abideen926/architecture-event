@@ -36,12 +36,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               toastOptions={{
                 classNames: {
                   toast:
-                    "!rounded-[14px] !border !border-[#E7E7E7] !bg-white !shadow-[0_14px_34px_-18px_rgba(20,20,20,0.35)]",
+                    "!rounded-[14px] !border !border-ae-border !bg-white !shadow-[0_14px_34px_-18px_rgba(20,20,20,0.35)]",
                   title: "!text-[14.5px] !font-semibold !text-foreground",
-                  description: "!text-[13.5px] !text-[#6A6A6A]",
-                  actionButton: "!rounded-[10px] !bg-[#1E1E1E] !text-white",
+                  description: "!text-[13.5px] !text-ae-muted",
+                  actionButton: "!rounded-[10px] !bg-foreground !text-white",
                   cancelButton: "!rounded-[10px] !bg-[#F2F2F2] !text-[#3A3A3A]",
-                  success: "!border-l-[3px] !border-l-[#b08a45]",
+                  success: "!border-l-[3px] !border-l-ae-accent",
                   error: "!border-l-[3px] !border-l-[#B3261E]",
                 },
               }}

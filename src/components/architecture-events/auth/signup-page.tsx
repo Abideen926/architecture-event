@@ -148,7 +148,7 @@ export function SignupPage() {
             </p>
 
             <form
-              className="mt-10 rounded-[20px] border border-[#E7E7E7] bg-white p-9"
+              className="mt-10 rounded-[20px] border border-ae-border bg-white p-9"
               onSubmit={handleSubmit}
               noValidate
             >
@@ -157,7 +157,7 @@ export function SignupPage() {
                   {content.accountTypeLabel}
                 </h2>
 
-                <div className="mt-4 inline-flex rounded-full border border-[#E7E7E7] p-1">
+                <div className="mt-4 inline-flex rounded-full border border-ae-border p-1">
                   {(
                     [
                       { value: "attendee", label: content.attendeeToggleLabel },
@@ -176,7 +176,7 @@ export function SignupPage() {
                         aria-pressed={isActive}
                         className={`inline-flex h-[40px] items-center rounded-full px-[22px] text-[14px] font-semibold transition-colors ${
                           isActive
-                            ? "bg-[#1E1E1E] text-white"
+                            ? "bg-foreground text-white"
                             : "text-[#3A3A3A] hover:text-foreground"
                         }`}
                       >
@@ -187,13 +187,13 @@ export function SignupPage() {
                 </div>
 
                 {accountType === "organizer" ? (
-                  <p className="mt-3 text-[14px] leading-[1.7] text-[#6A6A6A]">
+                  <p className="mt-3 text-[14px] leading-[1.7] text-ae-muted">
                     {content.organizerDescription}
                   </p>
                 ) : null}
               </div>
 
-              <div className="mt-8 grid gap-[18px] border-t border-[#E7E7E7] pt-7 md:grid-cols-2">
+              <div className="mt-8 grid gap-[18px] border-t border-ae-border pt-7 md:grid-cols-2">
                 <Input
                   label="Full name"
                   labelClassName="text-[#303030]"
@@ -281,7 +281,7 @@ export function SignupPage() {
               </div>
 
               {accountType === "attendee" ? (
-                <div className="mt-8 border-t border-[#E7E7E7] pt-7">
+                <div className="mt-8 border-t border-ae-border pt-7">
                   <PreferenceGroup
                     title="Favourite categories"
                     subtitle="optional"
@@ -310,14 +310,14 @@ export function SignupPage() {
                     />
                   </div>
 
-                  <label className="mt-[30px] flex items-start gap-3 rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] p-5">
+                  <label className="mt-[30px] flex items-start gap-3 rounded-[16px] border border-ae-border bg-mainbackground p-5">
                     <input
                       type="checkbox"
                       checked={newsletterEnabled}
                       onChange={(event) =>
                         setNewsletterEnabled(event.target.checked)
                       }
-                      className="mt-[2px] h-[18px] w-[18px] accent-[#1E1E1E]"
+                      className="mt-[2px] h-[18px] w-[18px] accent-foreground"
                     />
 
                     <span className="text-[14.5px] leading-[1.7] text-[#3A3A3A]">
@@ -340,7 +340,7 @@ export function SignupPage() {
                   : content.submitLabel}
               </Button>
 
-              <p className="mt-[18px] text-center text-[14.5px] text-[#6A6A6A]">
+              <p className="mt-[18px] text-center text-[14.5px] text-ae-muted">
                 {content.loginPrompt}{" "}
                 <Link
                   href={content.loginCtaHref}
@@ -405,7 +405,7 @@ function PreferenceGroup({
   return (
     <div>
       <h2 className="text-[15px] font-bold text-foreground">
-        {title} <span className="font-medium text-[#6A6A6A]">— {subtitle}</span>
+        {title} <span className="font-medium text-ae-muted">— {subtitle}</span>
       </h2>
 
       <div className="mt-4 flex flex-wrap gap-2.5">
@@ -420,8 +420,8 @@ function PreferenceGroup({
               aria-pressed={isActive}
               className={`inline-flex h-[40px] items-center rounded-full border px-[18px] text-[14px] transition-colors ${
                 isActive
-                  ? "border-foreground bg-[#1E1E1E] text-white"
-                  : "border-[#E7E7E7] bg-white text-[#3A3A3A] hover:border-foreground"
+                  ? "border-foreground bg-foreground text-white"
+                  : "border-ae-border bg-white text-[#3A3A3A] hover:border-foreground"
               }`}
             >
               {item.label}

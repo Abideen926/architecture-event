@@ -129,7 +129,7 @@ export function AdminFeaturedRequestsPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[#E7E7E7] pb-5">
+      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ae-border pb-5">
         <div>
           <Button
             href={appRoutes.admin.payments}
@@ -140,7 +140,7 @@ export function AdminFeaturedRequestsPage() {
             ← Back to Payments
           </Button>
           <Heading level="page">Featured Listing requests</Heading>
-          <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+          <p className="mt-2 text-[14.5px] text-ae-muted">
             {isLoading ? "Loading..." : `${meta?.total ?? 0} requests`}
           </p>
         </div>
@@ -170,8 +170,8 @@ export function AdminFeaturedRequestsPage() {
             }}
             className={`rounded-full border px-[13px] py-1.5 text-[12px] font-semibold transition-colors ${
               statusFilter === status
-                ? "border-[#1E1E1E] bg-[#1E1E1E] text-white"
-                : "border-[#E7E7E7] bg-white text-[#5F5F5F]"
+                ? "border-foreground bg-foreground text-white"
+                : "border-ae-border bg-white text-[#5F5F5F]"
             }`}
           >
             {status === "ALL" ? "All" : statusLabels[status]}
@@ -179,12 +179,12 @@ export function AdminFeaturedRequestsPage() {
         ))}
       </div>
 
-      <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
+      <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
         {isLoading ? (
           <div className="h-[240px] animate-pulse bg-[#F5F5F5]" />
         ) : isError ? (
           <div className="px-[26px] py-10 text-center">
-            <p className="text-[14.5px] text-[#6A6A6A]">
+            <p className="text-[14.5px] text-ae-muted">
               Couldn&apos;t load feature requests.
             </p>
             <Button
@@ -197,12 +197,12 @@ export function AdminFeaturedRequestsPage() {
             </Button>
           </div>
         ) : requests.length === 0 ? (
-          <div className="px-[26px] py-10 text-center text-[14.5px] text-[#6A6A6A]">
+          <div className="px-[26px] py-10 text-center text-[14.5px] text-ae-muted">
             No requests match this filter.
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-[1.8fr_1.4fr_1fr_0.9fr_1fr_auto] gap-[22px] border-b border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <div className="grid grid-cols-[1.8fr_1.4fr_1fr_0.9fr_1fr_auto] gap-[22px] border-b border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
               <span>EVENT</span>
               <span>ORGANIZER</span>
               <span>DATE</span>
@@ -221,7 +221,7 @@ export function AdminFeaturedRequestsPage() {
                   {request.event ? (
                     <Link
                       href={appRoutes.admin.eventDetail(request.event.id)}
-                      className="transition-colors hover:text-[var(--ae-accent-strong)]"
+                      className="transition-colors hover:text-ae-accent-strong"
                     >
                       {request.event.title}
                     </Link>
@@ -237,7 +237,7 @@ export function AdminFeaturedRequestsPage() {
                     </span>
                   ) : null}
                 </div>
-                <div className="text-[13.5px] text-[#6A6A6A]">
+                <div className="text-[13.5px] text-ae-muted">
                   {dateFormatter.format(new Date(request.createdAt))}
                 </div>
                 <div className="text-[14.5px] font-semibold text-foreground">
@@ -284,7 +284,7 @@ export function AdminFeaturedRequestsPage() {
       </section>
 
       {meta && meta.totalPages > 1 ? (
-        <div className="flex items-center justify-between gap-4 text-[13.5px] text-[#6A6A6A]">
+        <div className="flex items-center justify-between gap-4 text-[13.5px] text-ae-muted">
           <span>
             Page {meta.page} of {meta.totalPages}
           </span>
@@ -293,7 +293,7 @@ export function AdminFeaturedRequestsPage() {
               type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="rounded-[10px] border border-[#E7E7E7] bg-white px-4 py-1.5 text-[13.5px] font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-[10px] border border-ae-border bg-white px-4 py-1.5 text-[13.5px] font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-40"
             >
               Previous
             </button>
@@ -301,7 +301,7 @@ export function AdminFeaturedRequestsPage() {
               type="button"
               onClick={() => setPage((p) => Math.min(meta.totalPages, p + 1))}
               disabled={page >= meta.totalPages}
-              className="rounded-[10px] border border-[#E7E7E7] bg-white px-4 py-1.5 text-[13.5px] font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-[10px] border border-ae-border bg-white px-4 py-1.5 text-[13.5px] font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-40"
             >
               Next
             </button>

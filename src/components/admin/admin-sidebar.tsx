@@ -20,14 +20,14 @@ export function AdminSidebar() {
               href={item.href}
               className={`inline-flex items-center gap-3 rounded-[12px] px-4 py-3 text-[14.5px] transition-colors ${
                 active
-                  ? "bg-[#F1EEE8] font-semibold text-foreground"
-                  : "font-medium text-[#6A6A6A] hover:bg-[#F1EEE8]"
+                  ? "bg-background font-semibold text-foreground"
+                  : "font-medium text-ae-muted hover:bg-background"
               }`}
             >
               <Icon className="h-4 w-4 flex-none" />
               <span>{item.label}</span>
               {"badge" in item && item.badge ? (
-                <span className="ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#1E1E1E] px-1.5 text-[11px] font-bold text-white">
+                <span className="ml-auto inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-foreground px-1.5 text-[11px] font-bold text-white">
                   {item.badge}
                 </span>
               ) : null}

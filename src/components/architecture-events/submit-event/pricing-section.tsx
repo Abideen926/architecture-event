@@ -11,12 +11,12 @@ export function SubmitEventPricingSection() {
               key={plan.id}
               className={`relative flex min-h-[448px] flex-col rounded-[20px] border px-[42px] pb-[28px] pt-[28px] shadow-[0_18px_28px_-30px_rgba(20,20,20,0.4)] ${
                 plan.featured
-                  ? "border-[#1E1E1E] bg-[#FBF8F1]"
+                  ? "border-foreground bg-[#FBF8F1]"
                   : "border-[#E2DDD5] bg-white"
               }`}
             >
               {plan.badge ? (
-                <span className="absolute right-[22px] top-[-14px] rounded-[10px] bg-[var(--ae-accent)] px-3 py-[8px] text-[10px] font-bold tracking-[0.07em] text-white shadow-[0_10px_20px_-16px_rgba(176,138,69,0.55)]">
+                <span className="absolute right-[22px] top-[-14px] rounded-[10px] bg-ae-accent px-3 py-[8px] text-[10px] font-bold tracking-[0.07em] text-white shadow-[0_10px_20px_-16px_rgba(176,138,69,0.55)]">
                   {plan.badge}
                 </span>
               ) : null}
@@ -48,7 +48,7 @@ export function SubmitEventPricingSection() {
                       className="flex items-start gap-3 text-[14px] leading-[1.5] text-[#5E5E5E]"
                     >
                       <Check
-                        className="mt-[2px] h-[13px] w-[13px] shrink-0 text-[var(--ae-accent)]"
+                        className="mt-[2px] h-[13px] w-[13px] shrink-0 text-ae-accent"
                         strokeWidth={2.1}
                       />
                       <span>{benefit}</span>

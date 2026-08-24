@@ -55,15 +55,15 @@ export function AdminReportsPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-5">
-      <div className="flex flex-col gap-5 border-b border-[#E7E7E7] pb-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-5 border-b border-ae-border pb-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Heading level="page">Reports</Heading>
-          <p className="mt-2 text-[14.5px] text-[#6A6A6A]">Last 12 months.</p>
+          <p className="mt-2 text-[14.5px] text-ae-muted">Last 12 months.</p>
         </div>
 
         <a
           href="/api/admin/reports/export"
-          className="rounded-[10px] border border-[#1E1E1E] bg-white px-4 py-2 text-[13px] font-medium text-[#1E1E1E] transition-colors hover:bg-[#FAFAFA]"
+          className="rounded-[10px] border border-foreground bg-white px-4 py-2 text-[13px] font-medium text-foreground transition-colors hover:bg-mainbackground"
         >
           Export Data (CSV)
         </a>
@@ -71,12 +71,12 @@ export function AdminReportsPage() {
 
       {isLoading ? (
         <div className="grid gap-5">
-          <div className="h-[300px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
-          <div className="h-[220px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+          <div className="h-[300px] animate-pulse rounded-[20px] border border-ae-border bg-[#F5F5F5]" />
+          <div className="h-[220px] animate-pulse rounded-[20px] border border-ae-border bg-[#F5F5F5]" />
         </div>
       ) : isError || !data ? (
-        <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-          <p className="text-[15px] text-[#6A6A6A]">
+        <div className="rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center">
+          <p className="text-[15px] text-ae-muted">
             Couldn&apos;t load reports.
           </p>
           <Button
@@ -90,19 +90,19 @@ export function AdminReportsPage() {
         </div>
       ) : (
         <>
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <div className="flex items-start justify-between gap-4">
               <Heading level="card" as="h3">
                 Event volume
               </Heading>
 
-              <div className="flex flex-wrap gap-4 text-[12.5px] text-[#6A6A6A]">
+              <div className="flex flex-wrap gap-4 text-[12.5px] text-ae-muted">
                 <span className="inline-flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-[2px] bg-[#1E1E1E]" />
+                  <span className="h-2.5 w-2.5 rounded-[2px] bg-foreground" />
                   Submitted
                 </span>
                 <span className="inline-flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-[2px] bg-[var(--ae-accent)]" />
+                  <span className="h-2.5 w-2.5 rounded-[2px] bg-ae-accent" />
                   Published
                 </span>
               </div>
@@ -116,19 +116,19 @@ export function AdminReportsPage() {
                 >
                   <div className="flex h-[200px] items-end gap-[5px]">
                     <span
-                      className="w-[32px] rounded-t-[3px] bg-[#1E1E1E]"
+                      className="w-[32px] rounded-t-[3px] bg-foreground"
                       style={{
                         height: `${(entry.submitted / maxVolume) * 100}%`,
                       }}
                     />
                     <span
-                      className="w-[32px] rounded-t-[3px] bg-[var(--ae-accent)]"
+                      className="w-[32px] rounded-t-[3px] bg-ae-accent"
                       style={{
                         height: `${(entry.published / maxVolume) * 100}%`,
                       }}
                     />
                   </div>
-                  <span className="text-[10.5px] font-bold tracking-[0.12em] text-[#6A6A6A]">
+                  <span className="text-[10.5px] font-bold tracking-[0.12em] text-ae-muted">
                     {formatMonthLabel(entry.month)}
                   </span>
                 </div>
@@ -137,18 +137,18 @@ export function AdminReportsPage() {
           </section>
 
           <div className="grid gap-5 xl:grid-cols-[1.05fr_0.95fr]">
-            <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+            <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
               <Heading level="card" as="h3">
                 Lead volume
               </Heading>
-              <p className="mt-3 text-[14px] leading-[1.75] text-[#6A6A6A]">
+              <p className="mt-3 text-[14px] leading-[1.75] text-ae-muted">
                 Leads captured through saves and registration opt-ins.
               </p>
 
               <p className="mt-6 ae-serif text-[50px] leading-none tracking-[-0.03em] text-foreground">
                 {leadVolume?.total.toLocaleString() ?? 0}
               </p>
-              <p className="mt-2 text-[13px] text-[#6A6A6A]">
+              <p className="mt-2 text-[13px] text-ae-muted">
                 All time · {leadVolume?.thisMonthTotal ?? 0} in{" "}
                 {currentMonthLabel}
               </p>
@@ -162,12 +162,10 @@ export function AdminReportsPage() {
                         {row.value.toLocaleString()}
                       </span>
                     </div>
-                    <div className="h-[6px] rounded-full bg-[#F1EEE8]">
+                    <div className="h-[6px] rounded-full bg-background">
                       <div
                         className={`h-[6px] rounded-full ${
-                          row.tone === "dark"
-                            ? "bg-[#1E1E1E]"
-                            : "bg-[var(--ae-accent)]"
+                          row.tone === "dark" ? "bg-foreground" : "bg-ae-accent"
                         }`}
                         style={{ width: `${row.percentage}%` }}
                       />

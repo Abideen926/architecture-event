@@ -135,10 +135,10 @@ export function AdminEventsPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
-      <div className="flex flex-col gap-5 border-b border-[#E7E7E7] pb-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-5 border-b border-ae-border pb-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Heading level="page">Events</Heading>
-          <p className="mt-2 text-[14.5px] text-[#6A6A6A]">{subtitle}</p>
+          <p className="mt-2 text-[14.5px] text-ae-muted">{subtitle}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -151,8 +151,8 @@ export function AdminEventsPage() {
                 onClick={() => setView(tab)}
                 className={`rounded-full border px-[18px] py-[9px] text-[13.5px] font-semibold transition-colors ${
                   active
-                    ? "border-[#1E1E1E] bg-[#1E1E1E] text-white"
-                    : "border-[#E7E7E7] bg-white text-foreground"
+                    ? "border-foreground bg-foreground text-white"
+                    : "border-ae-border bg-white text-foreground"
                 }`}
               >
                 {tab}
@@ -177,8 +177,8 @@ export function AdminEventsPage() {
                   }}
                   className={`rounded-full border px-[17px] py-[9px] text-[13.5px] transition-colors ${
                     active
-                      ? "border-[#1E1E1E] bg-[#1E1E1E] font-semibold text-white"
-                      : "border-[#E7E7E7] bg-white text-[#5F5F5F]"
+                      ? "border-foreground bg-foreground font-semibold text-white"
+                      : "border-ae-border bg-white text-[#5F5F5F]"
                   }`}
                 >
                   {tab === "All" ? "All" : EVENT_STATUS_LABELS[tab]}
@@ -192,13 +192,13 @@ export function AdminEventsPage() {
               {[0, 1, 2].map((key) => (
                 <div
                   key={key}
-                  className="h-[70px] animate-pulse rounded-[16px] border border-[#E7E7E7] bg-[#F5F5F5]"
+                  className="h-[70px] animate-pulse rounded-[16px] border border-ae-border bg-[#F5F5F5]"
                 />
               ))}
             </div>
           ) : isError ? (
-            <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-              <p className="text-[15px] text-[#6A6A6A]">
+            <div className="rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center">
+              <p className="text-[15px] text-ae-muted">
                 Couldn&apos;t load events.
               </p>
               <Button
@@ -211,13 +211,13 @@ export function AdminEventsPage() {
               </Button>
             </div>
           ) : rows.length === 0 ? (
-            <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center text-[15px] text-[#6A6A6A]">
+            <div className="rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center text-[15px] text-ae-muted">
               No events match this filter.
             </div>
           ) : (
             <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)]">
-              <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
-                <div className="grid grid-cols-[2.2fr_1.2fr_1fr_0.9fr_auto] gap-[22px] border-b border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+              <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
+                <div className="grid grid-cols-[2.2fr_1.2fr_1fr_0.9fr_auto] gap-[22px] border-b border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                   <span>EVENT</span>
                   <span>ORGANIZER</span>
                   <span>CATEGORY</span>
@@ -230,7 +230,7 @@ export function AdminEventsPage() {
                     key={row.id}
                     type="button"
                     onClick={() => setSelectedId(row.id)}
-                    className={`grid w-full grid-cols-[2.2fr_1.2fr_1fr_0.9fr_auto] items-center gap-[22px] border-t border-[#F1F1F1] px-[26px] py-[18px] text-left transition-colors hover:bg-[#FAFAFA] ${
+                    className={`grid w-full grid-cols-[2.2fr_1.2fr_1fr_0.9fr_auto] items-center gap-[22px] border-t border-[#F1F1F1] px-[26px] py-[18px] text-left transition-colors hover:bg-mainbackground ${
                       selectedRow?.id === row.id ? "bg-[#F7F3EC]" : "bg-white"
                     }`}
                   >
@@ -243,7 +243,7 @@ export function AdminEventsPage() {
                     <div className="text-[14.5px] text-[#3A3A3A]">
                       {row.category?.name ?? "—"}
                     </div>
-                    <div className="text-[14px] text-[#6A6A6A]">
+                    <div className="text-[14px] text-ae-muted">
                       {row.submittedAt
                         ? dateFormatter.format(new Date(row.submittedAt))
                         : "—"}
@@ -256,9 +256,9 @@ export function AdminEventsPage() {
               </section>
 
               {selectedRow ? (
-                <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+                <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+                    <p className="text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                       {EVENT_STATUS_LABELS[selectedRow.status].toUpperCase()}
                     </p>
                     <Button
@@ -273,21 +273,21 @@ export function AdminEventsPage() {
                   <Heading level="card" as="h3" className="mt-3">
                     {selectedRow.title}
                   </Heading>
-                  <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+                  <p className="mt-2 text-[14.5px] text-ae-muted">
                     {selectedRow.organizer?.fullName ?? "—"} ·{" "}
                     {selectedRow.category?.name ?? "—"}
                   </p>
 
-                  <div className="mt-5 space-y-4 border-t border-[#E7E7E7] pt-5 text-[14.5px] leading-[1.8] text-[#4E4E4E]">
+                  <div className="mt-5 space-y-4 border-t border-ae-border pt-5 text-[14.5px] leading-[1.8] text-[#4E4E4E]">
                     <p>{selectedRow.description}</p>
                     {selectedRow.latestAdminNote ? (
                       <p>{selectedRow.latestAdminNote}</p>
                     ) : null}
                   </div>
 
-                  <div className="mt-5 grid gap-3 border-t border-[#E7E7E7] pt-5 text-[14px] text-[#3A3A3A]">
+                  <div className="mt-5 grid gap-3 border-t border-ae-border pt-5 text-[14px] text-[#3A3A3A]">
                     <div className="flex items-start justify-between gap-4">
-                      <span className="text-[#6A6A6A]">When</span>
+                      <span className="text-ae-muted">When</span>
                       <span className="text-right font-medium text-foreground">
                         {dateTimeFormatter.format(
                           new Date(selectedRow.startAt),
@@ -295,7 +295,7 @@ export function AdminEventsPage() {
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-4">
-                      <span className="text-[#6A6A6A]">Location</span>
+                      <span className="text-ae-muted">Location</span>
                       <span className="text-right font-medium text-foreground">
                         {selectedRow.isOnline
                           ? "Online"
@@ -303,7 +303,7 @@ export function AdminEventsPage() {
                       </span>
                     </div>
                     <div className="flex items-start justify-between gap-4">
-                      <span className="text-[#6A6A6A]">Package</span>
+                      <span className="text-ae-muted">Package</span>
                       <span className="text-right font-medium text-foreground">
                         {selectedRow.isFeatured
                           ? "Featured Listing — $49"
@@ -312,7 +312,7 @@ export function AdminEventsPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 border-t border-[#E7E7E7] pt-5">
+                  <div className="mt-6 border-t border-ae-border pt-5">
                     <div className="flex flex-wrap gap-2.5">
                       <Button
                         size="sm"
@@ -324,7 +324,7 @@ export function AdminEventsPage() {
                       <button
                         type="button"
                         onClick={() => setNoteModal("changes")}
-                        className="rounded-[10px] border border-[#1E1E1E] bg-white px-4 py-1.5 text-[13.5px] font-medium text-[#1E1E1E]"
+                        className="rounded-[10px] border border-foreground bg-white px-4 py-1.5 text-[13.5px] font-medium text-foreground"
                       >
                         Request changes
                       </button>
@@ -352,19 +352,17 @@ export function AdminEventsPage() {
 
       {view === "Archive" ? (
         <div className="mt-6 space-y-5">
-          <p className="text-[14.5px] text-[#6A6A6A]">
-            Past events, read-only.
-          </p>
+          <p className="text-[14.5px] text-ae-muted">Past events, read-only.</p>
 
           {isArchiveLoading ? (
-            <div className="h-[200px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+            <div className="h-[200px] animate-pulse rounded-[20px] border border-ae-border bg-[#F5F5F5]" />
           ) : (archiveData?.items.length ?? 0) === 0 ? (
-            <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center text-[15px] text-[#6A6A6A]">
+            <div className="rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center text-[15px] text-ae-muted">
               No archived events yet.
             </div>
           ) : (
-            <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
-              <div className="grid grid-cols-[2.15fr_1.2fr_1fr_0.9fr] gap-[22px] border-b border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
+              <div className="grid grid-cols-[2.15fr_1.2fr_1fr_0.9fr] gap-[22px] border-b border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                 <span>EVENT</span>
                 <span>ORGANIZER</span>
                 <span>CATEGORY</span>
@@ -387,7 +385,7 @@ export function AdminEventsPage() {
                   <div className="text-[14.5px] text-[#3A3A3A]">
                     {row.category?.name ?? "—"}
                   </div>
-                  <div className="text-[14px] text-[#6A6A6A]">
+                  <div className="text-[14px] text-ae-muted">
                     {dateFormatter.format(new Date(row.startAt))}
                   </div>
                 </div>
@@ -447,14 +445,14 @@ export function AdminEventsPage() {
 function renderStatus(status: EventStatus) {
   if (status === "PUBLISHED") {
     return (
-      <span className="inline-flex rounded-full border border-[#1E1E1E] bg-[#1E1E1E] px-[14px] py-1.5 text-[12px] font-semibold text-white">
+      <span className="inline-flex rounded-full border border-foreground bg-foreground px-[14px] py-1.5 text-[12px] font-semibold text-white">
         {EVENT_STATUS_LABELS[status]}
       </span>
     );
   }
   if (status === "CHANGES_REQUESTED") {
     return (
-      <span className="inline-flex rounded-full border border-[#B08A45] bg-white px-[14px] py-1.5 text-[12px] font-semibold text-[#B08A45]">
+      <span className="inline-flex rounded-full border border-ae-accent bg-white px-[14px] py-1.5 text-[12px] font-semibold text-ae-accent">
         {EVENT_STATUS_LABELS[status]}
       </span>
     );
@@ -505,11 +503,11 @@ function TaxonomySettings() {
 
   return (
     <div className="mt-6 max-w-[780px] space-y-5">
-      <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[32px] py-[32px]">
+      <section className="rounded-[20px] border border-ae-border bg-white px-[32px] py-[32px]">
         <Heading level="card" as="h3">
           Event categories
         </Heading>
-        <p className="mt-4 text-[14.5px] leading-[1.75] text-[#6A6A6A]">
+        <p className="mt-4 text-[14.5px] leading-[1.75] text-ae-muted">
           These drive the public filters and the organizer submission form.
         </p>
 
@@ -528,8 +526,8 @@ function TaxonomySettings() {
               }
               className={`inline-flex h-[36px] items-center rounded-full border px-[14px] text-[14px] ${
                 category.isActive
-                  ? "border-[#E7E7E7] text-[#444444]"
-                  : "border-[#E7E7E7] bg-[#F1F1F1] text-[#9A9A9A] line-through"
+                  ? "border-ae-border text-[#444444]"
+                  : "border-ae-border bg-[#F1F1F1] text-[#9A9A9A] line-through"
               }`}
             >
               {category.name}
@@ -543,23 +541,23 @@ function TaxonomySettings() {
             value={newCategory}
             onChange={(event) => setNewCategory(event.target.value)}
             placeholder="New category name"
-            className="h-[40px] flex-1 rounded-[12px] border border-[#E7E7E7] px-4 text-[14px] text-foreground outline-none"
+            className="h-[40px] flex-1 rounded-[12px] border border-ae-border px-4 text-[14px] text-foreground outline-none"
           />
           <button
             type="button"
             onClick={handleAddCategory}
-            className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-[#1E1E1E] bg-white px-6 text-[14px] font-semibold text-[#1E1E1E]"
+            className="inline-flex h-[40px] items-center justify-center rounded-[12px] border border-foreground bg-white px-6 text-[14px] font-semibold text-foreground"
           >
             Add category
           </button>
         </div>
       </section>
 
-      <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[32px] py-[32px]">
+      <section className="rounded-[20px] border border-ae-border bg-white px-[32px] py-[32px]">
         <Heading level="card" as="h3">
           Industries
         </Heading>
-        <p className="mt-4 text-[14.5px] leading-[1.75] text-[#6A6A6A]">
+        <p className="mt-4 text-[14.5px] leading-[1.75] text-ae-muted">
           The industry an event is targeted at, shown alongside its category.
         </p>
         <div className="mt-4 flex flex-wrap gap-2.5">
@@ -568,8 +566,8 @@ function TaxonomySettings() {
               key={industry.id}
               className={`inline-flex h-[36px] items-center rounded-full border px-[14px] text-[14px] ${
                 industry.isActive
-                  ? "border-[#E7E7E7] text-[#444444]"
-                  : "border-[#E7E7E7] bg-[#F1F1F1] text-[#9A9A9A]"
+                  ? "border-ae-border text-[#444444]"
+                  : "border-ae-border bg-[#F1F1F1] text-[#9A9A9A]"
               }`}
             >
               {industry.name}
@@ -578,8 +576,8 @@ function TaxonomySettings() {
         </div>
       </section>
 
-      <section className="rounded-[20px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-[32px] py-[26px]">
-        <p className="text-[13.5px] leading-[1.7] text-[#6A6A6A]">
+      <section className="rounded-[20px] border border-dashed border-ae-border bg-mainbackground px-[32px] py-[26px]">
+        <p className="text-[13.5px] leading-[1.7] text-ae-muted">
           Featured Listing and Brand Spotlight pricing management is not yet
           available — the backend doesn&apos;t expose a settings endpoint for
           these values yet. The Featured Listing price is currently fixed at $49

@@ -10,7 +10,10 @@ import {
   useGetOrganizerProfileQuery,
   useUpdateOrganizerProfileMutation,
 } from "@/features/organizer/organizer-api";
-import { useChangeMyPasswordMutation, useUpdateMyProfileMutation } from "@/features/users/users-api";
+import {
+  useChangeMyPasswordMutation,
+  useUpdateMyProfileMutation,
+} from "@/features/users/users-api";
 import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { PasswordInput } from "@/components/ui/password-input";
@@ -30,19 +33,26 @@ export function OrganizerAccountPage() {
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
-  const [changePassword, { isLoading: isChangingPassword }] = useChangeMyPasswordMutation();
+  const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>(
+    {},
+  );
+  const [changePassword, { isLoading: isChangingPassword }] =
+    useChangeMyPasswordMutation();
 
   const [fullName, setFullName] = useState("");
   const [organizationName, setOrganizationName] = useState("");
   const [website, setWebsite] = useState("");
   const [phone, setPhone] = useState("");
   const [orgErrors, setOrgErrors] = useState<Record<string, string>>({});
-  const [updateProfile, { isLoading: isSavingProfile }] = useUpdateMyProfileMutation();
-  const [updateOrgProfile, { isLoading: isSavingOrg }] = useUpdateOrganizerProfileMutation();
+  const [updateProfile, { isLoading: isSavingProfile }] =
+    useUpdateMyProfileMutation();
+  const [updateOrgProfile, { isLoading: isSavingOrg }] =
+    useUpdateOrganizerProfileMutation();
 
   const [logout] = useLogoutMutation();
-  const [partnerState, setPartnerState] = useState<"closed" | "open" | "sent">("closed");
+  const [partnerState, setPartnerState] = useState<"closed" | "open" | "sent">(
+    "closed",
+  );
 
   useEffect(() => {
     if (me) setFullName(me.fullName);
@@ -59,7 +69,9 @@ export function OrganizerAccountPage() {
   async function handleChangePassword() {
     if (!currentPassword || !newPassword) {
       setPasswordErrors({
-        ...(currentPassword ? {} : { currentPassword: "Current password is required" }),
+        ...(currentPassword
+          ? {}
+          : { currentPassword: "Current password is required" }),
         ...(newPassword ? {} : { newPassword: "New password is required" }),
       });
       return;
@@ -73,7 +85,9 @@ export function OrganizerAccountPage() {
       setNewPassword("");
     } catch (error) {
       setPasswordErrors(getApiFieldErrors(error));
-      toast.error("Couldn't update password", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't update password", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -91,7 +105,9 @@ export function OrganizerAccountPage() {
       toast.success("Changes saved");
     } catch (error) {
       setOrgErrors(getApiFieldErrors(error));
-      toast.error("Couldn't save changes", { description: getApiErrorMessage(error) });
+      toast.error("Couldn't save changes", {
+        description: getApiErrorMessage(error),
+      });
     }
   }
 
@@ -109,14 +125,14 @@ export function OrganizerAccountPage() {
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
-      <div className="border-b border-[#E7E7E7] pb-5">
+      <div className="border-b border-ae-border pb-5">
         <Heading level="page">Account</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           Your login, your organization details, and partnership requests.
         </p>
       </div>
 
-      <div className="mt-[20px] rounded-[20px] border border-[#E7E7E7] p-6 md:px-6 md:py-7">
+      <div className="mt-[20px] rounded-[20px] border border-ae-border p-6 md:px-6 md:py-7">
         <Heading level="card" as="h3">
           Login credentials
         </Heading>
@@ -126,11 +142,13 @@ export function OrganizerAccountPage() {
           value={me?.email ?? ""}
           disabled
           wrapperClassName="mt-[18px] max-w-[400px]"
-          className="cursor-not-allowed bg-[#FAFAFA] text-[#6A6A6A]"
+          className="cursor-not-allowed bg-mainbackground text-ae-muted"
         />
         <div className="mt-[10px] grid gap-[16px] md:grid-cols-2">
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">Current password</span>
+            <span className="mb-[9px] block text-[13.5px] font-semibold">
+              Current password
+            </span>
             <PasswordInput
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
@@ -144,7 +162,9 @@ export function OrganizerAccountPage() {
             ) : null}
           </label>
           <label className="block">
-            <span className="mb-[9px] block text-[13.5px] font-semibold">New password</span>
+            <span className="mb-[9px] block text-[13.5px] font-semibold">
+              New password
+            </span>
             <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -170,7 +190,7 @@ export function OrganizerAccountPage() {
         </Button>
       </div>
 
-      <div className="mt-[18px] rounded-[20px] border border-[#E7E7E7] p-6 md:px-6 md:py-7">
+      <div className="mt-[18px] rounded-[20px] border border-ae-border p-6 md:px-6 md:py-7">
         <Heading level="card" as="h3">
           Organization
         </Heading>
@@ -195,7 +215,12 @@ export function OrganizerAccountPage() {
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
-          <Input label="Phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          <Input
+            label="Phone"
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
         </div>
         <button
           type="button"
@@ -207,14 +232,14 @@ export function OrganizerAccountPage() {
         </button>
       </div>
 
-      <div className="mt-[18px] rounded-[20px] border border-[#E7E7E7] p-6 md:px-6 md:py-7">
+      <div className="mt-[18px] rounded-[20px] border border-ae-border p-6 md:px-6 md:py-7">
         <Heading level="card" as="h3">
           Partnership request
         </Heading>
-        <p className="mt-3 max-w-[62ch] text-[15.5px] leading-[1.75] text-[#6A6A6A]">
-          A formal partnership lets attendees register for your events natively on
-          Architecture Events, with registrations fully tracked on your listing instead
-          of handed off to an external page.
+        <p className="mt-3 max-w-[62ch] text-[15.5px] leading-[1.75] text-ae-muted">
+          A formal partnership lets attendees register for your events natively
+          on Architecture Events, with registrations fully tracked on your
+          listing instead of handed off to an external page.
         </p>
 
         {partnerState === "closed" ? (
@@ -229,10 +254,14 @@ export function OrganizerAccountPage() {
         ) : null}
 
         {partnerState === "open" ? (
-          <div className="mt-6 grid gap-[18px] border-t border-[#E7E7E7] pt-[26px] animate-[fadeIn_0.3s_ease]">
+          <div className="mt-6 grid gap-[18px] border-t border-ae-border pt-[26px] animate-[fadeIn_0.3s_ease]">
             <div className="grid gap-[18px] md:grid-cols-2">
               <Input label="Your name" type="text" defaultValue={fullName} />
-              <Input label="Company" type="text" defaultValue={organizationName} />
+              <Input
+                label="Company"
+                type="text"
+                defaultValue={organizationName}
+              />
             </div>
             <Textarea
               label="Message"
@@ -240,8 +269,13 @@ export function OrganizerAccountPage() {
               placeholder="Tell us about your events and how many you run each year."
             />
             <div className="flex flex-wrap gap-3">
-              <Button onClick={() => setPartnerState("sent")}>Send request</Button>
-              <Button variant="secondary" onClick={() => setPartnerState("closed")}>
+              <Button onClick={() => setPartnerState("sent")}>
+                Send request
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => setPartnerState("closed")}
+              >
                 Cancel
               </Button>
             </div>
@@ -249,20 +283,20 @@ export function OrganizerAccountPage() {
         ) : null}
 
         {partnerState === "sent" ? (
-          <div className="mt-6 flex items-start gap-3 rounded-[16px] border border-[#E7E7E7] bg-[#F1EEE8] px-[22px] py-5 animate-[fadeIn_0.3s_ease]">
-            <span className="mt-1 inline-flex h-[20px] w-[20px] items-center justify-center text-[var(--ae-accent)]">
+          <div className="mt-6 flex items-start gap-3 rounded-[16px] border border-ae-border bg-background px-[22px] py-5 animate-[fadeIn_0.3s_ease]">
+            <span className="mt-1 inline-flex h-[20px] w-[20px] items-center justify-center text-ae-accent">
               <Check className="h-[17px] w-[17px]" strokeWidth={2.1} />
             </span>
             <p className="text-[15px] leading-[1.7] text-[#3A3A3A]">
-              Request sent. The Architecture Events team will follow up by email within
-              a few business days.
+              Request sent. The Architecture Events team will follow up by email
+              within a few business days.
             </p>
           </div>
         ) : null}
       </div>
 
-      <div className="mt-[18px] flex flex-wrap items-center justify-between gap-5 border-t border-[#E7E7E7] pt-[16px]">
-        <p className="text-[14.5px] text-[#6A6A6A]">Signed in as {me?.email}</p>
+      <div className="mt-[18px] flex flex-wrap items-center justify-between gap-5 border-t border-ae-border pt-[16px]">
+        <p className="text-[14.5px] text-ae-muted">Signed in as {me?.email}</p>
         <Button
           variant="ghost"
           size="text"

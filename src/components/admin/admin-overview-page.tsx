@@ -68,9 +68,9 @@ export function AdminOverviewPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
-      <section className="border-b border-[#E7E7E7] pb-5">
+      <section className="border-b border-ae-border pb-5">
         <Heading level="page">Overview</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           A live snapshot of events, accounts, and Featured Listing requests.
         </p>
       </section>
@@ -80,13 +80,13 @@ export function AdminOverviewPage() {
           {[0, 1, 2, 3].map((key) => (
             <div
               key={key}
-              className="h-[190px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]"
+              className="h-[190px] animate-pulse rounded-[20px] border border-ae-border bg-[#F5F5F5]"
             />
           ))}
         </section>
       ) : isError || !stats ? (
-        <section className="mt-6 rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-          <p className="text-[15px] text-[#6A6A6A]">
+        <section className="mt-6 rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center">
+          <p className="text-[15px] text-ae-muted">
             Couldn&apos;t load overview stats.
           </p>
           <Button
@@ -101,21 +101,21 @@ export function AdminOverviewPage() {
       ) : (
         <>
           <section className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <article className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                 TOTAL EVENTS
               </p>
               <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-foreground">
                 {stats.events.total}
               </p>
-              <div className="mt-4 border-t border-[#E7E7E7] pt-4">
+              <div className="mt-4 border-t border-ae-border pt-4">
                 <div className="space-y-2.5">
                   {(
                     ["UNDER_REVIEW", "CHANGES_REQUESTED", "PUBLISHED"] as const
                   ).map((status) => (
                     <div
                       key={status}
-                      className="flex items-center justify-between gap-3 text-[13.5px] text-[#6A6A6A]"
+                      className="flex items-center justify-between gap-3 text-[13.5px] text-ae-muted"
                     >
                       <span>{EVENT_STATUS_LABELS[status]}</span>
                       <span className="font-semibold text-foreground">
@@ -127,55 +127,55 @@ export function AdminOverviewPage() {
               </div>
             </article>
 
-            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <article className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                 ORGANIZERS
               </p>
               <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-foreground">
                 {stats.organizers.total}
               </p>
-              <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">
+              <div className="mt-4 border-t border-ae-border pt-4">
+                <p className="text-[13.5px] text-ae-muted">
                   Registered organizer accounts
                 </p>
               </div>
             </article>
 
-            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <article className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                 ATTENDEES
               </p>
               <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-foreground">
                 {stats.attendees.total}
               </p>
-              <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">
+              <div className="mt-4 border-t border-ae-border pt-4">
+                <p className="text-[13.5px] text-ae-muted">
                   Registered attendee accounts
                 </p>
               </div>
             </article>
 
-            <article className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <article className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                 FEATURED LISTING REQUESTS
               </p>
-              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-[var(--ae-accent)]">
+              <p className="mt-4 ae-serif text-[40px] leading-none tracking-[-0.03em] text-ae-accent">
                 {stats.featureRequests.pendingReview}
               </p>
-              <div className="mt-4 border-t border-[#E7E7E7] pt-4">
-                <p className="text-[13.5px] text-[#6A6A6A]">
+              <div className="mt-4 border-t border-ae-border pt-4">
+                <p className="text-[13.5px] text-ae-muted">
                   Awaiting admin review
                 </p>
               </div>
             </article>
           </section>
 
-          <section className="mt-7 overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
-            <div className="flex items-center justify-between gap-4 border-b border-[#E7E7E7] px-[26px] py-5">
+          <section className="mt-7 overflow-hidden rounded-[20px] border border-ae-border bg-white">
+            <div className="flex items-center justify-between gap-4 border-b border-ae-border px-[26px] py-5">
               <Heading level="card" as="h2">
                 Needs your attention
               </Heading>
-              <p className="text-[13.5px] text-[#6A6A6A]">
+              <p className="text-[13.5px] text-ae-muted">
                 {attentionItems.length} items
               </p>
             </div>
@@ -193,16 +193,14 @@ export function AdminOverviewPage() {
                   >
                     <span
                       className={`mt-1 h-2 w-2 flex-none rounded-full ${
-                        item.tone === "accent"
-                          ? "bg-[var(--ae-accent)]"
-                          : "bg-[#6A6A6A]"
+                        item.tone === "accent" ? "bg-ae-accent" : "bg-ae-muted"
                       }`}
                     />
                     <div className="min-w-0 flex-1">
                       <h3 className="text-[15.5px] font-semibold text-foreground">
                         {item.title}
                       </h3>
-                      <p className="text-[13.5px] leading-[1.6] text-[#6A6A6A]">
+                      <p className="text-[13.5px] leading-[1.6] text-ae-muted">
                         {item.meta}
                       </p>
                     </div>
@@ -210,7 +208,7 @@ export function AdminOverviewPage() {
                       href={item.href}
                       variant="ghost"
                       size="text"
-                      className="text-[13.5px] font-semibold whitespace-nowrap !text-[var(--ae-accent)]"
+                      className="text-[13.5px] font-semibold whitespace-nowrap !text-ae-accent"
                     >
                       {item.actionLabel} →
                     </Button>
@@ -218,7 +216,7 @@ export function AdminOverviewPage() {
                 ))}
               </div>
             ) : (
-              <div className="px-[26px] py-10 text-center text-[14.5px] text-[#6A6A6A]">
+              <div className="px-[26px] py-10 text-center text-[14.5px] text-ae-muted">
                 Nothing needs your attention right now.
               </div>
             )}

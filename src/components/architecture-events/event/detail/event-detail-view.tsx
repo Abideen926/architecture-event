@@ -14,20 +14,23 @@ export function EventDetailView({ id }: EventDetailViewProps) {
 
   if (isLoading) {
     return (
-      <div className="ae-shell bg-[#F7F4EF]">
-        <div className="h-[482px] animate-pulse bg-[#E7E1D6]" />
+      <div className="ae-shell bg-background">
+        <div className="h-[482px] animate-pulse bg-background" />
       </div>
     );
   }
 
   if (isError) {
-    const statusCode = (error as { statusCode?: number } | undefined)?.statusCode;
+    const statusCode = (error as { statusCode?: number } | undefined)
+      ?.statusCode;
     if (statusCode === 404) {
       notFound();
     }
     return (
-      <div className="ae-shell flex min-h-[50vh] items-center justify-center bg-[#F7F4EF] text-center">
-        <p className="text-[16px] text-[#6A6A6A]">Couldn&apos;t load this event. Please try again.</p>
+      <div className="ae-shell flex min-h-[50vh] items-center justify-center bg-background text-center">
+        <p className="text-[16px] text-ae-muted">
+          Couldn&apos;t load this event. Please try again.
+        </p>
       </div>
     );
   }
@@ -35,7 +38,7 @@ export function EventDetailView({ id }: EventDetailViewProps) {
   if (!event) return null;
 
   return (
-    <div className="ae-shell bg-[#F7F4EF]">
+    <div className="ae-shell bg-background">
       <main>
         <EventDetailHero event={event} />
         <EventDetailContent event={event} />

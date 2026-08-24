@@ -27,7 +27,7 @@ export function EventRelatedSection({
   if (related.length === 0) return null;
 
   return (
-    <section className="border-y border-[#E7E7E7] bg-[#FAFAFA] py-10 md:py-23 mt-15">
+    <section className="border-y border-ae-border bg-mainbackground py-10 md:py-23 mt-15">
       <div className="ae-container">
         <div className="flex items-end justify-between gap-6">
           <h2 className="ae-serif text-[32px] leading-[1.04] tracking-[-0.045em] text-foreground md:text-[33px] font-semibold mb-4">
@@ -35,7 +35,7 @@ export function EventRelatedSection({
           </h2>
           <Link
             href={appRoutes.architectureEvents.events}
-            className="hidden items-center gap-2 text-[14px] font-semibold !text-[var(--ae-accent)] transition-colors !hover:text-[var(--ae-accent-strong)] md:inline-flex"
+            className="hidden items-center gap-2 text-[14px] font-semibold !text-ae-accent transition-colors !hover:text-ae-accent-strong md:inline-flex"
           >
             View all events
             <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
@@ -50,7 +50,7 @@ export function EventRelatedSection({
               <Link
                 key={event.id}
                 href={appRoutes.architectureEvents.eventDetail(event.id)}
-                className="group overflow-hidden rounded-[18px] border border-[#E7E1D6] bg-white shadow-[0_10px_24px_-22px_rgba(32,32,32,0.18)] transition-transform duration-300 hover:-translate-y-1"
+                className="group overflow-hidden rounded-[18px] border border-background bg-white shadow-[0_10px_24px_-22px_rgba(32,32,32,0.18)] transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="relative h-[176px] overflow-hidden bg-[#D8D0C2]">
                   {thumbnail ? (

@@ -88,7 +88,7 @@ export function ForgotPasswordPage() {
               </Button>
             </form>
 
-            <p className="mt-[26px] text-[14.5px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-[26px] text-[14.5px] leading-[1.75] text-ae-muted">
               {content.backPrompt}{" "}
               <Link
                 href={content.backCtaHref}
@@ -100,7 +100,7 @@ export function ForgotPasswordPage() {
           </div>
         </section>
 
-        <section className="relative hidden overflow-hidden bg-[#1E1E1E] xl:block">
+        <section className="relative hidden overflow-hidden bg-foreground xl:block">
           <Image
             src={content.image}
             alt="Modern building facade"

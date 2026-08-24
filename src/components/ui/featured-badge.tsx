@@ -9,7 +9,7 @@ type FeaturedBadgeProps = {
 export function FeaturedBadge({ className }: FeaturedBadgeProps) {
   return (
     <span
-      className={`inline-flex rounded-full bg-[var(--ae-accent)] px-[12px] py-[5px] text-[10px] font-bold tracking-[0.12em] text-white shadow-sm ${className ?? ""}`}
+      className={`inline-flex rounded-full bg-ae-accent px-[12px] py-[5px] text-[10px] font-bold tracking-[0.12em] text-white shadow-sm ${className ?? ""}`}
     >
       FEATURED
     </span>

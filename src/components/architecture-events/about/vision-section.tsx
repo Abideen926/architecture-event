@@ -16,7 +16,7 @@ export function AboutVisionSection() {
 
       <div className="ae-container relative z-10">
         <div className="mx-auto flex max-w-[1150px] flex-col items-center text-center">
-          <p className="text-[12px] font-semibold tracking-[0.24em] text-[var(--ae-accent)]">
+          <p className="text-[12px] font-semibold tracking-[0.24em] text-ae-accent">
             OUR VISION
           </p>
           <h2 className="ae-serif mt-6 max-w-[32ch] text-balance text-[44px] font-semibold leading-[1.08] tracking-[-0.05em] text-white sm:text-[45px] lg:text-[50px]">

@@ -25,11 +25,13 @@ const companyLinks = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-[#1E1E1E] text-[rgba(255,255,255,0.72)]">
+    <footer className="bg-foreground text-[rgba(255,255,255,0.72)]">
       <div className="ae-container grid gap-14 py-[76px] pb-[34px] lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
-            <span className="ae-serif ae-accent-text text-[34px] leading-none">A</span>
+            <span className="ae-serif ae-accent-text text-[34px] leading-none">
+              A
+            </span>
             <span className="text-[13px] font-bold leading-[1.25] tracking-[0.14em] text-white">
               ARCHITECTURE
               <br />
@@ -37,8 +39,8 @@ export function SiteFooter() {
             </span>
           </div>
           <p className="mt-[22px] max-w-[34ch] text-[14.5px] leading-[1.75]">
-            Events, brands, and venues for architecture, engineering, construction,
-            and design professionals.
+            Events, brands, and venues for architecture, engineering,
+            construction, and design professionals.
           </p>
           <div className="mt-[26px] max-w-[360px]">
             <p className="mb-[10px] text-[11.5px] font-bold tracking-[0.13em] text-white">
@@ -52,7 +54,7 @@ export function SiteFooter() {
               />
               <button
                 type="button"
-                className="h-[46px] rounded-xl bg-white px-5 text-[14.5px] font-semibold text-[#1E1E1E] transition-colors hover:bg-[var(--ae-accent)] hover:text-white"
+                className="h-[46px] rounded-xl bg-white px-5 text-[14.5px] font-semibold text-foreground transition-colors hover:bg-ae-accent hover:text-white"
               >
                 Subscribe
               </button>

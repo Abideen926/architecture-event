@@ -42,7 +42,7 @@ export function BrowseHeroSection() {
   }
 
   return (
-    <section className="bg-[var(--mainbackground)] border-b border-[#E7E7E7] pb-10 pt-14">
+    <section className="bg-mainbackground border-b border-ae-border pb-10 pt-14">
       <div className="ae-container">
         <div className="ae-browse-shell">
           <p className="ae-section-kicker">BROWSE EVENTS</p>
@@ -182,12 +182,12 @@ function BrowseField({
       </button>
 
       {open && options ? (
-        <div className="absolute left-0 top-full z-20 mt-2 w-full overflow-hidden rounded-[14px] border border-[#E7E7E7] bg-white shadow-[0_18px_36px_-24px_rgba(32,32,32,0.24)]">
+        <div className="absolute left-0 top-full z-20 mt-2 w-full overflow-hidden rounded-[14px] border border-ae-border bg-white shadow-[0_18px_36px_-24px_rgba(32,32,32,0.24)]">
           {options.map((option) => (
             <button
               key={option}
               type="button"
-              className="flex h-[44px] w-full items-center px-4 text-left text-[14px] text-foreground transition-colors hover:bg-[#FAFAFA]"
+              className="flex h-[44px] w-full items-center px-4 text-left text-[14px] text-foreground transition-colors hover:bg-mainbackground"
               onClick={() => onSelect?.(option)}
             >
               {option}

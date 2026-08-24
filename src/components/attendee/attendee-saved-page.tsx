@@ -34,10 +34,10 @@ export function AttendeeSavedPage() {
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
-      <div className="flex flex-wrap items-end justify-between gap-6 border-b border-[#E7E7E7] pb-5">
+      <div className="flex flex-wrap items-end justify-between gap-6 border-b border-ae-border pb-5">
         <div>
           <Heading level="page">Saved Events</Heading>
-          <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+          <p className="mt-2 text-[14.5px] text-ae-muted">
             {isLoading
               ? "Loading..."
               : savedEvents.length === 0
@@ -51,7 +51,7 @@ export function AttendeeSavedPage() {
           href={appRoutes.architectureEvents.events}
           variant="ghost"
           size="text"
-          className="!text-[var(--ae-accent)] text-[14.5px] font-semibold"
+          className="!text-ae-accent text-[14.5px] font-semibold"
         >
           Browse all events →
         </Button>
@@ -62,13 +62,13 @@ export function AttendeeSavedPage() {
           {[0, 1, 2].map((key) => (
             <div
               key={key}
-              className="h-[280px] animate-pulse rounded-[18px] border border-[#E7E7E7] bg-[#F5F5F5]"
+              className="h-[280px] animate-pulse rounded-[18px] border border-ae-border bg-[#F5F5F5]"
             />
           ))}
         </div>
       ) : isError ? (
-        <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-[76px] text-center">
-          <p className="text-[16px] text-[#6A6A6A]">
+        <div className="mt-[26px] rounded-[20px] border border-ae-border bg-mainbackground px-10 py-[76px] text-center">
+          <p className="text-[16px] text-ae-muted">
             Couldn&apos;t load your saved events.
           </p>
           <button
@@ -88,7 +88,7 @@ export function AttendeeSavedPage() {
             return (
               <article
                 key={event.id}
-                className="group relative overflow-hidden rounded-[18px] border border-[#E7E7E7] bg-white transition-shadow hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.24)]"
+                className="group relative overflow-hidden rounded-[18px] border border-ae-border bg-white transition-shadow hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.24)]"
               >
                 <Link
                   href={appRoutes.architectureEvents.eventDetail(event.id)}
@@ -96,7 +96,7 @@ export function AttendeeSavedPage() {
                   aria-label={`Open ${event.title}`}
                 />
 
-                <div className="relative h-[168px] overflow-hidden bg-[#F1EEE8]">
+                <div className="relative h-[168px] overflow-hidden bg-background">
                   {thumbnail ? (
                     <img
                       src={thumbnail}
@@ -119,7 +119,7 @@ export function AttendeeSavedPage() {
                     <FeaturedBadge className="absolute right-4 top-4 z-20" />
                   ) : null}
                   <span
-                    className={`absolute right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-[var(--ae-accent)] shadow-[0_8px_18px_rgba(0,0,0,0.1)] ${
+                    className={`absolute right-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-ae-accent shadow-[0_8px_18px_rgba(0,0,0,0.1)] ${
                       event.isFeatured ? "top-[54px]" : "top-4"
                     }`}
                   >
@@ -134,10 +134,10 @@ export function AttendeeSavedPage() {
                   <p className="text-[11px] font-bold tracking-[0.16em] text-[#7A7A7A]">
                     {event.category?.name.toUpperCase() ?? "EVENT"}
                   </p>
-                  <h3 className="mt-[8px] min-h-[74px] text-[18px] font-bold leading-[1.18] tracking-[-0.02em] text-[#2B2B2B] group-hover:text-[var(--ae-accent)]">
+                  <h3 className="mt-[8px] min-h-[74px] text-[18px] font-bold leading-[1.18] tracking-[-0.02em] text-[#2B2B2B] group-hover:text-ae-accent">
                     {event.title}
                   </h3>
-                  <div className="mt-[1px] flex items-center justify-between gap-4 border-t border-[#ECECEC] pt-[12px] text-[14.5px] text-[#6A6A6A]">
+                  <div className="mt-[1px] flex items-center justify-between gap-4 border-t border-[#ECECEC] pt-[12px] text-[14.5px] text-ae-muted">
                     <span className="flex items-center gap-[7px]">
                       <MapPin className="h-[14px] w-[14px]" strokeWidth={1.7} />
                       {event.isOnline ? "Online" : (event.city ?? "—")}
@@ -160,14 +160,14 @@ export function AttendeeSavedPage() {
           })}
         </div>
       ) : (
-        <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-[76px] text-center">
-          <span className="inline-flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#E7E7E7] bg-[#F1EEE8] text-[var(--ae-accent)]">
+        <div className="mt-[26px] rounded-[20px] border border-ae-border bg-mainbackground px-10 py-[76px] text-center">
+          <span className="inline-flex h-[52px] w-[52px] items-center justify-center rounded-full border border-ae-border bg-background text-ae-accent">
             <Bookmark className="h-5 w-5" strokeWidth={1.5} />
           </span>
           <Heading level="section" as="h3" className="mt-[22px]">
             Nothing saved yet
           </Heading>
-          <p className="mx-auto mt-[13px] max-w-[46ch] text-[16px] leading-[1.75] text-[#6A6A6A]">
+          <p className="mx-auto mt-[13px] max-w-[46ch] text-[16px] leading-[1.75] text-ae-muted">
             Tap the bookmark on any event and it will wait for you here with a
             reminder before registration closes.
           </p>

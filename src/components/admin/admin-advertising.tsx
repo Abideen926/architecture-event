@@ -82,25 +82,25 @@ export function AdminAdvertising() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-5">
-      <div className="border-b border-[#E7E7E7] pb-5">
+      <div className="border-b border-ae-border pb-5">
         <Heading level="page">Advertising</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           Sponsorship placements, package holders, and the internal ledger.
         </p>
       </div>
 
-      <div className="rounded-[14px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-5 py-3 text-[13px] leading-[1.6] text-[#6A6A6A]">
+      <div className="rounded-[14px] border border-dashed border-ae-border bg-mainbackground px-5 py-3 text-[13px] leading-[1.6] text-ae-muted">
         There&apos;s no advertising/sponsorship model in the API yet — this page
         shows sample data and isn&apos;t connected to the backend.
       </div>
 
-      <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
+      <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
         <div className="px-[26px] py-5">
           <Heading level="card" as="h3">
             Advertising packages
           </Heading>
         </div>
-        <div className="grid grid-cols-[1.2fr_0.8fr_1.15fr_0.8fr] gap-[22px] border-y border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+        <div className="grid grid-cols-[1.2fr_0.8fr_1.15fr_0.8fr] gap-[22px] border-y border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
           <span>PACKAGE</span>
           <span>PRICE</span>
           <span>CURRENT HOLDERS</span>
@@ -125,7 +125,7 @@ export function AdminAdvertising() {
             <div
               className={`text-[14px] font-semibold ${
                 item.availability.includes("remaining")
-                  ? "text-[var(--ae-accent)]"
+                  ? "text-ae-accent"
                   : "text-[#4F4F4F]"
               }`}
             >

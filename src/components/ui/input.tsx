@@ -17,7 +17,7 @@ type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> & {
 // Matches the fieldClassName convention duplicated across submit-event,
 // account, and profile forms — same border, radius, and focus color.
 const BASE_CLASSES =
-  "w-full rounded-[12px] border border-[#E7E7E7] px-4 text-[15px] outline-none focus:border-[#C7B48D]";
+  "w-full rounded-[12px] border border-ae-border px-4 text-[15px] outline-none focus:border-[#C7B48D]";
 
 const SIZE_CLASSES: Record<InputSize, string> = {
   default: "h-[52px]",

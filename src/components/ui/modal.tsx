@@ -55,13 +55,13 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="ae-modal-title"
-        className="relative w-full max-w-[440px] rounded-[20px] border border-[#E7E7E7] bg-white p-7 shadow-[0_24px_60px_-24px_rgba(20,20,20,0.35)]"
+        className="relative w-full max-w-[440px] rounded-[20px] border border-ae-border bg-white p-7 shadow-[0_24px_60px_-24px_rgba(20,20,20,0.35)]"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-5 top-5 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8A8A8A] transition-colors hover:bg-[#FAFAFA] hover:text-foreground"
+          className="absolute right-5 top-5 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#8A8A8A] transition-colors hover:bg-mainbackground hover:text-foreground"
         >
           <X className="h-4 w-4" />
         </button>
@@ -74,7 +74,7 @@ export function Modal({
         </h2>
 
         {description ? (
-          <p className="mt-2.5 text-[14.5px] leading-[1.7] text-[#6A6A6A]">
+          <p className="mt-2.5 text-[14.5px] leading-[1.7] text-ae-muted">
             {description}
           </p>
         ) : null}

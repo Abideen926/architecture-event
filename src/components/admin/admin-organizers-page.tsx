@@ -55,10 +55,10 @@ export function AdminOrganizersPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
-      <div className="flex flex-col gap-5 border-b border-[#E7E7E7] pb-5 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-5 border-b border-ae-border pb-5 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <Heading level="page">Organizers</Heading>
-          <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+          <p className="mt-2 text-[14.5px] text-ae-muted">
             {isLoading
               ? "Loading..."
               : `${organizers.length} accounts · ${activeCount} active`}
@@ -66,17 +66,17 @@ export function AdminOrganizersPage() {
         </div>
       </div>
 
-      <section className="mt-6 rounded-[20px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-5 text-[13.5px] leading-[1.7] text-[#6A6A6A]">
+      <section className="mt-6 rounded-[20px] border border-dashed border-ae-border bg-mainbackground px-[26px] py-5 text-[13.5px] leading-[1.7] text-ae-muted">
         Organizer accounts are created through self-registration on the signup
         page — the API doesn&apos;t support admins creating accounts directly.
         You can activate or deactivate existing accounts below.
       </section>
 
       {isLoading ? (
-        <div className="mt-6 h-[200px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+        <div className="mt-6 h-[200px] animate-pulse rounded-[20px] border border-ae-border bg-[#F5F5F5]" />
       ) : isError ? (
-        <div className="mt-6 rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-          <p className="text-[15px] text-[#6A6A6A]">
+        <div className="mt-6 rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center">
+          <p className="text-[15px] text-ae-muted">
             Couldn&apos;t load organizers.
           </p>
           <Button
@@ -89,8 +89,8 @@ export function AdminOrganizersPage() {
           </Button>
         </div>
       ) : (
-        <section className="mt-6 overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
-          <div className="grid grid-cols-[1.6fr_1.4fr_0.9fr_0.7fr_auto] gap-[22px] border-b border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+        <section className="mt-6 overflow-hidden rounded-[20px] border border-ae-border bg-white">
+          <div className="grid grid-cols-[1.6fr_1.4fr_0.9fr_0.7fr_auto] gap-[22px] border-b border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
             <span>CONTACT</span>
             <span>EMAIL</span>
             <span>JOINED</span>
@@ -107,7 +107,7 @@ export function AdminOrganizersPage() {
                 {user.fullName}
               </div>
               <div className="text-[13.5px] text-[#3A3A3A]">{user.email}</div>
-              <div className="text-[13.5px] text-[#6A6A6A]">
+              <div className="text-[13.5px] text-ae-muted">
                 {user.createdAt
                   ? dateFormatter.format(new Date(user.createdAt))
                   : "—"}
@@ -116,7 +116,7 @@ export function AdminOrganizersPage() {
                 <span
                   className={`inline-flex rounded-full border px-[12px] py-1 text-[12px] font-medium ${
                     user.isActive
-                      ? "border-[#E7E7E7] bg-white text-[#3A3A3A]"
+                      ? "border-ae-border bg-white text-[#3A3A3A]"
                       : "border-[#E0DDD6] bg-[#F3F1ED] text-[#6F6F6F]"
                   }`}
                 >

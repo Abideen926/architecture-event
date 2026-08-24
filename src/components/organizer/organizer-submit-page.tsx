@@ -21,9 +21,9 @@ export function OrganizerSubmitPage() {
 function OrganizerSubmitPageFallback() {
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
-      <div className="border-b border-[#E7E7E7] pb-5">
+      <div className="border-b border-ae-border pb-5">
         <Heading level="page">Submit New Event</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">Loading...</p>
+        <p className="mt-2 text-[14.5px] text-ae-muted">Loading...</p>
       </div>
     </div>
   );
@@ -60,9 +60,11 @@ function OrganizerSubmitPageContent() {
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
-      <div className="border-b border-[#E7E7E7] pb-5">
-        <Heading level="page">{eventId ? "Edit Event" : "Submit New Event"}</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+      <div className="border-b border-ae-border pb-5">
+        <Heading level="page">
+          {eventId ? "Edit Event" : "Submit New Event"}
+        </Heading>
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           {step === "package"
             ? "Step 1 of 2 — choose your listing package"
             : step === "form"

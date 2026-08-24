@@ -124,25 +124,25 @@ export function AdminPaymentsPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-5">
-      <div className="border-b border-[#E7E7E7] pb-5">
+      <div className="border-b border-ae-border pb-5">
         <Heading level="page">Payments</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           Featured Listing requests, sponsorship placements, and the internal
           ledger.
         </p>
       </div>
 
-      <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+      <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
         <div className="flex items-start justify-between gap-4">
           <div>
             <Heading level="card" as="h3">
               Brand Spotlight rotation
             </Heading>
-            <p className="mt-3 text-[14px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-3 text-[14px] leading-[1.75] text-ae-muted">
               Three companies appear on the homepage at a time.
             </p>
           </div>
-          <span className="inline-flex h-[27px] items-center rounded-full border border-[#E7E7E7] bg-[#FAFAFA] px-3 text-[10.5px] font-bold tracking-[0.11em] text-[#6A6A6A]">
+          <span className="inline-flex h-[27px] items-center rounded-full border border-ae-border bg-mainbackground px-3 text-[10.5px] font-bold tracking-[0.11em] text-ae-muted">
             SAMPLE DATA
           </span>
         </div>
@@ -151,15 +151,15 @@ export function AdminPaymentsPage() {
           {spotlightSlots.map((slot) => (
             <article
               key={slot.slot}
-              className="rounded-[16px] border border-[#E7E7E7] px-5 py-5"
+              className="rounded-[16px] border border-ae-border px-5 py-5"
             >
-              <p className="text-[10px] font-bold tracking-[0.15em] text-[#6A6A6A]">
+              <p className="text-[10px] font-bold tracking-[0.15em] text-ae-muted">
                 {slot.slot.toUpperCase()}
               </p>
               <h4 className="mt-3 text-[15px] font-semibold text-foreground">
                 {slot.company}
               </h4>
-              <p className="mt-2 text-[13px] text-[#6A6A6A]">{slot.until}</p>
+              <p className="mt-2 text-[13px] text-ae-muted">{slot.until}</p>
             </article>
           ))}
         </div>
@@ -169,13 +169,13 @@ export function AdminPaymentsPage() {
         </p>
       </section>
 
-      <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
+      <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
         <div className="flex flex-wrap items-start justify-between gap-4 px-[26px] py-5">
           <div>
             <Heading level="card" as="h3">
               Featured Listing requests
             </Heading>
-            <p className="mt-3 text-[14px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-3 text-[14px] leading-[1.75] text-ae-muted">
               Organizers pay $49 upfront; approving here marks their event as
               featured. Showing the {RECENT_COUNT} most recent pending review.
             </p>
@@ -194,7 +194,7 @@ export function AdminPaymentsPage() {
           <div className="h-[140px] animate-pulse bg-[#F5F5F5]" />
         ) : isError ? (
           <div className="px-[26px] py-10 text-center">
-            <p className="text-[14.5px] text-[#6A6A6A]">
+            <p className="text-[14.5px] text-ae-muted">
               Couldn&apos;t load feature requests.
             </p>
             <Button
@@ -207,12 +207,12 @@ export function AdminPaymentsPage() {
             </Button>
           </div>
         ) : requests.length === 0 ? (
-          <div className="px-[26px] py-10 text-center text-[14.5px] text-[#6A6A6A]">
+          <div className="px-[26px] py-10 text-center text-[14.5px] text-ae-muted">
             No pending Featured Listing requests.
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-[1fr_0.9fr_1fr_1.3fr_auto] gap-[22px] border-y border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+            <div className="grid grid-cols-[1fr_0.9fr_1fr_1.3fr_auto] gap-[22px] border-y border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
               <span>DATE</span>
               <span>AMOUNT</span>
               <span>STATUS</span>
@@ -226,7 +226,7 @@ export function AdminPaymentsPage() {
                   index < requests.length - 1 ? "border-b border-[#F1F1F1]" : ""
                 }`}
               >
-                <div className="text-[14px] text-[#6A6A6A]">
+                <div className="text-[14px] text-ae-muted">
                   {dateFormatter.format(new Date(request.createdAt))}
                 </div>
                 <div className="text-[15px] font-semibold text-foreground">
@@ -275,22 +275,22 @@ export function AdminPaymentsPage() {
         )}
       </section>
 
-      <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
+      <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
         <div className="flex items-start justify-between gap-4 px-[26px] py-5">
           <div>
             <Heading level="card" as="h3">
               Internal ledger
             </Heading>
-            <p className="mt-3 text-[14px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-3 text-[14px] leading-[1.75] text-ae-muted">
               Manually recorded payments received and spent.
             </p>
           </div>
-          <span className="inline-flex h-[27px] items-center rounded-full border border-[#E7E7E7] bg-[#FAFAFA] px-3 text-[10.5px] font-bold tracking-[0.11em] text-[#6A6A6A]">
+          <span className="inline-flex h-[27px] items-center rounded-full border border-ae-border bg-mainbackground px-3 text-[10.5px] font-bold tracking-[0.11em] text-ae-muted">
             SAMPLE DATA
           </span>
         </div>
 
-        <div className="grid grid-cols-[1fr_2.2fr_0.9fr_0.9fr] gap-[22px] border-y border-[#E7E7E7] bg-[#FAFAFA] px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+        <div className="grid grid-cols-[1fr_2.2fr_0.9fr_0.9fr] gap-[22px] border-y border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
           <span>DATE</span>
           <span>DESCRIPTION</span>
           <span>AMOUNT</span>
@@ -305,14 +305,14 @@ export function AdminPaymentsPage() {
                 : ""
             }`}
           >
-            <div className="text-[14px] text-[#6A6A6A]">{entry.date}</div>
+            <div className="text-[14px] text-ae-muted">{entry.date}</div>
             <div className="text-[14px] text-[#3A3A3A]">
               {entry.description}
             </div>
             <div className="text-[15px] font-semibold text-foreground">
               {entry.amount}
             </div>
-            <div className="text-[14px] text-[#6A6A6A]">{entry.invoice}</div>
+            <div className="text-[14px] text-ae-muted">{entry.invoice}</div>
           </div>
         ))}
         <p className="px-[26px] py-4 text-[12.5px] leading-[1.6] text-[#8A8A8A]">

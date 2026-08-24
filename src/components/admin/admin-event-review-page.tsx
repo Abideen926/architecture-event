@@ -168,15 +168,15 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
     return (
       <div className="space-y-4">
         <div className="h-8 w-48 animate-pulse rounded-[8px] bg-[#F5F5F5]" />
-        <div className="h-[400px] animate-pulse rounded-[20px] border border-[#E7E7E7] bg-[#F5F5F5]" />
+        <div className="h-[400px] animate-pulse rounded-[20px] border border-ae-border bg-[#F5F5F5]" />
       </div>
     );
   }
 
   if (isError || !event) {
     return (
-      <div className="rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-10 py-16 text-center">
-        <p className="text-[15px] text-[#6A6A6A]">
+      <div className="rounded-[20px] border border-ae-border bg-mainbackground px-10 py-16 text-center">
+        <p className="text-[15px] text-ae-muted">
           Couldn&apos;t load this event.
         </p>
         <Button
@@ -206,7 +206,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
           <Heading level="page">{event.title}</Heading>
           {event.isFeatured ? <FeaturedBadge /> : null}
         </div>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           {EVENT_STATUS_LABELS[event.status]} ·{" "}
           {event.organizer?.fullName ?? "—"} · {event.category?.name ?? "—"}
           {event.industry ? ` · ${event.industry.name}` : ""}
@@ -215,7 +215,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <div className="space-y-5">
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <Heading level="subsection" as="h3">
               Description
             </Heading>
@@ -223,14 +223,14 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
               {event.description}
             </p>
             {event.latestAdminNote ? (
-              <div className="mt-4 rounded-[14px] border border-[#E7E7E7] bg-[#FAFAFA] px-4 py-3 text-[14px] leading-[1.7] text-[#3A3A3A]">
+              <div className="mt-4 rounded-[14px] border border-ae-border bg-mainbackground px-4 py-3 text-[14px] leading-[1.7] text-[#3A3A3A]">
                 <span className="font-semibold">Latest admin note:</span>{" "}
                 {event.latestAdminNote}
               </div>
             ) : null}
           </section>
 
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <Heading level="subsection" as="h3">
               When &amp; where
             </Heading>
@@ -261,7 +261,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                   href={event.registrationUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="break-all text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                  className="break-all text-ae-accent transition-colors hover:text-ae-accent-strong"
                 >
                   {event.registrationUrl}
                 </a>
@@ -276,7 +276,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
             </div>
           </section>
 
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <Heading level="subsection" as="h3">
               Organizer contact
             </Heading>
@@ -291,7 +291,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
           </section>
 
           {event.media && event.media.length > 0 ? (
-            <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+            <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
               <Heading level="subsection" as="h3">
                 Media
               </Heading>
@@ -302,12 +302,12 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                     className={`overflow-hidden rounded-[16px] border ${
                       media.isThumbnail
                         ? "border-foreground"
-                        : "border-[#E7E7E7]"
+                        : "border-ae-border"
                     }`}
                   >
                     <div className="relative h-[140px] bg-[#F1F1F1]">
                       {media.resourceType === "VIDEO" ? (
-                        <div className="flex h-full w-full items-center justify-center text-[#6A6A6A]">
+                        <div className="flex h-full w-full items-center justify-center text-ae-muted">
                           <Video className="h-7 w-7" strokeWidth={1.5} />
                         </div>
                       ) : (
@@ -320,7 +320,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                       )}
                     </div>
                     {media.isThumbnail ? (
-                      <p className="py-[8px] text-center text-[11px] font-bold tracking-[0.1em] text-white bg-[#1E1E1E]">
+                      <p className="py-[8px] text-center text-[11px] font-bold tracking-[0.1em] text-white bg-foreground">
                         THUMBNAIL
                       </p>
                     ) : null}
@@ -330,7 +330,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
             </section>
           ) : null}
 
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <Heading level="subsection" as="h3">
               Status history
             </Heading>
@@ -345,7 +345,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                   .map((entry) => (
                     <div
                       key={entry.id}
-                      className="border-l-2 border-[#E7E7E7] pl-4"
+                      className="border-l-2 border-ae-border pl-4"
                     >
                       <p className="text-[13.5px] font-semibold text-foreground">
                         {EVENT_STATUS_LABELS[entry.fromStatus]} →{" "}
@@ -363,7 +363,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                   ))}
               </div>
             ) : (
-              <p className="mt-3 text-[14px] text-[#6A6A6A]">
+              <p className="mt-3 text-[14px] text-ae-muted">
                 No status changes recorded yet.
               </p>
             )}
@@ -371,7 +371,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
         </div>
 
         <div className="space-y-5">
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <Heading level="subsection" as="h3">
               Review decision
             </Heading>
@@ -382,7 +382,7 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
               <button
                 type="button"
                 onClick={() => setNoteModal("changes")}
-                className="rounded-[10px] border border-[#1E1E1E] bg-white px-4 py-1.5 text-[13.5px] font-medium text-[#1E1E1E]"
+                className="rounded-[10px] border border-foreground bg-white px-4 py-1.5 text-[13.5px] font-medium text-foreground"
               >
                 Request changes
               </button>
@@ -402,12 +402,12 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
             </div>
           </section>
 
-          <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+          <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
             <Heading level="subsection" as="h3">
               Featured Listing
             </Heading>
             {featureRequests.length === 0 ? (
-              <p className="mt-3 text-[14px] text-[#6A6A6A]">
+              <p className="mt-3 text-[14px] text-ae-muted">
                 This organizer has never requested Featured for this event.
               </p>
             ) : (
@@ -415,13 +415,13 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                 {featureRequests.map((request) => (
                   <div
                     key={request.id}
-                    className="rounded-[14px] border border-[#E7E7E7] px-4 py-3"
+                    className="rounded-[14px] border border-ae-border px-4 py-3"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-[13.5px] font-semibold text-foreground">
                         {featureRequestStatusLabels[request.status]}
                       </span>
-                      <span className="text-[13px] text-[#6A6A6A]">
+                      <span className="text-[13px] text-ae-muted">
                         {centsToUsd(request.amountCents)}
                       </span>
                     </div>
@@ -544,7 +544,7 @@ function Field({
 }) {
   return (
     <div>
-      <p className="text-[10.5px] font-bold tracking-[0.1em] text-[#6A6A6A]">
+      <p className="text-[10.5px] font-bold tracking-[0.1em] text-ae-muted">
         {label.toUpperCase()}
       </p>
       <p className="mt-1 font-medium text-foreground">{children}</p>

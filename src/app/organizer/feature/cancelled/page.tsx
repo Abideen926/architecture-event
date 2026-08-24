@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 
 export default function FeaturePaymentCancelledPage() {
   return (
-    <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-[44px] py-[66px] text-center animate-[fadeIn_0.35s_ease]">
-      <span className="inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border border-[#E7E7E7] bg-white text-[var(--ae-accent)]">
+    <div className="mt-[30px] rounded-[20px] border border-ae-border bg-mainbackground px-[44px] py-[66px] text-center animate-[fadeIn_0.35s_ease]">
+      <span className="inline-flex h-[56px] w-[56px] items-center justify-center rounded-full border border-ae-border bg-white text-ae-accent">
         <CircleAlert className="h-[22px] w-[22px]" strokeWidth={1.8} />
       </span>
       <Heading level="page" as="h1" className="mt-6">
         Payment cancelled
       </Heading>
-      <p className="mx-auto mt-[14px] max-w-[52ch] text-[16px] leading-[1.75] text-[#6A6A6A]">
+      <p className="mx-auto mt-[14px] max-w-[52ch] text-[16px] leading-[1.75] text-ae-muted">
         No charge was made. Your event was still submitted for review as a
         standard listing — you can request Featured again from My Listings.
       </p>

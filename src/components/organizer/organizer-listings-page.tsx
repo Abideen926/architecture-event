@@ -14,12 +14,12 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 
 const statusStyles: Record<EventStatus, string> = {
-  PUBLISHED: "border-foreground bg-[#1E1E1E] text-white",
-  UNDER_REVIEW: "border-[#E7E7E7] bg-[#F1EEE8] text-[#3A3A3A]",
-  CHANGES_REQUESTED: "border-[#B08A45] bg-white text-[#B08A45]",
-  REJECTED: "border-[#C9C9C9] bg-white text-[#6A6A6A]",
-  DRAFT: "border-[#E7E7E7] bg-[#F1F1F1] text-[#6A6A6A]",
-  ARCHIVED: "border-[#E7E7E7] bg-white text-[#6A6A6A]",
+  PUBLISHED: "border-foreground bg-foreground text-white",
+  UNDER_REVIEW: "border-ae-border bg-background text-[#3A3A3A]",
+  CHANGES_REQUESTED: "border-ae-accent bg-white text-ae-accent",
+  REJECTED: "border-[#C9C9C9] bg-white text-ae-muted",
+  DRAFT: "border-ae-border bg-[#F1F1F1] text-ae-muted",
+  ARCHIVED: "border-ae-border bg-white text-ae-muted",
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -44,10 +44,10 @@ export function OrganizerListingsPage() {
 
   return (
     <div className="animate-[fadeIn_0.35s_ease]">
-      <div className="flex flex-wrap items-end justify-between gap-6 border-b border-[#E7E7E7] pb-5">
+      <div className="flex flex-wrap items-end justify-between gap-6 border-b border-ae-border pb-5">
         <div>
           <Heading level="page">My Listings</Heading>
-          <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+          <p className="mt-2 text-[14.5px] text-ae-muted">
             {data
               ? `${data.meta.total} listings / ${publishedCount} published`
               : "Loading..."}
@@ -64,13 +64,13 @@ export function OrganizerListingsPage() {
           {[0, 1, 2].map((key) => (
             <div
               key={key}
-              className="h-[100px] animate-pulse rounded-[16px] border border-[#E7E7E7] bg-[#F5F5F5]"
+              className="h-[100px] animate-pulse rounded-[16px] border border-ae-border bg-[#F5F5F5]"
             />
           ))}
         </div>
       ) : isError ? (
-        <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-[40px] py-[56px] text-center">
-          <p className="text-[16px] text-[#6A6A6A]">
+        <div className="mt-[26px] rounded-[20px] border border-ae-border bg-mainbackground px-[40px] py-[56px] text-center">
+          <p className="text-[16px] text-ae-muted">
             Couldn&apos;t load your listings.
           </p>
           <button
@@ -94,17 +94,17 @@ export function OrganizerListingsPage() {
                       ? `${appRoutes.organizer.submit}?step=form&id=${event.id}`
                       : `${appRoutes.organizer.submit}?id=${event.id}`
                   }
-                  className="block rounded-[16px] border border-[#E7E7E7] bg-white p-[17px] px-[22px] transition-shadow duration-200 hover:border-[#D9D9D9] hover:shadow-[0_18px_40px_-30px_rgba(20,20,20,0.4)]"
+                  className="block rounded-[16px] border border-ae-border bg-white p-[17px] px-[22px] transition-shadow duration-200 hover:border-[#D9D9D9] hover:shadow-[0_18px_40px_-30px_rgba(20,20,20,0.4)]"
                 >
                   <div className="grid gap-4 md:grid-cols-[2.6fr_1fr_auto] md:items-center md:gap-[22px]">
                     <div>
-                      <p className="mb-[3px] text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+                      <p className="mb-[3px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                         {event.category?.name.toUpperCase() ?? "UNCATEGORIZED"}
                       </p>
                       <h3 className="text-[18px] font-bold leading-[1.22] tracking-[-0.01em] text-foreground">
                         {event.title}
                       </h3>
-                      <p className="mt-[4px] text-[13.5px] leading-[1.45] text-[#6A6A6A]">
+                      <p className="mt-[4px] text-[13.5px] leading-[1.45] text-ae-muted">
                         {event.submittedAt
                           ? `Submitted ${dateFormatter.format(new Date(event.submittedAt))}`
                           : "Not yet submitted"}{" "}
@@ -121,11 +121,11 @@ export function OrganizerListingsPage() {
 
                     <span className="flex items-center gap-[18px] justify-self-start md:justify-self-end">
                       {event.status === "PUBLISHED" ? (
-                        <span className="text-[13.5px] font-semibold text-[var(--ae-accent)]">
+                        <span className="text-[13.5px] font-semibold text-ae-accent">
                           View live page →
                         </span>
                       ) : null}
-                      <span className="text-[13.5px] font-semibold text-[#6A6A6A]">
+                      <span className="text-[13.5px] font-semibold text-ae-muted">
                         {editable ? "Edit" : "View"}
                       </span>
                     </span>
@@ -133,9 +133,9 @@ export function OrganizerListingsPage() {
 
                   {event.status === "CHANGES_REQUESTED" &&
                   event.latestAdminNote ? (
-                    <div className="mt-[14px] flex items-start gap-3 rounded-[12px] border border-[#E7E7E7] bg-[#F1EEE8] px-[16px] py-[12px] text-[14.5px] leading-[1.65] text-[#3A3A3A]">
+                    <div className="mt-[14px] flex items-start gap-3 rounded-[12px] border border-ae-border bg-background px-[16px] py-[12px] text-[14.5px] leading-[1.65] text-[#3A3A3A]">
                       <CircleAlert
-                        className="mt-[3px] h-[16px] w-[16px] flex-none text-[var(--ae-accent)]"
+                        className="mt-[3px] h-[16px] w-[16px] flex-none text-ae-accent"
                         strokeWidth={1.7}
                       />
                       <span>{event.latestAdminNote}</span>
@@ -143,9 +143,9 @@ export function OrganizerListingsPage() {
                   ) : null}
 
                   {event.status === "REJECTED" && event.latestAdminNote ? (
-                    <div className="mt-[14px] flex items-start gap-3 rounded-[12px] border border-[#E7E7E7] bg-[#F1EEE8] px-[16px] py-[12px] text-[14.5px] leading-[1.65] text-[#3A3A3A]">
+                    <div className="mt-[14px] flex items-start gap-3 rounded-[12px] border border-ae-border bg-background px-[16px] py-[12px] text-[14.5px] leading-[1.65] text-[#3A3A3A]">
                       <CircleAlert
-                        className="mt-[3px] h-[16px] w-[16px] flex-none text-[var(--ae-accent)]"
+                        className="mt-[3px] h-[16px] w-[16px] flex-none text-ae-accent"
                         strokeWidth={1.7}
                       />
                       <span>{event.latestAdminNote}</span>
@@ -162,18 +162,18 @@ export function OrganizerListingsPage() {
                 type="button"
                 disabled={page <= 1 || isFetching}
                 onClick={() => setPage((value) => Math.max(1, value - 1))}
-                className="rounded-[10px] border border-[#E7E7E7] px-4 py-[10px] text-[13.5px] font-semibold text-[#3A3A3A] transition-colors hover:border-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-[10px] border border-ae-border px-4 py-[10px] text-[13.5px] font-semibold text-[#3A3A3A] transition-colors hover:border-foreground disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Previous
               </button>
-              <span className="text-[13.5px] text-[#6A6A6A]">
+              <span className="text-[13.5px] text-ae-muted">
                 Page {data.meta.page} of {data.meta.totalPages}
               </span>
               <button
                 type="button"
                 disabled={page >= data.meta.totalPages || isFetching}
                 onClick={() => setPage((value) => value + 1)}
-                className="rounded-[10px] border border-[#E7E7E7] px-4 py-[10px] text-[13.5px] font-semibold text-[#3A3A3A] transition-colors hover:border-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-[10px] border border-ae-border px-4 py-[10px] text-[13.5px] font-semibold text-[#3A3A3A] transition-colors hover:border-foreground disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Next
               </button>
@@ -181,8 +181,8 @@ export function OrganizerListingsPage() {
           ) : null}
         </>
       ) : (
-        <div className="mt-[26px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] px-[40px] py-[76px] text-center">
-          <span className="inline-flex h-[52px] w-[52px] items-center justify-center rounded-full border border-[#E7E7E7] bg-[#F1EEE8] text-[var(--ae-accent)]">
+        <div className="mt-[26px] rounded-[20px] border border-ae-border bg-mainbackground px-[40px] py-[76px] text-center">
+          <span className="inline-flex h-[52px] w-[52px] items-center justify-center rounded-full border border-ae-border bg-background text-ae-accent">
             <svg
               width="20"
               height="20"
@@ -199,7 +199,7 @@ export function OrganizerListingsPage() {
           <h3 className="ae-serif mt-[22px] text-[27px] font-semibold tracking-[-0.015em] text-foreground">
             No listings yet
           </h3>
-          <p className="mx-auto mt-[13px] max-w-[48ch] text-[16px] leading-[1.75] text-[#6A6A6A]">
+          <p className="mx-auto mt-[13px] max-w-[48ch] text-[16px] leading-[1.75] text-ae-muted">
             Submit your first event and it will appear here with its review
             status as it moves through editorial.
           </p>

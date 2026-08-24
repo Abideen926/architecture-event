@@ -20,10 +20,10 @@ export function ContactPage() {
   }
 
   return (
-    <div className="ae-shell bg-white">
+    <div className="bg-background min-h-100vh">
       <main className="pb-[104px] pt-[22px]">
         <section className="ae-container max-w-[1000px] !lg:mr-auto !lg:mr-0">
-          <p className="mb-7 mt-6 text-[12px] font-semibold tracking-[0.24em] text-[var(--ae-accent)]">
+          <p className="mb-7 mt-6 text-[12px] font-semibold tracking-[0.24em] text-ae-accent">
             CONTACT US
           </p>
           <h1 className="ae-serif text-[45px] font-semibold leading-[0.92] tracking-[-0.06em] text-foreground sm:text-[50px] xl:text-[50px]">
@@ -108,7 +108,7 @@ export function ContactPage() {
             </p>
             <a
               href={`mailto:${email}`}
-              className="mt-4 inline-flex text-[16px] font-medium !text-[var(--ae-accent)]"
+              className="mt-4 inline-flex text-[16px] font-medium !text-ae-accent"
             >
               {email}
             </a>
@@ -118,7 +118,7 @@ export function ContactPage() {
                 <span key={social.label}>
                   <a
                     href={social.href}
-                    className="!text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                    className="!text-ae-accent transition-colors hover:text-ae-accent-strong"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -137,7 +137,7 @@ export function ContactPage() {
 }
 
 const fieldClassName =
-  "h-[52px] w-full rounded-[12px] border border-[#e1e1e1] bg-white px-[14px] text-[15px] text-[#232323] outline-none transition-colors placeholder:text-[#a2a2a2] focus:border-[var(--ae-accent)]";
+  "h-[52px] w-full rounded-[12px] border border-[#e1e1e1] bg-white px-[14px] text-[15px] text-[#232323] outline-none transition-colors placeholder:text-[#a2a2a2] focus:border-ae-accent";
 
 type FormFieldProps = {
   label: string;

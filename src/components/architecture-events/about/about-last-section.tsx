@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { aboutValues, contactLinks, platformSteps } from "@/lib/architecture-events/about/about-data";
+import {
+  aboutValues,
+  contactLinks,
+  platformSteps,
+} from "@/lib/architecture-events/about/about-data";
 
 export function AboutLastSection() {
   return (
@@ -13,7 +17,9 @@ export function AboutLastSection() {
                 key={item.title}
                 className={[
                   "max-w-[32ch]",
-                  index > 0 ? "md:border-l md:border-[#e6e6e6] md:pl-10 lg:pl-12" : "",
+                  index > 0
+                    ? "md:border-l md:border-[#e6e6e6] md:pl-10 lg:pl-12"
+                    : "",
                 ].join(" ")}
               >
                 <h2 className="ae-serif text-[25px] font-semibold leading-[1.08] tracking-[-0.035em] text-[#242424] sm:text-[28px]">
@@ -51,8 +57,8 @@ export function AboutLastSection() {
             </h2>
 
             <p className="mt-10 max-w-[34ch] text-[18px] leading-[1.7] tracking-[-0.01em] text-[#6d6d6d]">
-              For listings, advertising, corrections, or anything else - email is
-              fastest.
+              For listings, advertising, corrections, or anything else - email
+              is fastest.
             </p>
 
             <div className="mt-10 border-t border-[#e6e6e6]">
@@ -63,21 +69,21 @@ export function AboutLastSection() {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex items-center justify-between border-b border-[#e6e6e6] py-6 text-[18px] font-semibold text-[#242424] transition-colors hover:text-[var(--ae-accent)]"
+                    className="group flex items-center justify-between border-b border-[#e6e6e6] py-6 text-[18px] font-semibold text-[#242424] transition-colors hover:text-ae-accent"
                   >
                     <span>{link.label}</span>
-                    <ArrowRight className="h-4 w-4 text-[var(--ae-accent)] transition-transform duration-200 group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 text-ae-accent transition-transform duration-200 group-hover:translate-x-1" />
                   </a>
                 ) : (
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="group flex items-center justify-between border-b border-[#e6e6e6] py-6 text-[18px] font-semibold text-[#242424] transition-colors hover:text-[var(--ae-accent)]"
+                    className="group flex items-center justify-between border-b border-[#e6e6e6] py-6 text-[18px] font-semibold text-[#242424] transition-colors hover:text-ae-accent"
                   >
                     <span>{link.label}</span>
-                    <ArrowRight className="h-4 w-4 text-[var(--ae-accent)] transition-transform duration-200 group-hover:translate-x-1" />
+                    <ArrowRight className="h-4 w-4 text-ae-accent transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
-                )
+                ),
               )}
             </div>
           </div>

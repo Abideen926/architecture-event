@@ -21,7 +21,7 @@ export function AdvertisePackagesSection() {
               }`}
             >
               {pkg.badge ? (
-                <span className="absolute right-1/120 top-[-11px] -translate-x-1/2 rounded-[8px] bg-[var(--ae-accent)] px-4 py-[5px] text-[10px] font-bold tracking-[0.05em] text-white">
+                <span className="absolute right-1/120 top-[-11px] -translate-x-1/2 rounded-[8px] bg-ae-accent px-4 py-[5px] text-[10px] font-bold tracking-[0.05em] text-white">
                   {pkg.badge}
                 </span>
               ) : null}
@@ -57,7 +57,7 @@ export function AdvertisePackagesSection() {
                       className="flex items-start gap-3 text-[14px] leading-[1.55] text-[#676767]"
                     >
                       <Check
-                        className="mt-[2px] h-[13px] w-[13px] shrink-0 text-[var(--ae-accent)]"
+                        className="mt-[2px] h-[13px] w-[13px] shrink-0 text-ae-accent"
                         strokeWidth={2.2}
                       />
                       <span>{detail}</span>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f1eee8;
   --foreground: #202020;
   --ae-accent: #b08a45;
   --ae-accent-strong: #94733a;
@@ -11,14 +11,14 @@
   --mainbackground: #fafafa;
 }
 @theme{
-  --color-background: #ffffff;
-  --color-foreground: #202020;
-  --color-ae-accent: #b08a45;
-  --color-ae-accent-strong: #94733a;
-  --color-ae-muted: #6a6a6a;
-  --color-ae-border: #e7e7e7;
-  --color-ae-border-strong: #dcdcdc;
-  --color-mainbackground: #fafafa;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ae-accent: var(--ae-accent);
+  --color-ae-accent-strong: var(--ae-accent-strong);
+  --color-ae-muted: var(--ae-muted);
+  --color-ae-border: var(--ae-border);
+  --color-ae-border-strong: var(--ae-border-strong);
+  --color-mainbackground: var(--mainbackground);
 }
 * {
   box-sizing: border-box;

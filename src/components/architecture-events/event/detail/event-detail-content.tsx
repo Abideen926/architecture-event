@@ -176,7 +176,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                 {isRegistering ? "Opening..." : "Register"}
               </button>
 
-              <div className="mt-7 grid grid-cols-2 gap-3 border-t pt-4 border-[#E7E7E7]">
+              <div className="mt-7 grid grid-cols-2 gap-3 border-t pt-4 border-ae-border">
                 <button
                   type="button"
                   onClick={() => toggleSave(event.id)}
@@ -184,7 +184,7 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                   aria-pressed={saved}
                   className={`inline-flex h-[46px] items-center justify-center gap-2 rounded-[14px] border px-4 text-[14px] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
                     saved
-                      ? "border-[var(--ae-accent)] bg-[#F1EEE8] text-[var(--ae-accent)]"
+                      ? "border-ae-accent bg-background text-ae-accent"
                       : "border-[#E2DED7] bg-white text-foreground"
                   }`}
                 >

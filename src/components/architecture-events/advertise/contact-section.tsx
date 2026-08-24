@@ -21,7 +21,7 @@ export function AdvertiseContactSection() {
   return (
     <section className=" pb-[96px] pt-[8px]">
       <div className="ae-container">
-        <div className="mx-auto grid max-w-[1280px] gap-9 rounded-[21px] border border-[#E4E0D8] bg-[var(--mainbackground)] px-[34px] py-[34px] lg:grid-cols-[0.92fr_1.25fr]">
+        <div className="mx-auto grid max-w-[1280px] gap-9 rounded-[21px] border border-[#E4E0D8] bg-mainbackground px-[34px] py-[34px] lg:grid-cols-[0.92fr_1.25fr]">
           <div>
             <h2 className="ae-section-heading text-[32px] leading-none md:text-[36px]">
               Tell us about your brand

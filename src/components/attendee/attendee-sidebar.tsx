@@ -36,7 +36,7 @@ export function AttendeeSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 whitespace-nowrap rounded-[12px] border-0 px-[16px] py-[13px] text-[14.5px] transition-colors hover:bg-[#F1EEE8]"
+              className="flex items-center gap-3 whitespace-nowrap rounded-[12px] border-0 px-[16px] py-[13px] text-[14.5px] transition-colors hover:bg-background"
               style={{
                 background: active ? "#F1EEE8" : "transparent",
                 color: active ? "#202020" : "#6A6A6A",

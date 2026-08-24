@@ -131,7 +131,7 @@ export function LoginPage() {
               </Button>
             </form>
 
-            <p className="mt-[26px] text-[14.5px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-[26px] text-[14.5px] leading-[1.75] text-ae-muted">
               {content.accountPrompt}{" "}
               <Link
                 href={content.accountCtaHref}
@@ -140,13 +140,13 @@ export function LoginPage() {
                 {content.accountCtaLabel}
               </Link>
             </p>
-            <p className="mt-[16px] text-[13.5px] leading-[1.75] text-[#6A6A6A]">
+            <p className="mt-[16px] text-[13.5px] leading-[1.75] text-ae-muted">
               {content.note}
             </p>
           </div>
         </section>
 
-        <section className="relative hidden overflow-hidden bg-[#1E1E1E] xl:block">
+        <section className="relative hidden overflow-hidden bg-foreground xl:block">
           <Image
             src={content.image}
             alt="Modern building facade"

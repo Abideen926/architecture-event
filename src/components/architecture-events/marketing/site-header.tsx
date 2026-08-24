@@ -25,7 +25,7 @@ export function SiteHeader() {
   const { data: me } = useGetMeQuery();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E7E7E7] bg-[rgba(255,255,255,0.94)] backdrop-blur-[8px] backdrop-saturate-125">
+    <header className="sticky top-0 z-50 border-b border-ae-border bg-[rgba(255,255,255,0.94)] backdrop-blur-[8px] backdrop-saturate-125">
       <div className="ae-container flex h-[76px] items-center gap-12">
         <Link
           href={appRoutes.architectureEvents.root}
@@ -60,7 +60,7 @@ export function SiteHeader() {
             <Link
               href={appRoutes.attendee.root}
               aria-label="Saved events"
-              className="flex items-center text-foreground transition-colors hover:text-[var(--ae-accent)]"
+              className="flex items-center text-foreground transition-colors hover:text-ae-accent"
             >
               <Bookmark className="h-[17px] w-[17px]" strokeWidth={1.6} />
             </Link>
@@ -69,7 +69,7 @@ export function SiteHeader() {
           {me ? (
             <Link
               href={ROLE_HOME[me.role] ?? appRoutes.architectureEvents.root}
-              className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+              className="rounded-xl bg-ae-accent px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-ae-accent-strong"
             >
               My Account
             </Link>
@@ -77,13 +77,13 @@ export function SiteHeader() {
             <>
               <Link
                 href={appRoutes.architectureEvents.login}
-                className="text-[14.5px] font-medium text-foreground transition-colors hover:text-[var(--ae-accent)]"
+                className="text-[14.5px] font-medium text-foreground transition-colors hover:text-ae-accent"
               >
                 Log In
               </Link>
               <Link
                 href={appRoutes.architectureEvents.signup}
-                className="rounded-xl bg-[var(--ae-accent)] px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-[var(--ae-accent-strong)]"
+                className="rounded-xl bg-ae-accent px-[22px] py-[8.4px] text-[14.5px] font-semibold !text-white transition-colors hover:bg-ae-accent-strong"
               >
                 Sign Up
               </Link>
@@ -98,14 +98,14 @@ export function SiteHeader() {
                 ? (ROLE_HOME[me.role] ?? appRoutes.architectureEvents.root)
                 : appRoutes.architectureEvents.signup
             }
-            className="rounded-xl bg-[var(--ae-accent)] px-4 py-2.5 text-[13.5px] font-semibold text-white"
+            className="rounded-xl bg-ae-accent px-4 py-2.5 text-[13.5px] font-semibold text-white"
           >
             {me ? "My Account" : "Sign Up"}
           </Link>
           <button
             type="button"
             aria-label="Open navigation"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#E7E7E7] bg-white text-foreground"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-ae-border bg-white text-foreground"
           >
             <Menu className="h-[18px] w-[18px]" strokeWidth={1.8} />
           </button>

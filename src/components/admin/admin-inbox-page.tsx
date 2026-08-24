@@ -54,22 +54,22 @@ export function AdminInboxPage() {
 
   return (
     <div className="animate-[fadeIn_.35s_ease_both] space-y-0">
-      <div className="border-b border-[#E7E7E7] pb-5">
+      <div className="border-b border-ae-border pb-5">
         <Heading level="page">Inbox &amp; Messages</Heading>
-        <p className="mt-2 text-[14.5px] text-[#6A6A6A]">
+        <p className="mt-2 text-[14.5px] text-ae-muted">
           Contact Us submissions and advertising inquiries, delivered through
           SendGrid.
         </p>
       </div>
 
-      <div className="mt-5 rounded-[14px] border border-dashed border-[#E7E7E7] bg-[#FAFAFA] px-5 py-3 text-[13px] leading-[1.6] text-[#6A6A6A]">
+      <div className="mt-5 rounded-[14px] border border-dashed border-ae-border bg-mainbackground px-5 py-3 text-[13px] leading-[1.6] text-ae-muted">
         There&apos;s no messaging/contact-form model in the API yet — this page
         shows sample data and replies aren&apos;t actually sent anywhere.
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_1.25fr]">
-        <section className="overflow-hidden rounded-[20px] border border-[#E7E7E7] bg-white">
-          <div className="flex flex-wrap gap-2 border-b border-[#E7E7E7] px-[26px] py-[16px]">
+        <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">
+          <div className="flex flex-wrap gap-2 border-b border-ae-border px-[26px] py-[16px]">
             {inboxFilters.map((item) => {
               const active = filter === item;
               return (
@@ -79,8 +79,8 @@ export function AdminInboxPage() {
                   onClick={() => selectFilter(item)}
                   className={`rounded-full border px-[13px] py-[8px] text-[12.5px] transition-colors ${
                     active
-                      ? "border-[#1E1E1E] bg-[#1E1E1E] font-semibold text-white"
-                      : "border-[#E7E7E7] bg-white text-[#4D4D4D]"
+                      ? "border-foreground bg-foreground font-semibold text-white"
+                      : "border-ae-border bg-white text-[#4D4D4D]"
                   }`}
                 >
                   {item}
@@ -115,13 +115,13 @@ export function AdminInboxPage() {
                         {message.shortTag}
                       </span>
                       {message.resolved ? (
-                        <span className="inline-flex rounded-full bg-[#1E1E1E] px-[8px] py-1 text-[10px] font-bold text-white">
+                        <span className="inline-flex rounded-full bg-foreground px-[8px] py-1 text-[10px] font-bold text-white">
                           RESOLVED
                         </span>
                       ) : null}
                     </div>
                   </div>
-                  <span className="text-[11.5px] text-[#6A6A6A]">
+                  <span className="text-[11.5px] text-ae-muted">
                     {message.date}
                   </span>
                 </div>
@@ -130,20 +130,20 @@ export function AdminInboxPage() {
           </div>
         </section>
 
-        <section className="rounded-[20px] border border-[#E7E7E7] bg-white px-[26px] py-[26px]">
+        <section className="rounded-[20px] border border-ae-border bg-white px-[26px] py-[26px]">
           {selectedMessage ? (
             <>
-              <p className="text-[10.5px] font-bold tracking-[0.13em] text-[#6A6A6A]">
+              <p className="text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
                 {selectedMessage.tag.toUpperCase()}
               </p>
               <Heading level="card" as="h3" className="mt-3">
                 {selectedMessage.subject}
               </Heading>
-              <p className="mt-3 text-[14px] text-[#6A6A6A]">
+              <p className="mt-3 text-[14px] text-ae-muted">
                 {selectedMessage.from} · {selectedMessage.date}, 2026
               </p>
 
-              <div className="mt-5 border-t border-[#E7E7E7] pt-5 text-[15px] leading-[1.95] text-[#5C5C5C]">
+              <div className="mt-5 border-t border-ae-border pt-5 text-[15px] leading-[1.95] text-[#5C5C5C]">
                 {selectedMessage.body.map((paragraph) => (
                   <p key={paragraph} className="mb-5 last:mb-0">
                     {paragraph}
@@ -151,7 +151,7 @@ export function AdminInboxPage() {
                 ))}
               </div>
 
-              <div className="mt-5 border-t border-[#E7E7E7] pt-5">
+              <div className="mt-5 border-t border-ae-border pt-5">
                 <label className="block">
                   <span className="mb-3 block text-[13px] font-semibold text-[#303030]">
                     Reply
@@ -161,7 +161,7 @@ export function AdminInboxPage() {
                     value={reply}
                     onChange={(event) => setReply(event.target.value)}
                     placeholder="Write a reply — it sends from hello@architectureevents.com."
-                    className="min-h-[103px] w-full rounded-[12px] border border-[#E7E7E7] px-4 py-3 text-[14px] text-foreground outline-none placeholder:text-[#9A9A9A]"
+                    className="min-h-[103px] w-full rounded-[12px] border border-ae-border px-4 py-3 text-[14px] text-foreground outline-none placeholder:text-[#9A9A9A]"
                   />
                 </label>
 
@@ -170,7 +170,7 @@ export function AdminInboxPage() {
                   <button
                     type="button"
                     onClick={toggleResolved}
-                    className="rounded-[10px] border border-[#1E1E1E] bg-white px-4 py-1.5 text-[13.5px] font-medium text-[#1E1E1E]"
+                    className="rounded-[10px] border border-foreground bg-white px-4 py-1.5 text-[13.5px] font-medium text-foreground"
                   >
                     Mark resolved
                   </button>

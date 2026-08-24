@@ -522,7 +522,7 @@ export function SubmitEventFormStep({
 
   return (
     <>
-      <div className="mt-8 flex justify-between rounded-[16px] border border-[#E7E7E7] bg-[#FAFAFA] px-5 py-4 text-[14.5px] text-[#3A3A3A]">
+      <div className="mt-8 flex justify-between rounded-[16px] border border-ae-border bg-mainbackground px-5 py-4 text-[14.5px] text-[#3A3A3A]">
         <div>
           <span className="font-semibold">Package:</span> {selectedPackageLabel}
         </div>
@@ -537,14 +537,14 @@ export function SubmitEventFormStep({
       </div>
 
       {!isEditableStatus ? (
-        <div className="mt-[18px] rounded-[14px] border border-[#E7E7E7] bg-[#F1EEE8] px-5 py-4 text-[14px] text-[#3A3A3A]">
+        <div className="mt-[18px] rounded-[14px] border border-ae-border bg-background px-5 py-4 text-[14px] text-[#3A3A3A]">
           This event is {event?.status.replace("_", " ").toLowerCase()} and can
           no longer be edited here.
         </div>
       ) : null}
 
       <fieldset disabled={!isEditableStatus || isBusy} className="contents">
-        <div className="mt-[30px] rounded-[20px] border border-[#E7E7E7] p-6 md:p-9">
+        <div className="mt-[30px] rounded-[20px] border border-ae-border p-6 md:p-9">
           <div className="mt-8">
             <Heading level="card" as="h3">
               Event details
@@ -601,13 +601,13 @@ export function SubmitEventFormStep({
                 <span className="mb-[9px] block text-[13.5px] font-semibold">
                   Pricing
                 </span>
-                <div className="flex h-[52px] items-center gap-4 rounded-[12px] border border-[#E7E7E7] px-4">
+                <div className="flex h-[52px] items-center gap-4 rounded-[12px] border border-ae-border px-4">
                   <label className="flex items-center gap-2 text-[14px]">
                     <input
                       type="checkbox"
                       checked={form.isFree}
                       onChange={(e) => setField("isFree", e.target.checked)}
-                      className="h-[16px] w-[16px] accent-[#1E1E1E]"
+                      className="h-[16px] w-[16px] accent-foreground"
                     />
                     Free event
                   </label>
@@ -671,7 +671,7 @@ export function SubmitEventFormStep({
                 className="disabled:cursor-not-allowed disabled:opacity-50"
               />
 
-              <div className="md:col-span-2 mt-[14px] border-t border-[#E7E7E7] pt-7">
+              <div className="md:col-span-2 mt-[14px] border-t border-ae-border pt-7">
                 <h3 className="m-0 text-[15px] font-bold text-foreground">
                   Location
                 </h3>
@@ -681,7 +681,7 @@ export function SubmitEventFormStep({
                     type="checkbox"
                     checked={form.isOnline}
                     onChange={(e) => setField("isOnline", e.target.checked)}
-                    className="h-[16px] w-[16px] accent-[#1E1E1E]"
+                    className="h-[16px] w-[16px] accent-foreground"
                   />
                   This is an online event
                 </label>
@@ -703,9 +703,9 @@ export function SubmitEventFormStep({
                       onChange={(e) => setField("state", e.target.value)}
                     />
                     <Field label="Venue name">
-                      <span className="flex h-[52px] items-center gap-[10px] rounded-[12px] border border-[#E7E7E7] bg-white px-4">
+                      <span className="flex h-[52px] items-center gap-[10px] rounded-[12px] border border-ae-border bg-white px-4">
                         <MapPin
-                          className="h-4 w-4 flex-none text-[#6A6A6A]"
+                          className="h-4 w-4 flex-none text-ae-muted"
                           strokeWidth={1.7}
                         />
                         <input
@@ -730,11 +730,11 @@ export function SubmitEventFormStep({
             </div>
           </div>
 
-          <div className="mt-8 border-t border-[#E7E7E7] pt-8">
+          <div className="mt-8 border-t border-ae-border pt-8">
             <h3 className="ae-serif text-[16px] font-semibold tracking-[-0.01em] text-foreground">
               Images and video
             </h3>
-            <span className="mb-5 font-medium text-[#6A6A6A]">
+            <span className="mb-5 font-medium text-ae-muted">
               {event
                 ? "Upload up to six images and one video. Select which image is used as the listing thumbnail."
                 : "Save this event first, then come back here to add images and video."}
@@ -772,12 +772,12 @@ export function SubmitEventFormStep({
                         className={`overflow-hidden rounded-[18px] border ${
                           media.isThumbnail
                             ? "border-foreground"
-                            : "border-[#E7E7E7]"
+                            : "border-ae-border"
                         }`}
                       >
                         <div className="relative h-[182px] bg-[#F1F1F1]">
                           {media.resourceType === "VIDEO" ? (
-                            <div className="flex h-full w-full items-center justify-center text-[#6A6A6A]">
+                            <div className="flex h-full w-full items-center justify-center text-ae-muted">
                               <Video className="h-8 w-8" strokeWidth={1.5} />
                             </div>
                           ) : (
@@ -803,8 +803,8 @@ export function SubmitEventFormStep({
                             onClick={() => handleSetThumbnail(media.id)}
                             className={`w-full py-[10px] text-[12px] font-bold tracking-[0.1em] ${
                               media.isThumbnail
-                                ? "bg-[#1E1E1E] text-white"
-                                : "bg-white text-[#3A3A3A] hover:bg-[#FAFAFA]"
+                                ? "bg-foreground text-white"
+                                : "bg-white text-[#3A3A3A] hover:bg-mainbackground"
                             }`}
                           >
                             {media.isThumbnail
@@ -820,7 +820,7 @@ export function SubmitEventFormStep({
             ) : null}
           </div>
 
-          <div className="mt-10 border-t border-[#E7E7E7] pt-10">
+          <div className="mt-10 border-t border-ae-border pt-10">
             <Textarea
               label="Internal notes — optional"
               rows={3}
@@ -829,7 +829,7 @@ export function SubmitEventFormStep({
             />
           </div>
 
-          <div className="mt-8 border-t border-[#E7E7E7] pt-8">
+          <div className="mt-8 border-t border-ae-border pt-8">
             <Heading level="card" as="h3">
               Organizer contact
             </Heading>
@@ -873,13 +873,13 @@ export function SubmitEventFormStep({
       </fieldset>
 
       {event && isEventFeaturableByOrganizer(event.status) ? (
-        <div className="mt-[22px] rounded-[20px] border border-[#E7E7E7] bg-[#FAFAFA] p-6 md:p-8">
+        <div className="mt-[22px] rounded-[20px] border border-ae-border bg-mainbackground p-6 md:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <Heading level="subsection" as="h3">
                 Featured Listing
               </Heading>
-              <p className="mt-[6px] max-w-[54ch] text-[14px] leading-[1.7] text-[#6A6A6A]">
+              <p className="mt-[6px] max-w-[54ch] text-[14px] leading-[1.7] text-ae-muted">
                 {event.isFeatured
                   ? "This event is featured and appears near the top of the Events page."
                   : reviewFeatureRequest
@@ -895,7 +895,7 @@ export function SubmitEventFormStep({
             {event.isFeatured ? (
               <FeaturedBadge />
             ) : reviewFeatureRequest ? (
-              <span className="whitespace-nowrap rounded-full border border-[#E7E7E7] bg-white px-[15px] py-[7px] text-[12.5px] font-semibold text-[#3A3A3A]">
+              <span className="whitespace-nowrap rounded-full border border-ae-border bg-white px-[15px] py-[7px] text-[12.5px] font-semibold text-[#3A3A3A]">
                 Pending review
               </span>
             ) : pendingFeatureRequest ? (

@@ -27,21 +27,21 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 // colors, radii, or spacing invented, just consolidated into one component.
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary:
-    "bg-[#1E1E1E] text-white hover:bg-black disabled:cursor-not-allowed disabled:opacity-60",
+    "bg-foreground text-white hover:bg-black disabled:cursor-not-allowed disabled:opacity-60",
   secondary:
-    "border border-foreground bg-white text-foreground hover:bg-[#FAFAFA] disabled:cursor-not-allowed disabled:opacity-60",
+    "border border-foreground bg-white text-foreground hover:bg-mainbackground disabled:cursor-not-allowed disabled:opacity-60",
   danger:
     "bg-[#B3261E] text-white hover:bg-[#8f1e18] disabled:cursor-not-allowed disabled:opacity-60",
   ghost:
-    "bg-transparent text-[var(--ae-accent)] hover:text-[var(--ae-accent-strong)] disabled:cursor-not-allowed disabled:opacity-60",
+    "bg-transparent text-ae-accent hover:text-ae-accent-strong disabled:cursor-not-allowed disabled:opacity-60",
   // Matches the Modal/ModalProvider cancel button, reused verbatim by every
   // confirm/alert dialog and admin "note" modal footer across the app.
   outline:
-    "border border-[#E7E7E7] text-[#3A3A3A] hover:border-foreground disabled:cursor-not-allowed disabled:opacity-60",
+    "border border-ae-border text-[#3A3A3A] hover:border-foreground disabled:cursor-not-allowed disabled:opacity-60",
   // Bare muted-gray text action (e.g. "Remove", admin row-level Reject/Retry
   // refund) — distinct from "ghost", which is accent-colored.
   muted:
-    "text-[#6A6A6A] hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60",
+    "text-ae-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {

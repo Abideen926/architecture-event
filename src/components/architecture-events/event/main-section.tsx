@@ -12,7 +12,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { appRoutes } from "@/lib/routes";
-import { useGetCategoriesQuery, useGetIndustriesQuery, useListPublicEventsQuery } from "@/features/public/public-api";
+import {
+  useGetCategoriesQuery,
+  useGetIndustriesQuery,
+  useListPublicEventsQuery,
+} from "@/features/public/public-api";
 import { useSaveToggle } from "@/features/attendee/use-save-toggle";
 import { FeaturedBadge } from "@/components/ui/featured-badge";
 import { Button } from "@/components/ui/button";
@@ -35,7 +39,8 @@ export function BrowseMainSection() {
   const categoryId = searchParams.get("categoryId") ?? undefined;
   const industryId = searchParams.get("industryId") ?? undefined;
   const isFreeParam = searchParams.get("isFree");
-  const isFree = isFreeParam === "true" ? true : isFreeParam === "false" ? false : undefined;
+  const isFree =
+    isFreeParam === "true" ? true : isFreeParam === "false" ? false : undefined;
   const sort = searchParams.get("sort") ?? "soonest";
   const page = Number(searchParams.get("page") ?? "1");
 
@@ -55,7 +60,8 @@ export function BrowseMainSection() {
   const { isSaved, toggleSave } = useSaveToggle();
 
   const events = data?.items ?? [];
-  const sortLabel = sortOptions.find((option) => option.value === sort)?.label ?? "Soonest";
+  const sortLabel =
+    sortOptions.find((option) => option.value === sort)?.label ?? "Soonest";
 
   function navigateWith(overrides: Record<string, string | undefined>) {
     const params = new URLSearchParams(searchParams.toString());
@@ -65,12 +71,19 @@ export function BrowseMainSection() {
     }
     if (!("page" in overrides)) params.delete("page");
     const query = params.toString();
-    router.push(query ? `${appRoutes.architectureEvents.events}?${query}` : appRoutes.architectureEvents.events);
+    router.push(
+      query
+        ? `${appRoutes.architectureEvents.events}?${query}`
+        : appRoutes.architectureEvents.events,
+    );
   }
 
   return (
     <section className="bg-white pb-18 pt-16">
-      <div className="mx-auto w-full max-w-[1310px]" style={{ paddingInline: "20px" }}>
+      <div
+        className="mx-auto w-full max-w-[1310px]"
+        style={{ paddingInline: "20px" }}
+      >
         <div className="grid gap-9 lg:grid-cols-[248px_minmax(0,1fr)] lg:gap-10">
           <aside className="text-[#3A3A3A]">
             <div className="flex items-center justify-between border-b border-[#E5E1DA] pb-4">
@@ -80,7 +93,7 @@ export function BrowseMainSection() {
               <button
                 type="button"
                 onClick={() => router.push(appRoutes.architectureEvents.events)}
-                className="text-[12px] font-medium text-[var(--ae-accent)] transition-colors hover:text-[var(--ae-accent-strong)]"
+                className="text-[12px] font-medium text-ae-accent transition-colors hover:text-ae-accent-strong"
               >
                 Clear all
               </button>
@@ -88,7 +101,10 @@ export function BrowseMainSection() {
 
             <SingleSelectFilterGroup
               title="EVENT TYPE"
-              items={(categories ?? []).map((c) => ({ id: c.id, label: c.name }))}
+              items={(categories ?? []).map((c) => ({
+                id: c.id,
+                label: c.name,
+              }))}
               selectedId={categoryId}
               onChange={(id) => navigateWith({ categoryId: id })}
             />
@@ -99,13 +115,27 @@ export function BrowseMainSection() {
                 { id: "free", label: "Free" },
                 { id: "paid", label: "Paid" },
               ]}
-              selectedId={isFree === true ? "free" : isFree === false ? "paid" : undefined}
-              onChange={(id) => navigateWith({ isFree: id === "free" ? "true" : id === "paid" ? "false" : undefined })}
+              selectedId={
+                isFree === true ? "free" : isFree === false ? "paid" : undefined
+              }
+              onChange={(id) =>
+                navigateWith({
+                  isFree:
+                    id === "free"
+                      ? "true"
+                      : id === "paid"
+                        ? "false"
+                        : undefined,
+                })
+              }
             />
 
             <SingleSelectFilterGroup
               title="INDUSTRY FOCUS"
-              items={(industries ?? []).map((i) => ({ id: i.id, label: i.name }))}
+              items={(industries ?? []).map((i) => ({
+                id: i.id,
+                label: i.name,
+              }))}
               selectedId={industryId}
               onChange={(id) => navigateWith({ industryId: id })}
             />
@@ -133,7 +163,7 @@ export function BrowseMainSection() {
             <div className="flex flex-col gap-5 border-b border-[#E5E1DA] pb-5 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-[14px] text-[#585858]">
                 <span className="font-semibold text-[#2A2A2A]">
-                  {isLoading ? "…" : data?.meta.total ?? 0} events
+                  {isLoading ? "…" : (data?.meta.total ?? 0)} events
                 </span>{" "}
                 matching your filters
               </p>
@@ -146,7 +176,10 @@ export function BrowseMainSection() {
                     className="inline-flex h-[32px] items-center gap-2 rounded-[10px] border border-[#E0DDD6] bg-white px-4 text-[12px] font-medium text-[#2E2E2E]"
                   >
                     Sort: {sortLabel}
-                    <ChevronDown className="h-3.5 w-3.5 text-[#6F6F6F]" strokeWidth={1.8} />
+                    <ChevronDown
+                      className="h-3.5 w-3.5 text-[#6F6F6F]"
+                      strokeWidth={1.8}
+                    />
                   </button>
 
                   {sortOpen ? (
@@ -159,7 +192,7 @@ export function BrowseMainSection() {
                             navigateWith({ sort: option.value });
                             setSortOpen(false);
                           }}
-                          className={`flex h-[40px] w-full items-center px-4 text-left text-[12px] text-[#2E2E2E] transition-colors hover:bg-[#FAFAFA] ${
+                          className={`flex h-[40px] w-full items-center px-4 text-left text-[12px] text-[#2E2E2E] transition-colors hover:bg-mainbackground ${
                             index > 0 ? "border-t border-[#F2EEE7]" : ""
                           }`}
                         >
@@ -184,25 +217,37 @@ export function BrowseMainSection() {
             {isLoading ? (
               <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {[0, 1, 2, 3, 4, 5].map((key) => (
-                  <div key={key} className="h-[360px] animate-pulse rounded-[18px] border border-[#DEDEDE] bg-[#F5F5F5]" />
+                  <div
+                    key={key}
+                    className="h-[360px] animate-pulse rounded-[18px] border border-[#DEDEDE] bg-[#F5F5F5]"
+                  />
                 ))}
               </div>
             ) : isError ? (
-              <div className="mt-7 rounded-[18px] border border-[#DEDEDE] bg-[#FAFAFA] px-10 py-16 text-center">
-                <p className="text-[15px] text-[#6A6A6A]">Couldn&apos;t load events.</p>
-                <Button variant="secondary" size="sm" className="mt-4" onClick={() => refetch()}>
+              <div className="mt-7 rounded-[18px] border border-[#DEDEDE] bg-mainbackground px-10 py-16 text-center">
+                <p className="text-[15px] text-ae-muted">
+                  Couldn&apos;t load events.
+                </p>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="mt-4"
+                  onClick={() => refetch()}
+                >
                   Try again
                 </Button>
               </div>
             ) : events.length === 0 ? (
-              <div className="mt-7 rounded-[18px] border border-[#DEDEDE] bg-[#FAFAFA] px-10 py-16 text-center text-[15px] text-[#6A6A6A]">
+              <div className="mt-7 rounded-[18px] border border-[#DEDEDE] bg-mainbackground px-10 py-16 text-center text-[15px] text-ae-muted">
                 No events match these filters.
               </div>
             ) : (
               <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {events.map((event) => {
                   const startAt = new Date(event.startAt);
-                  const thumbnail = event.media?.find((m) => m.isThumbnail)?.url;
+                  const thumbnail = event.media?.find(
+                    (m) => m.isThumbnail,
+                  )?.url;
                   const saved = isSaved(event.id);
 
                   return (
@@ -211,11 +256,13 @@ export function BrowseMainSection() {
                       className="group relative overflow-hidden rounded-[18px] border border-[#DEDEDE] bg-white shadow-[0_16px_28px_-26px_rgba(20,20,20,0.28)]"
                     >
                       <Link
-                        href={appRoutes.architectureEvents.eventDetail(event.id)}
+                        href={appRoutes.architectureEvents.eventDetail(
+                          event.id,
+                        )}
                         className="absolute inset-0 z-10"
                         aria-label={`Open ${event.title}`}
                       />
-                      <div className="relative h-[198px] overflow-hidden bg-[#F1EEE8]">
+                      <div className="relative h-[198px] overflow-hidden bg-background">
                         {thumbnail ? (
                           <img
                             src={thumbnail}
@@ -239,7 +286,11 @@ export function BrowseMainSection() {
                         ) : null}
                         <button
                           type="button"
-                          aria-label={saved ? `Unsave ${event.title}` : `Save ${event.title}`}
+                          aria-label={
+                            saved
+                              ? `Unsave ${event.title}`
+                              : `Save ${event.title}`
+                          }
                           aria-pressed={saved}
                           onClick={(clickEvent) => {
                             clickEvent.preventDefault();
@@ -247,9 +298,12 @@ export function BrowseMainSection() {
                           }}
                           className={`absolute right-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-white shadow-sm ${
                             event.isFeatured ? "top-[46px]" : "top-3"
-                          } ${saved ? "text-[var(--ae-accent)]" : "text-[#595959]"}`}
+                          } ${saved ? "text-ae-accent" : "text-[#595959]"}`}
                         >
-                          <Bookmark className={`h-3.5 w-3.5 ${saved ? "fill-current" : ""}`} strokeWidth={1.8} />
+                          <Bookmark
+                            className={`h-3.5 w-3.5 ${saved ? "fill-current" : ""}`}
+                            strokeWidth={1.8}
+                          />
                         </button>
                       </div>
 
@@ -267,10 +321,13 @@ export function BrowseMainSection() {
                         <div className="mt-5 border-t border-[#ECE7E0] pt-4">
                           <div className="flex items-center justify-between gap-4">
                             <div className="inline-flex items-center gap-1.5 text-[12px] text-[#7B7B7B]">
-                              <MapPin className="h-3.5 w-3.5" strokeWidth={1.8} />
-                              {event.isOnline ? "Online" : event.city ?? "—"}
+                              <MapPin
+                                className="h-3.5 w-3.5"
+                                strokeWidth={1.8}
+                              />
+                              {event.isOnline ? "Online" : (event.city ?? "—")}
                             </div>
-                            <span className="text-[12.5px] font-medium text-[var(--ae-accent)]">
+                            <span className="text-[12.5px] font-medium text-ae-accent">
                               {event.isFree
                                 ? "Free"
                                 : event.priceFromCents
@@ -289,10 +346,17 @@ export function BrowseMainSection() {
             {data && data.meta.totalPages > 1 ? (
               <div className="mt-9 flex items-center justify-center gap-2">
                 <PagerButton
-                  icon={<ChevronLeft className="h-3.5 w-3.5" strokeWidth={1.8} />}
-                  onClick={() => navigateWith({ page: String(Math.max(1, page - 1)) })}
+                  icon={
+                    <ChevronLeft className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  }
+                  onClick={() =>
+                    navigateWith({ page: String(Math.max(1, page - 1)) })
+                  }
                 />
-                {Array.from({ length: data.meta.totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                {Array.from(
+                  { length: data.meta.totalPages },
+                  (_, index) => index + 1,
+                ).map((pageNumber) => (
                   <PagerButton
                     key={pageNumber}
                     label={String(pageNumber)}
@@ -301,8 +365,14 @@ export function BrowseMainSection() {
                   />
                 ))}
                 <PagerButton
-                  icon={<ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />}
-                  onClick={() => navigateWith({ page: String(Math.min(data.meta.totalPages, page + 1)) })}
+                  icon={
+                    <ChevronRight className="h-3.5 w-3.5" strokeWidth={1.8} />
+                  }
+                  onClick={() =>
+                    navigateWith({
+                      page: String(Math.min(data.meta.totalPages, page + 1)),
+                    })
+                  }
                 />
               </div>
             ) : null}
@@ -320,10 +390,17 @@ type SingleSelectFilterGroupProps = {
   onChange: (id: string | undefined) => void;
 };
 
-function SingleSelectFilterGroup({ title, items, selectedId, onChange }: SingleSelectFilterGroupProps) {
+function SingleSelectFilterGroup({
+  title,
+  items,
+  selectedId,
+  onChange,
+}: SingleSelectFilterGroupProps) {
   return (
     <div className="border-t border-[#E5E1DA] py-5">
-      <h3 className="text-[11px] font-bold tracking-[0.12em] text-[#6F6F6F]">{title}</h3>
+      <h3 className="text-[11px] font-bold tracking-[0.12em] text-[#6F6F6F]">
+        {title}
+      </h3>
       <div className="mt-7 grid gap-[14px]">
         {items.map((item) => (
           <label
@@ -333,8 +410,10 @@ function SingleSelectFilterGroup({ title, items, selectedId, onChange }: SingleS
             <input
               type="checkbox"
               checked={selectedId === item.id}
-              onChange={() => onChange(selectedId === item.id ? undefined : item.id)}
-              className="h-[14px] w-[14px] rounded-[3px] border border-[#B9B9B9] accent-[var(--ae-accent)]"
+              onChange={() =>
+                onChange(selectedId === item.id ? undefined : item.id)
+              }
+              className="h-[14px] w-[14px] rounded-[3px] border border-[#B9B9B9] accent-ae-accent"
             />
             {item.label}
           </label>
@@ -351,7 +430,12 @@ type PagerButtonProps = {
   onClick?: () => void;
 };
 
-function PagerButton({ label, active = false, icon, onClick }: PagerButtonProps) {
+function PagerButton({
+  label,
+  active = false,
+  icon,
+  onClick,
+}: PagerButtonProps) {
   return (
     <button
       type="button"
@@ -359,7 +443,7 @@ function PagerButton({ label, active = false, icon, onClick }: PagerButtonProps)
       className={`inline-flex h-[30px] min-w-[30px] items-center justify-center rounded-[9px] border text-[12px] font-medium transition-colors ${
         active
           ? "border-[#1F1F1F] bg-[#1F1F1F] px-3 text-white"
-          : "border-[#D8D5CE] bg-white px-3 text-[#6A6A6A] hover:border-[#BEB7AA]"
+          : "border-[#D8D5CE] bg-white px-3 text-ae-muted hover:border-[#BEB7AA]"
       }`}
     >
       {icon ?? label}
