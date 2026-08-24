@@ -17,13 +17,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { FeaturedBadge } from "@/components/ui/featured-badge";
 import {
-  brandSpotlights,
   heroImage,
   heroKeywordSuggestions,
   valuePoints,
 } from "@/lib/architecture-events/marketing/home-data";
 import { appRoutes } from "@/lib/routes";
-import { useListPublicEventsQuery } from "@/features/public/public-api";
+import { useListPublicEventsQuery, useListPublicSpotlightsQuery } from "@/features/public/public-api";
 import { useSaveToggle } from "@/features/attendee/use-save-toggle";
 
 export function HomePage() {
@@ -161,6 +160,11 @@ function HeroSection() {
 }
 
 function BrandSpotlightSection() {
+  const { data } = useListPublicSpotlightsQuery();
+  const spotlights = data ?? [];
+
+  if (spotlights.length === 0) return null;
+
   return (
     <section className="bg-white pt-[152px]">
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 xl:px-20">
@@ -184,65 +188,38 @@ function BrandSpotlightSection() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
-            {brandSpotlights.map((brand) => (
+            {spotlights.map((spotlight) => (
               <article
-                key={brand.id}
+                key={spotlight.id}
                 className="overflow-hidden rounded-[16px] border border-ae-border bg-white transition-shadow duration-200 hover:shadow-[0_18px_40px_-28px_rgba(20,20,20,0.35)]"
               >
                 <div
                   className="relative h-[250px] overflow-hidden bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${brand.image})` }}
+                  style={{ backgroundImage: `url(${spotlight.thumbnailImageUrl})` }}
                 />
                 <div className="relative px-6 pb-[26px] pt-[46px]">
                   <div className="absolute left-[22px] top-0 flex h-[96px] w-[104px] -translate-y-[68%] flex-col items-center justify-center rounded-[12px] border border-ae-border bg-white shadow-[0_10px_22px_-18px_rgba(20,20,20,0.3)]">
-                    {brand.id === "forest-accents" ? (
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke={brand.accent}
-                        strokeWidth="1.5"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 3 6 12h12L12 3zM12 9l-4.5 8h9L12 9zM12 17v4" />
-                      </svg>
-                    ) : brand.id === "company-name" ? (
-                      <span
-                        className="text-[26px] leading-none"
-                        style={{ color: "#C4BEB2" }}
-                        aria-hidden="true"
-                      >
-                        □
-                      </span>
-                    ) : (
-                      <span
-                        className="font-serif text-[26px] leading-none"
-                        style={{ color: brand.accent }}
-                      >
-                        {brand.token}
-                      </span>
-                    )}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={spotlight.logoImageUrl}
+                      alt=""
+                      className="h-8 w-8 object-contain"
+                    />
                     <span className="mt-3 text-center text-[9.5px] font-bold tracking-[0.1em] text-foreground">
-                      {brand.name === "Company Name" ? (
-                        <>
-                          <span className="block">COMPANY</span>
-                          <span className="block">LOGO</span>
-                        </>
-                      ) : (
-                        brand.name.toUpperCase()
-                      )}
+                      {spotlight.name.toUpperCase()}
                     </span>
                   </div>
 
                   <h3 className="m-0 text-[20px] font-bold tracking-[-0.01em] text-foreground">
-                    {brand.name}
+                    {spotlight.name}
                   </h3>
                   <p className="mt-[10px] max-w-[23ch] text-[14.5px] leading-[1.7] text-ae-muted">
-                    {brand.headline}
+                    {spotlight.description}
                   </p>
-                  <Link
-                    href={appRoutes.architectureEvents.events}
+                  <a
+                    href={spotlight.websiteUrl}
+                    target="_blank"
+                    rel="noreferrer"
                     className="ae-link-accent mt-[18px] inline-flex items-center gap-[9px] text-[14px] font-semibold transition-all hover:gap-[14px]"
                   >
                     View Spotlight
@@ -250,7 +227,7 @@ function BrandSpotlightSection() {
                       className="h-[15px] w-[15px]"
                       strokeWidth={1.8}
                     />
-                  </Link>
+                  </a>
                 </div>
               </article>
             ))}

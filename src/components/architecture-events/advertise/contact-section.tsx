@@ -1,7 +1,9 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
+import { useCreatePublicMessageMutation } from "@/features/public/public-api";
+import { getApiErrorMessage } from "@/lib/store/api-error";
 
 const interestOptions = [
   "Brand Spotlight",
@@ -11,11 +13,42 @@ const interestOptions = [
 ] as const;
 
 export function AdvertiseContactSection() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [interestedIn, setInterestedIn] = useState<string>(interestOptions[0]);
+  const [message, setMessage] = useState("");
+  const [createMessage, { isLoading }] = useCreatePublicMessageMutation();
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    toast.error("This form isn't connected yet", {
-      description: "Please reach out through the Contact Us page in the meantime.",
-    });
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      toast.error("Please fill in your name, email, and message.");
+      return;
+    }
+
+    try {
+      await createMessage({
+        category: "ADVERTISE",
+        reasonLabel: interestedIn,
+        name: name.trim(),
+        email: email.trim(),
+        company: company.trim() || undefined,
+        message: message.trim(),
+      }).unwrap();
+
+      toast.success("Message sent", {
+        description: "We'll get back to you as soon as possible.",
+      });
+      setName("");
+      setCompany("");
+      setEmail("");
+      setInterestedIn(interestOptions[0]);
+      setMessage("");
+    } catch (error) {
+      toast.error("Couldn't send your message", { description: getApiErrorMessage(error) });
+    }
   }
 
   return (
@@ -42,19 +75,38 @@ export function AdvertiseContactSection() {
           <form onSubmit={handleSubmit} className="grid gap-[15px]">
             <div className="grid gap-[15px] md:grid-cols-2">
               <FormField label="Name">
-                <input type="text" className={fieldClassName} />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={fieldClassName}
+                />
               </FormField>
               <FormField label="Company">
-                <input type="text" className={fieldClassName} />
+                <input
+                  type="text"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className={fieldClassName}
+                />
               </FormField>
             </div>
 
             <div className="grid gap-[15px] md:grid-cols-2">
               <FormField label="Email">
-                <input type="email" className={fieldClassName} />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={fieldClassName}
+                />
               </FormField>
               <FormField label="Interested in">
-                <select defaultValue={interestOptions[0]} className={fieldClassName}>
+                <select
+                  value={interestedIn}
+                  onChange={(e) => setInterestedIn(e.target.value)}
+                  className={fieldClassName}
+                >
                   {interestOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
@@ -67,6 +119,8 @@ export function AdvertiseContactSection() {
             <FormField label="Message">
               <textarea
                 rows={4}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 placeholder="What are you promoting, and when?"
                 className={`${fieldClassName} min-h-[94px] resize-none px-[14px] py-[11px] placeholder:text-[#8B8B8B]`}
               />
@@ -75,9 +129,10 @@ export function AdvertiseContactSection() {
             <div className="">
               <button
                 type="submit"
-                className="inline-flex h-[47px] min-w-[120px] items-center justify-center rounded-[10px] border border-[#232323] bg-[#232323] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-black"
+                disabled={isLoading}
+                className="inline-flex h-[47px] min-w-[120px] items-center justify-center rounded-[10px] border border-[#232323] bg-[#232323] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send inquiry
+                {isLoading ? "Sending..." : "Send inquiry"}
               </button>
             </div>
           </form>

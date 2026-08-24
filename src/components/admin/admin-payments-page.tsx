@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  ledgerEntries as initialLedgerEntries,
-  spotlightSlots as initialSpotlightSlots,
-} from "@/lib/admin/dashboard-data";
+import { ledgerEntries as initialLedgerEntries } from "@/lib/admin/dashboard-data";
 import {
   useApproveFeatureRequestMutation,
   useListAdminFeatureRequestsQuery,
   useRejectFeatureRequestMutation,
   useRetryFeatureRequestRefundMutation,
 } from "@/features/admin/admin-feature-requests-api";
+import { useListAdminSpotlightsQuery } from "@/features/admin/admin-advertising-api";
 import type { FeatureRequestStatus } from "@/features/organizer/organizer-api";
 import { getApiErrorMessage } from "@/lib/store/api-error";
 import { useConfirm } from "@/components/ui/modal-provider";
@@ -21,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { appRoutes } from "@/lib/routes";
 
-type SpotlightSlot = { slot: string; company: string; until: string };
 type LedgerEntry = {
   date: string;
   description: string;
@@ -48,9 +45,9 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 const centsToUsd = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
 export function AdminPaymentsPage() {
-  const [spotlightSlots] = useState<SpotlightSlot[]>(
-    initialSpotlightSlots.map((slot) => ({ ...slot })),
-  );
+  const { data: spotlightsData } = useListAdminSpotlightsQuery();
+  const spotlights = (spotlightsData ?? []).slice(0, 3);
+
   const [ledgerEntries] = useState<LedgerEntry[]>(
     initialLedgerEntries.map((entry) => ({ ...entry })),
   );
@@ -142,31 +139,38 @@ export function AdminPaymentsPage() {
               Three companies appear on the homepage at a time.
             </p>
           </div>
-          <span className="inline-flex h-[27px] items-center rounded-full border border-ae-border bg-mainbackground px-3 text-[10.5px] font-bold tracking-[0.11em] text-ae-muted">
-            SAMPLE DATA
-          </span>
+          <Button
+            href={appRoutes.admin.advertising}
+            variant="ghost"
+            size="text"
+            className="whitespace-nowrap text-[13.5px] font-semibold"
+          >
+            Manage →
+          </Button>
         </div>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-3">
-          {spotlightSlots.map((slot) => (
-            <article
-              key={slot.slot}
-              className="rounded-[16px] border border-ae-border px-5 py-5"
-            >
-              <p className="text-[10px] font-bold tracking-[0.15em] text-ae-muted">
-                {slot.slot.toUpperCase()}
-              </p>
-              <h4 className="mt-3 text-[15px] font-semibold text-foreground">
-                {slot.company}
-              </h4>
-              <p className="mt-2 text-[13px] text-ae-muted">{slot.until}</p>
-            </article>
-          ))}
-        </div>
-        <p className="mt-4 text-[12.5px] leading-[1.6] text-[#8A8A8A]">
-          There&apos;s no advertising/sponsorship model in the API yet, so this
-          section isn&apos;t wired to real data.
-        </p>
+        {spotlights.length === 0 ? (
+          <p className="mt-5 text-[14px] text-ae-muted">No active spotlights yet.</p>
+        ) : (
+          <div className="mt-5 grid gap-4 md:grid-cols-3">
+            {spotlights.map((spotlight) => (
+              <article
+                key={spotlight.id}
+                className="flex items-center gap-3 rounded-[16px] border border-ae-border px-5 py-5"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={spotlight.thumbnailImageUrl}
+                  alt=""
+                  className="h-[40px] w-[40px] flex-none rounded-[10px] object-cover"
+                />
+                <h4 className="text-[15px] font-semibold text-foreground">
+                  {spotlight.name}
+                </h4>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="overflow-hidden rounded-[20px] border border-ae-border bg-white">

@@ -17,6 +17,14 @@ export type OrganizerProfile = {
   logoUrl: string | null;
 };
 
+export type AdvertisingRequest = {
+  id: string;
+  packageId: string | null;
+  subject: string;
+  resolved: boolean;
+  createdAt: string;
+};
+
 export type FeatureRequestStatus =
   | "PENDING_PAYMENT"
   | "PENDING_REVIEW"
@@ -216,6 +224,21 @@ export const organizerApi = baseApi.injectEndpoints({
         response.data.featureRequest,
       invalidatesTags: ["FeatureRequest"],
     }),
+
+    requestAdvertisingPackage: builder.mutation<void, string>({
+      query: (packageId) => ({
+        url: `/organizer/advertising/packages/${packageId}/request`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "MyAdvertisingRequest", id: "LIST" }],
+    }),
+
+    listMyAdvertisingRequests: builder.query<AdvertisingRequest[], void>({
+      query: () => ({ url: "/organizer/advertising/requests" }),
+      transformResponse: (response: ApiEnvelope<{ requests: AdvertisingRequest[] }>) =>
+        response.data.requests,
+      providesTags: [{ type: "MyAdvertisingRequest", id: "LIST" }],
+    }),
   }),
 });
 
@@ -235,4 +258,6 @@ export const {
   useCreateFeatureRequestMutation,
   useListMyFeatureRequestsQuery,
   useRetryFeatureRequestPaymentMutation,
+  useRequestAdvertisingPackageMutation,
+  useListMyAdvertisingRequestsQuery,
 } = organizerApi;

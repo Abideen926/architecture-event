@@ -41,7 +41,11 @@ export async function backendFetch<T = unknown>(
     }
   }
 
-  const headers: HeadersInit = { "Content-Type": "application/json" };
+  // FormData (multipart uploads) is passed through untouched — fetch sets
+  // its own Content-Type with the correct boundary; JSON bodies keep the
+  // existing stringify behavior.
+  const isFormData = body instanceof FormData;
+  const headers: HeadersInit = isFormData ? {} : { "Content-Type": "application/json" };
   if (token) headers.Authorization = `Bearer ${token}`;
 
   let response: Response;
@@ -50,7 +54,7 @@ export async function backendFetch<T = unknown>(
     response = await fetch(url, {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: isFormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
       cache,
     });
   } catch {

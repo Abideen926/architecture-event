@@ -46,6 +46,10 @@ export const baseApi = createApi({
     "AttendeeInteraction",
     "AdminStats",
     "AdminReports",
+    "AdvertisingPackage",
+    "BrandSpotlight",
+    "SiteMessage",
+    "MyAdvertisingRequest",
   ],
   endpoints: () => ({}),
 });

@@ -18,6 +18,45 @@ export type Industry = {
   displayOrder: number;
 };
 
+export type AdvertisingPackage = {
+  id: string;
+  name: string;
+  price: string;
+  priceSuffix: string | null;
+  badge: string | null;
+  featured: boolean;
+  description: string;
+  label: string;
+  details: string[];
+  note: string | null;
+  buttonLabel: string;
+  buttonVariant: "solid" | "outline";
+  displayOrder: number;
+  isActive: boolean;
+};
+
+export type BrandSpotlight = {
+  id: string;
+  name: string;
+  description: string;
+  thumbnailImageUrl: string;
+  logoImageUrl: string;
+  websiteUrl: string;
+  displayOrder: number;
+  isActive: boolean;
+};
+
+export type SiteMessageCategory = "ADVERTISE" | "GENERAL_QUESTION" | "ORGANIZER_QUERY";
+
+export type CreatePublicMessagePayload = {
+  category: SiteMessageCategory;
+  reasonLabel?: string;
+  name: string;
+  email: string;
+  company?: string;
+  message: string;
+};
+
 export const publicApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], void>({
@@ -72,6 +111,24 @@ export const publicApi = baseApi.injectEndpoints({
       query: (id) => ({ url: `/public/events/${id}/register`, method: "POST" }),
       transformResponse: (response: ApiEnvelope<{ registrationUrl: string }>) => response.data,
     }),
+
+    listPublicAdvertisingPackages: builder.query<AdvertisingPackage[], void>({
+      query: () => ({ url: "/public/advertising/packages" }),
+      transformResponse: (response: ApiEnvelope<{ packages: AdvertisingPackage[] }>) =>
+        response.data.packages,
+      providesTags: [{ type: "AdvertisingPackage", id: "LIST" }],
+    }),
+
+    listPublicSpotlights: builder.query<BrandSpotlight[], void>({
+      query: () => ({ url: "/public/advertising/spotlights" }),
+      transformResponse: (response: ApiEnvelope<{ spotlights: BrandSpotlight[] }>) =>
+        response.data.spotlights,
+      providesTags: [{ type: "BrandSpotlight", id: "LIST" }],
+    }),
+
+    createPublicMessage: builder.mutation<void, CreatePublicMessagePayload>({
+      query: (body) => ({ url: "/public/messages", method: "POST", body }),
+    }),
   }),
 });
 
@@ -81,4 +138,7 @@ export const {
   useListPublicEventsQuery,
   useGetPublicEventQuery,
   useRegisterClickThroughMutation,
+  useListPublicAdvertisingPackagesQuery,
+  useListPublicSpotlightsQuery,
+  useCreatePublicMessageMutation,
 } = publicApi;

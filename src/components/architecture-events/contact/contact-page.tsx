@@ -1,22 +1,66 @@
 "use client";
 
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
   contactHelpOptions,
   contactPageContent,
 } from "@/lib/architecture-events/contact/contact-data";
+import { useCreatePublicMessageMutation } from "@/features/public/public-api";
+import type { SiteMessageCategory } from "@/features/public/public-api";
+import { getApiErrorMessage } from "@/lib/store/api-error";
+
+// Maps the visible "What can we help you with?" options onto the 3-way
+// classification the admin inbox filters by. "Advertising opportunities"
+// and "Brand partnership" both land in the same Advertising bucket.
+const HELP_OPTION_CATEGORY: Record<(typeof contactHelpOptions)[number], SiteMessageCategory> = {
+  "Submit or update an event": "ORGANIZER_QUERY",
+  "Advertising opportunities": "ADVERTISE",
+  "Brand partnership": "ADVERTISE",
+  "General question": "GENERAL_QUESTION",
+};
 
 export function ContactPage() {
   const { description, email, socials, supportCards, title } =
     contactPageContent;
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const [name, setName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [helpOption, setHelpOption] = useState<string>(contactHelpOptions[0]);
+  const [message, setMessage] = useState("");
+  const [createMessage, { isLoading }] = useCreatePublicMessageMutation();
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    toast.error("This form isn't connected yet", {
-      description: `Please email us directly at ${email} in the meantime.`,
-    });
+
+    if (!name.trim() || !contactEmail.trim() || !message.trim()) {
+      toast.error("Please fill in your name, email, and message.");
+      return;
+    }
+
+    try {
+      await createMessage({
+        category: HELP_OPTION_CATEGORY[helpOption as (typeof contactHelpOptions)[number]] ?? "GENERAL_QUESTION",
+        reasonLabel: helpOption,
+        name: name.trim(),
+        email: contactEmail.trim(),
+        company: company.trim() || undefined,
+        message: message.trim(),
+      }).unwrap();
+
+      toast.success("Message sent", {
+        description: "We'll get back to you as soon as possible.",
+      });
+      setName("");
+      setContactEmail("");
+      setCompany("");
+      setHelpOption(contactHelpOptions[0]);
+      setMessage("");
+    } catch (error) {
+      toast.error("Couldn't send your message", { description: getApiErrorMessage(error) });
+    }
   }
 
   return (
@@ -39,20 +83,36 @@ export function ContactPage() {
           >
             <div className="grid gap-4 md:grid-cols-2">
               <FormField label="Name">
-                <input type="text" className={fieldClassName} />
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={fieldClassName}
+                />
               </FormField>
               <FormField label="Email Address">
-                <input type="email" className={fieldClassName} />
+                <input
+                  type="email"
+                  value={contactEmail}
+                  onChange={(e) => setContactEmail(e.target.value)}
+                  className={fieldClassName}
+                />
               </FormField>
             </div>
 
             <FormField className="mt-4" label="Company or Organization">
-              <input type="text" className={fieldClassName} />
+              <input
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                className={fieldClassName}
+              />
             </FormField>
 
             <FormField className="mt-4" label="What can we help you with?">
               <select
-                defaultValue={contactHelpOptions[0]}
+                value={helpOption}
+                onChange={(e) => setHelpOption(e.target.value)}
                 className={fieldClassName}
               >
                 {contactHelpOptions.map((option) => (
@@ -66,6 +126,8 @@ export function ContactPage() {
             <FormField className="mt-4" label="Message">
               <textarea
                 rows={6}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 className={`${fieldClassName} min-h-[122px] resize-y px-[14px] py-[12px]`}
               />
             </FormField>
@@ -73,9 +135,10 @@ export function ContactPage() {
             <div className="mt-4">
               <button
                 type="submit"
-                className="inline-flex h-[52px] min-w-[157px] items-center justify-center rounded-[14px] bg-[#232323] px-6 text-[15px] font-semibold text-white transition-colors hover:bg-black"
+                disabled={isLoading}
+                className="inline-flex h-[52px] min-w-[157px] items-center justify-center rounded-[14px] bg-[#232323] px-6 text-[15px] font-semibold text-white transition-colors hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send Message
+                {isLoading ? "Sending..." : "Send Message"}
               </button>
             </div>
           </form>
