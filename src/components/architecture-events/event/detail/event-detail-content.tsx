@@ -7,6 +7,7 @@ import { useRegisterClickThroughMutation } from "@/features/public/public-api";
 import { useSaveToggle } from "@/features/attendee/use-save-toggle";
 import { getApiErrorMessage } from "@/lib/store/api-error";
 import { EventRelatedSection } from "@/components/architecture-events/event/detail/event-related-section";
+import { EventLocationMap } from "@/components/maps/event-location-map";
 
 type EventDetailContentProps = {
   event: EventRecord;
@@ -129,10 +130,17 @@ export function EventDetailContent({ event }: EventDetailContentProps) {
                   Venue
                 </h2>
                 <div className="mt-6 overflow-hidden rounded-[22px] border border-[#E6E1D9] bg-white p-0 shadow-[0_20px_40px_-36px_rgba(32,32,32,0.3)]">
-                  <div className="relative overflow-hidden rounded-t-[22px] bg-[#EFE8DB]">
-                    <div className="flex min-h-[262px] items-center justify-center bg-[linear-gradient(180deg,#F5F1EA_0%,#F0ECE5_100%)]">
-                      <div className="h-5 w-5 rounded-full border-4 border-[#C79A4D] bg-white shadow-[0_0_0_10px_rgba(199,154,77,0.14)]" />
-                    </div>
+                  <div className="relative h-[262px] overflow-hidden rounded-t-[22px] bg-[#EFE8DB]">
+                    {event.latitude != null && event.longitude != null ? (
+                      <EventLocationMap
+                        latitude={event.latitude}
+                        longitude={event.longitude}
+                      />
+                    ) : (
+                      <div className="flex min-h-[262px] items-center justify-center bg-[linear-gradient(180deg,#F5F1EA_0%,#F0ECE5_100%)]">
+                        <div className="h-5 w-5 rounded-full border-4 border-[#C79A4D] bg-white shadow-[0_0_0_10px_rgba(199,154,77,0.14)]" />
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-col gap-4 border-t border-[#EDE7DE] px-5 py-5 md:flex-row md:items-center md:justify-between md:px-6">
                     <div className="min-w-0">

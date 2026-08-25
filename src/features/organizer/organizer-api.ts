@@ -17,6 +17,16 @@ export type OrganizerProfile = {
   logoUrl: string | null;
 };
 
+export type GeocodeResult = {
+  displayName: string;
+  latitude: number;
+  longitude: number;
+  venueName?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+};
+
 export type AdvertisingRequest = {
   id: string;
   packageId: string | null;
@@ -239,6 +249,18 @@ export const organizerApi = baseApi.injectEndpoints({
         response.data.requests,
       providesTags: [{ type: "MyAdvertisingRequest", id: "LIST" }],
     }),
+
+    searchGeocode: builder.query<GeocodeResult[], string>({
+      query: (q) => ({ url: "/organizer/geocode/search", params: { q } }),
+      transformResponse: (response: ApiEnvelope<{ results: GeocodeResult[] }>) =>
+        response.data.results,
+    }),
+
+    reverseGeocode: builder.query<GeocodeResult | null, { lat: number; lon: number }>({
+      query: ({ lat, lon }) => ({ url: "/organizer/geocode/reverse", params: { lat, lon } }),
+      transformResponse: (response: ApiEnvelope<{ result: GeocodeResult | null }>) =>
+        response.data.result,
+    }),
   }),
 });
 
@@ -260,4 +282,6 @@ export const {
   useRetryFeatureRequestPaymentMutation,
   useRequestAdvertisingPackageMutation,
   useListMyAdvertisingRequestsQuery,
+  useLazySearchGeocodeQuery,
+  useLazyReverseGeocodeQuery,
 } = organizerApi;

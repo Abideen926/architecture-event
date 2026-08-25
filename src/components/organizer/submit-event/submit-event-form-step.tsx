@@ -25,6 +25,8 @@ import {
   formatTimeInZone,
 } from "@/features/organizer/datetime";
 import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
+import { EventLocationPicker } from "@/components/maps/event-location-picker";
+import type { PickedPlace } from "@/components/maps/event-location-picker";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { FeaturedBadge } from "@/components/ui/featured-badge";
 import { Input, inputFieldClassName } from "@/components/ui/input";
@@ -54,6 +56,8 @@ type EventFormState = {
   state: string;
   venueName: string;
   address: string;
+  latitude: string;
+  longitude: string;
   contactName: string;
   contactEmail: string;
   contactPhone: string;
@@ -78,6 +82,8 @@ function emptyFormState(): EventFormState {
     state: "",
     venueName: "",
     address: "",
+    latitude: "",
+    longitude: "",
     contactName: "",
     contactEmail: "",
     contactPhone: "",
@@ -105,6 +111,8 @@ function formStateFromEvent(event: EventRecord): EventFormState {
     state: event.state ?? "",
     venueName: event.venueName ?? "",
     address: event.address ?? "",
+    latitude: event.latitude != null ? String(event.latitude) : "",
+    longitude: event.longitude != null ? String(event.longitude) : "",
     contactName: event.contactName,
     contactEmail: event.contactEmail,
     contactPhone: event.contactPhone ?? "",
@@ -173,6 +181,20 @@ export function SubmitEventFormStep({
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
+  function handlePositionChange(lat: string, lng: string) {
+    setForm((prev) => ({ ...prev, latitude: lat, longitude: lng }));
+  }
+
+  function handlePlaceSelected(place: PickedPlace) {
+    setForm((prev) => ({
+      ...prev,
+      city: place.city ?? prev.city,
+      state: place.state ?? prev.state,
+      address: place.address ?? prev.address,
+      venueName: place.venueName ?? prev.venueName,
+    }));
+  }
+
   function buildPayload() {
     return {
       title: form.title.trim(),
@@ -193,6 +215,10 @@ export function SubmitEventFormStep({
       state: form.isOnline ? undefined : form.state.trim() || undefined,
       venueName: form.venueName.trim() || undefined,
       address: form.address.trim() || undefined,
+      latitude:
+        !form.isOnline && form.latitude !== "" ? Number(form.latitude) : undefined,
+      longitude:
+        !form.isOnline && form.longitude !== "" ? Number(form.longitude) : undefined,
       contactName: form.contactName.trim(),
       contactEmail: form.contactEmail.trim(),
       contactPhone: form.contactPhone.trim() || undefined,
@@ -724,6 +750,15 @@ export function SubmitEventFormStep({
                       value={form.address}
                       onChange={(e) => setField("address", e.target.value)}
                     />
+
+                    <div className="md:col-span-2">
+                      <EventLocationPicker
+                        latitude={form.latitude}
+                        longitude={form.longitude}
+                        onPositionChange={handlePositionChange}
+                        onPlaceSelected={handlePlaceSelected}
+                      />
+                    </div>
                   </div>
                 ) : null}
               </div>

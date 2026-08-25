@@ -18,6 +18,7 @@ import {
 import type { FeatureRequestStatus } from "@/features/organizer/organizer-api";
 import { EVENT_STATUS_LABELS } from "@/features/events/event-types";
 import { getApiErrorMessage } from "@/lib/store/api-error";
+import { EventLocationMap } from "@/components/maps/event-location-map";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { Modal } from "@/components/ui/modal";
 import { Heading } from "@/components/ui/heading";
@@ -254,6 +255,19 @@ export function AdminEventReviewPage({ id }: AdminEventReviewPageProps) {
                   </Field>
                   <Field label="Venue">{event.venueName ?? "—"}</Field>
                   <Field label="Address">{event.address ?? "—"}</Field>
+                  {event.latitude != null && event.longitude != null ? (
+                    <div className="sm:col-span-2">
+                      <span className="mb-2 block text-[11px] font-bold uppercase tracking-[0.1em] text-ae-muted">
+                        Map
+                      </span>
+                      <div className="h-[220px] w-full overflow-hidden rounded-[14px] border border-ae-border">
+                        <EventLocationMap
+                          latitude={event.latitude}
+                          longitude={event.longitude}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
                 </>
               ) : null}
               <Field label="Registration URL">
