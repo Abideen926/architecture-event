@@ -22,7 +22,7 @@ export function Heading({ level = "page", as, className, children, ...props }: H
   const Tag = as ?? (level === "page" ? "h2" : level === "card" ? "h4" : "h3");
   return (
     <Tag
-      className={`ae-serif text-[#202020] ${LEVEL_CLASSES[level]} ${className ?? ""}`}
+      className={`ae-serif text-foreground ${LEVEL_CLASSES[level]} ${className ?? ""}`}
       {...props}
     >
       {children}
