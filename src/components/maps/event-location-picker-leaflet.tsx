@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useLazyReverseGeocodeQuery, useLazySearchGeocodeQuery } from "@/features/organizer/organizer-api";
+import {
+  useLazyReverseGeocodeQuery,
+  useLazySearchGeocodeQuery,
+} from "@/features/organizer/organizer-api";
 import type { GeocodeResult } from "@/features/organizer/organizer-api";
 
 const DEFAULT_CENTER: [number, number] = [20, 0];
@@ -127,8 +136,8 @@ export function EventLocationPickerLeaflet({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => results.length > 0 && setIsOpen(true)}
-          placeholder="Search for an address, venue, or city"
-          className="h-[52px] w-full rounded-[12px] border border-ae-border px-4 text-[15px] outline-none focus:border-[#C7B48D]"
+          placeholder="Search for an address, venue, or city "
+          className="h-[52px] w-full rounded-[12px] z-10 border border-ae-border px-4 text-[15px] outline-none focus:border-[#C7B48D]"
         />
         {isFetching ? (
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[12px] text-ae-muted">
@@ -137,7 +146,7 @@ export function EventLocationPickerLeaflet({
         ) : null}
 
         {isOpen && results.length > 0 ? (
-          <ul className="absolute z-10 mt-1 max-h-[280px] w-full overflow-y-auto rounded-[12px] border border-ae-border bg-white shadow-[0_12px_30px_-16px_rgba(20,20,20,0.25)]">
+          <ul className="absolute z-20 mt-1 max-h-[280px] w-full overflow-y-auto rounded-[12px] border border-ae-border bg-white shadow-[0_12px_30px_-16px_rgba(20,20,20,0.25)]">
             {results.map((result, index) => (
               <li key={index}>
                 <button
@@ -153,7 +162,7 @@ export function EventLocationPickerLeaflet({
         ) : null}
       </div>
 
-      <div className="mt-3 h-[280px] w-full overflow-hidden rounded-[14px] border border-ae-border">
+      <div className="mt-3 h-[450px] z-0 relative w-full overflow-hidden rounded-[14px] border border-ae-border">
         <MapContainer
           center={position ?? DEFAULT_CENTER}
           zoom={hasPin ? PINNED_ZOOM : DEFAULT_ZOOM}
@@ -166,7 +175,9 @@ export function EventLocationPickerLeaflet({
           />
           <ClickToPlacePin onPick={handleMapPick} />
           <RecenterOnPositionChange position={position} />
-          {position ? <DraggablePin position={position} onPick={handleMapPick} /> : null}
+          {position ? (
+            <DraggablePin position={position} onPick={handleMapPick} />
+          ) : null}
         </MapContainer>
       </div>
 
@@ -181,7 +192,11 @@ export function EventLocationPickerLeaflet({
   );
 }
 
-function ClickToPlacePin({ onPick }: { onPick: (lat: number, lng: number) => void }) {
+function ClickToPlacePin({
+  onPick,
+}: {
+  onPick: (lat: number, lng: number) => void;
+}) {
   useMapEvents({
     click(event) {
       onPick(event.latlng.lat, event.latlng.lng);
@@ -190,7 +205,11 @@ function ClickToPlacePin({ onPick }: { onPick: (lat: number, lng: number) => voi
   return null;
 }
 
-function RecenterOnPositionChange({ position }: { position: [number, number] | null }) {
+function RecenterOnPositionChange({
+  position,
+}: {
+  position: [number, number] | null;
+}) {
   const map = useMap();
 
   useEffect(() => {
