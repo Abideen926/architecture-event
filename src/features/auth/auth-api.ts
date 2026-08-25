@@ -37,12 +37,17 @@ export type RegisterOrganizerRequest = {
 
 export type OtpPurpose = "EMAIL_VERIFICATION" | "PASSWORD_RESET";
 
+// The backend responds with this instead of an error when the account
+// exists/password is correct but the email isn't verified yet — a
+// verification code is (re)sent server-side and the caller should redirect
+// to the OTP screen rather than show an error.
+export type LoginResult = { needsVerification: true; email: string } | { user: CurrentUser };
+
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<CurrentUser, LoginRequest>({
+    login: builder.mutation<LoginResult, LoginRequest>({
       query: (body) => ({ url: "/auth/login", method: "POST", body }),
-      transformResponse: (response: ApiEnvelope<{ user: CurrentUser; accessToken: string }>) =>
-        response.data.user,
+      transformResponse: (response: ApiEnvelope<LoginResult>) => response.data,
       invalidatesTags: ["Me"],
     }),
 

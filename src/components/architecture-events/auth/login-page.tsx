@@ -45,7 +45,19 @@ export function LoginPage() {
     }
 
     try {
-      const user = await login({ email: trimmedEmail, password }).unwrap();
+      const result = await login({ email: trimmedEmail, password }).unwrap();
+
+      if ("needsVerification" in result) {
+        toast.success("Verify your email", {
+          description: "We've sent a verification code to your email.",
+        });
+        router.push(
+          `${appRoutes.architectureEvents.verifyEmail}?email=${encodeURIComponent(result.email)}`,
+        );
+        return;
+      }
+
+      const { user } = result;
       toast.success("Welcome back", {
         description: `Signed in as ${user.fullName}.`,
       });

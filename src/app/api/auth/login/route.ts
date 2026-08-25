@@ -2,14 +2,18 @@ import { NextResponse } from "next/server";
 import { backendFetch } from "@/lib/api/backend";
 import { setSessionCookie } from "@/lib/session";
 
-type LoginData = { user: unknown; accessToken: string };
+type LoginData =
+  | { needsVerification: true; email: string }
+  | { user: unknown; accessToken: string };
 
 export async function POST(request: Request) {
   const body = await request.json();
   const result = await backendFetch<LoginData>("/auth/login", { method: "POST", body });
 
-  if (result.payload.success && result.payload.data?.accessToken) {
-    await setSessionCookie(result.payload.data.accessToken);
+  const data = result.payload.data;
+
+  if (result.payload.success && data && "accessToken" in data) {
+    await setSessionCookie(data.accessToken);
   }
 
   // The access token lives only in the httpOnly cookie — never echo it back
@@ -17,7 +21,7 @@ export async function POST(request: Request) {
   return NextResponse.json(
     {
       ...result.payload,
-      data: result.payload.data ? { user: result.payload.data.user } : result.payload.data,
+      data: data && "user" in data ? { user: data.user } : data,
     },
     { status: result.status }
   );
