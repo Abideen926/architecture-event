@@ -518,32 +518,6 @@ export const stripePayments = [
   },
 ] as const;
 
-export const ledgerEntries = [
-  {
-    date: "Jul 29, 2026",
-    description: "Brand Spotlight - Solstice Glazing (Aug)",
-    amount: "+$299.00",
-    invoice: "AE-1042",
-  },
-  {
-    date: "Jul 21, 2026",
-    description: "Reel editing - freelance",
-    amount: "-$420.00",
-    invoice: "AE-1041",
-  },
-  {
-    date: "Jul 15, 2026",
-    description: "Founding Partner - Arcform Systems",
-    amount: "+$999.00",
-    invoice: "AE-1040",
-  },
-  {
-    date: "Jul 6, 2026",
-    description: "Email platform - monthly",
-    amount: "-$89.00",
-    invoice: "AE-1039",
-  },
-] as const;
 
 export const monthlyVolume = [
   { month: "AUG", submitted: 9, published: 7 },

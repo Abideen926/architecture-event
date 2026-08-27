@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { ledgerEntries as initialLedgerEntries } from "@/lib/admin/dashboard-data";
 import {
   useApproveFeatureRequestMutation,
   useListAdminFeatureRequestsQuery,
@@ -10,6 +9,7 @@ import {
   useRetryFeatureRequestRefundMutation,
 } from "@/features/admin/admin-feature-requests-api";
 import { useListAdminSpotlightsQuery } from "@/features/admin/admin-advertising-api";
+import { useListAdminLedgerQuery } from "@/features/admin/admin-payments-api";
 import type { FeatureRequestStatus } from "@/features/organizer/organizer-api";
 import { getApiErrorMessage } from "@/lib/store/api-error";
 import { useConfirm } from "@/components/ui/modal-provider";
@@ -19,12 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { appRoutes } from "@/lib/routes";
 
-type LedgerEntry = {
-  date: string;
-  description: string;
-  amount: string;
-  invoice: string;
-};
+const LEDGER_PAGE_SIZE = 10;
 
 const statusLabels: Record<FeatureRequestStatus, string> = {
   PENDING_PAYMENT: "Pending Payment",
@@ -42,15 +37,46 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   year: "numeric",
 });
+const ledgerDateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+});
 const centsToUsd = (cents: number) => `$${(cents / 100).toFixed(2)}`;
+const signedCentsToUsd = (cents: number) =>
+  `${cents < 0 ? "-" : "+"}$${(Math.abs(cents) / 100).toFixed(2)}`;
 
 export function AdminPaymentsPage() {
   const { data: spotlightsData } = useListAdminSpotlightsQuery();
   const spotlights = (spotlightsData ?? []).slice(0, 3);
 
-  const [ledgerEntries] = useState<LedgerEntry[]>(
-    initialLedgerEntries.map((entry) => ({ ...entry })),
-  );
+  // Stripe's balance-transaction API is cursor-paginated, not page-numbered —
+  // each entry is the "startingAfter" cursor used to reach that page, so
+  // "Previous" just pops back to the prior cursor instead of re-deriving it.
+  const [ledgerCursorStack, setLedgerCursorStack] = useState<string[]>([]);
+  const ledgerCursor = ledgerCursorStack[ledgerCursorStack.length - 1];
+  const {
+    data: ledgerData,
+    isLoading: isLedgerLoading,
+    isError: isLedgerError,
+    refetch: refetchLedger,
+  } = useListAdminLedgerQuery({
+    limit: LEDGER_PAGE_SIZE,
+    startingAfter: ledgerCursor,
+  });
+  const ledgerEntries = ledgerData?.transactions ?? [];
+
+  function handleLedgerNext() {
+    const lastEntry = ledgerEntries[ledgerEntries.length - 1];
+    if (!lastEntry) return;
+    setLedgerCursorStack((prev) => [...prev, lastEntry.id]);
+  }
+
+  function handleLedgerPrevious() {
+    setLedgerCursorStack((prev) => prev.slice(0, -1));
+  }
 
   // Defaults to PENDING_REVIEW server-side when no status filter is passed
   // (see featureRequest.service.js#listForAdmin) — this summary only ever
@@ -150,7 +176,9 @@ export function AdminPaymentsPage() {
         </div>
 
         {spotlights.length === 0 ? (
-          <p className="mt-5 text-[14px] text-ae-muted">No active spotlights yet.</p>
+          <p className="mt-5 text-[14px] text-ae-muted">
+            No active spotlights yet.
+          </p>
         ) : (
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {spotlights.map((spotlight) => (
@@ -286,43 +314,91 @@ export function AdminPaymentsPage() {
               Internal ledger
             </Heading>
             <p className="mt-3 text-[14px] leading-[1.75] text-ae-muted">
-              Manually recorded payments received and spent.
+              Transactions recorded on the connected Stripe account.
             </p>
           </div>
-          <span className="inline-flex h-[27px] items-center rounded-full border border-ae-border bg-mainbackground px-3 text-[10.5px] font-bold tracking-[0.11em] text-ae-muted">
-            SAMPLE DATA
-          </span>
         </div>
 
-        <div className="grid grid-cols-[1fr_2.2fr_0.9fr_0.9fr] gap-[22px] border-y border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
-          <span>DATE</span>
-          <span>DESCRIPTION</span>
-          <span>AMOUNT</span>
-          <span>INVOICE</span>
-        </div>
-        {ledgerEntries.map((entry, index) => (
-          <div
-            key={`${entry.invoice}-${entry.date}-${index}`}
-            className={`grid grid-cols-[1fr_2.2fr_0.9fr_0.9fr] gap-[22px] px-[26px] py-[18px] ${
-              index < ledgerEntries.length - 1
-                ? "border-b border-[#F1F1F1]"
-                : ""
-            }`}
-          >
-            <div className="text-[14px] text-ae-muted">{entry.date}</div>
-            <div className="text-[14px] text-[#3A3A3A]">
-              {entry.description}
-            </div>
-            <div className="text-[15px] font-semibold text-foreground">
-              {entry.amount}
-            </div>
-            <div className="text-[14px] text-ae-muted">{entry.invoice}</div>
+        {isLedgerLoading ? (
+          <div className="h-[140px] animate-pulse bg-[#F5F5F5]" />
+        ) : isLedgerError ? (
+          <div className="px-[26px] py-10 text-center">
+            <p className="text-[14.5px] text-ae-muted">
+              Couldn&apos;t load the ledger from Stripe.
+            </p>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="mt-3"
+              onClick={() => refetchLedger()}
+            >
+              Try again
+            </Button>
           </div>
-        ))}
-        <p className="px-[26px] py-4 text-[12.5px] leading-[1.6] text-[#8A8A8A]">
-          There&apos;s no ledger model in the API yet, so entries here
-          aren&apos;t saved anywhere.
-        </p>
+        ) : ledgerEntries.length === 0 ? (
+          <div className="px-[26px] py-10 text-center text-[14.5px] text-ae-muted">
+            No ledger transactions yet.
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-[1.3fr_2fr_0.8fr_0.8fr_1.1fr] gap-[22px] border-y border-ae-border bg-mainbackground px-[26px] py-[15px] text-[10.5px] font-bold tracking-[0.13em] text-ae-muted">
+              <span>DATE &amp; TIME</span>
+              <span>DESCRIPTION</span>
+              <span>AMOUNT</span>
+              <span>FEE</span>
+              <span>REFERENCE</span>
+            </div>
+            {ledgerEntries.map((entry, index) => (
+              <div
+                key={entry.id}
+                className={`grid grid-cols-[1.3fr_2fr_0.8fr_0.8fr_1.1fr] gap-[22px] px-[26px] py-[18px] ${
+                  index < ledgerEntries.length - 1
+                    ? "border-b border-[#F1F1F1]"
+                    : ""
+                }`}
+              >
+                <div className="text-[14px] text-ae-muted">
+                  {ledgerDateTimeFormatter.format(new Date(entry.createdAt))}
+                </div>
+                <div className="truncate text-[14px] capitalize text-[#3A3A3A]">
+                  {entry.description}
+                </div>
+                <div
+                  className={`text-[15px] font-semibold ${
+                    entry.amountCents < 0 ? "text-[#B3261E]" : "text-foreground"
+                  }`}
+                >
+                  {signedCentsToUsd(entry.amountCents)}
+                </div>
+                <div className="text-[14px] text-ae-muted">
+                  {centsToUsd(entry.feeCents)}
+                </div>
+                <div className="truncate text-[13px] text-ae-muted">
+                  {entry.id}
+                </div>
+              </div>
+            ))}
+
+            <div className="flex items-center justify-end gap-2.5 border-t border-ae-border px-[26px] py-4">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={ledgerCursorStack.length === 0}
+                onClick={handleLedgerPrevious}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!ledgerData?.hasMore}
+                onClick={handleLedgerNext}
+              >
+                Next
+              </Button>
+            </div>
+          </>
+        )}
       </section>
 
       <Modal
