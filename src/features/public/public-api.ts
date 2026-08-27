@@ -48,6 +48,16 @@ export type BrandSpotlight = {
 
 export type SiteMessageCategory = "ADVERTISE" | "GENERAL_QUESTION" | "ORGANIZER_QUERY";
 
+export type GeocodeResult = {
+  displayName: string;
+  latitude: number;
+  longitude: number;
+  venueName?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+};
+
 export type CreatePublicMessagePayload = {
   category: SiteMessageCategory;
   reasonLabel?: string;
@@ -129,6 +139,12 @@ export const publicApi = baseApi.injectEndpoints({
     createPublicMessage: builder.mutation<void, CreatePublicMessagePayload>({
       query: (body) => ({ url: "/public/messages", method: "POST", body }),
     }),
+
+    searchGeocode: builder.query<GeocodeResult[], string>({
+      query: (q) => ({ url: "/public/geocode/search", params: { q } }),
+      transformResponse: (response: ApiEnvelope<{ results: GeocodeResult[] }>) =>
+        response.data.results,
+    }),
   }),
 });
 
@@ -141,4 +157,5 @@ export const {
   useListPublicAdvertisingPackagesQuery,
   useListPublicSpotlightsQuery,
   useCreatePublicMessageMutation,
+  useLazySearchGeocodeQuery,
 } = publicApi;

@@ -10,11 +10,8 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {
-  useLazyReverseGeocodeQuery,
-  useLazySearchGeocodeQuery,
-} from "@/features/organizer/organizer-api";
-import type { GeocodeResult } from "@/features/organizer/organizer-api";
+import { useLazySearchGeocodeQuery } from "@/features/public/public-api";
+import type { GeocodeResult } from "@/features/public/public-api";
 
 const DEFAULT_CENTER: [number, number] = [20, 0];
 const DEFAULT_ZOOM = 2;
@@ -57,8 +54,6 @@ export function EventLocationPickerLeaflet({
   const [results, setResults] = useState<GeocodeResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [triggerSearch, { isFetching }] = useLazySearchGeocodeQuery();
-  const [triggerReverseGeocode, { isFetching: isReverseGeocoding }] =
-    useLazyReverseGeocodeQuery();
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const hasPin = latitude !== "" && longitude !== "";
@@ -101,27 +96,6 @@ export function EventLocationPickerLeaflet({
       address: result.displayName,
       venueName: result.venueName,
     });
-  }
-
-  // Click/drag doesn't come with address data attached (unlike a search
-  // selection, which already has it) — reverse-geocode the dropped point so
-  // Venue name/Address/City/State fill in automatically too. The organizer
-  // can still freely edit any of those fields afterward.
-  async function handleMapPick(lat: number, lng: number) {
-    onPositionChange(String(lat), String(lng));
-    try {
-      const result = await triggerReverseGeocode({ lat, lon: lng }).unwrap();
-      if (result) {
-        onPlaceSelected({
-          city: result.city,
-          state: result.state,
-          address: result.displayName,
-          venueName: result.venueName,
-        });
-      }
-    } catch {
-      // best-effort — leave venue/address fields as the organizer last set them
-    }
   }
 
   return (
@@ -173,20 +147,23 @@ export function EventLocationPickerLeaflet({
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <ClickToPlacePin onPick={handleMapPick} />
+          <ClickToPlacePin
+            onPick={(lat, lng) => onPositionChange(String(lat), String(lng))}
+          />
           <RecenterOnPositionChange position={position} />
           {position ? (
-            <DraggablePin position={position} onPick={handleMapPick} />
+            <DraggablePin
+              position={position}
+              onPick={(lat, lng) => onPositionChange(String(lat), String(lng))}
+            />
           ) : null}
         </MapContainer>
       </div>
 
       <p className="mt-2 text-[12.5px] text-ae-muted">
-        {isReverseGeocoding
-          ? "Looking up the venue and address for this point…"
-          : hasPin
-            ? `Pinned at ${Number(latitude).toFixed(5)}, ${Number(longitude).toFixed(5)} — drag the marker to fine-tune. Venue and address below are editable.`
-            : "Search above, or click the map to drop a pin — venue and address fill in automatically and you can still edit them."}
+        {hasPin
+          ? `Pinned at ${Number(latitude).toFixed(5)}, ${Number(longitude).toFixed(5)} — drag the marker to fine-tune.`
+          : "Search above or click the map to drop a pin."}
       </p>
     </div>
   );

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { Check } from "lucide-react";
+import { appRoutes } from "@/lib/routes";
 import { listingPlans } from "@/lib/architecture-events/submit-event/submit-event-data";
 
 export function SubmitEventPricingSection() {
@@ -11,7 +13,7 @@ export function SubmitEventPricingSection() {
               key={plan.id}
               className={`relative flex min-h-[448px] flex-col rounded-[20px] border px-[42px] pb-[28px] pt-[28px] shadow-[0_18px_28px_-30px_rgba(20,20,20,0.4)] ${
                 plan.featured
-                  ? "border-foreground bg-[#FBF8F1]"
+                  ? "border-foreground bg-background"
                   : "border-[#E2DDD5] bg-white"
               }`}
             >
@@ -57,16 +59,16 @@ export function SubmitEventPricingSection() {
                 </ul>
               </div>
 
-              <button
-                type="button"
+              <Link
+                href={`${appRoutes.architectureEvents.submitEvent}?step=form&package=${plan.id}`}
                 className={`mt-auto inline-flex h-[54px] w-full items-center justify-center rounded-[14px] border text-[14px] font-medium tracking-[-0.01em] transition-colors ${
-                  plan.featured
-                    ? "border-[#1F1F1F] bg-[#1F1F1F] text-white hover:bg-black"
-                    : "border-[#232323] bg-white text-[#232323] hover:bg-[#232323] hover:text-white"
+                  plan?.featured
+                    ? "border-border bg-foreground text-white! hover:bg-black"
+                    : "border-[#232323] bg-white text-[#232323] hover:bg-[#232323] hover:text-white!"
                 }`}
               >
                 {plan.buttonLabel}
-              </button>
+              </Link>
             </article>
           ))}
         </div>

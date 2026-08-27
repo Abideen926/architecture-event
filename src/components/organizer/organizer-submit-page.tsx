@@ -5,10 +5,15 @@ import { Suspense, useEffect, useState } from "react";
 import { appRoutes } from "@/lib/routes";
 import { useGetOrganizerEventQuery } from "@/features/organizer/organizer-api";
 import type { PackageId, SubmitStep } from "./submit-event/submit-event-types";
+import type { EventFormState } from "./submit-event/event-form-state";
 import { SubmitEventFormStep } from "./submit-event/submit-event-form-step";
 import { SubmitEventPackageStep } from "./submit-event/submit-event-package-step";
 import { SubmitEventSuccessStep } from "./submit-event/submit-event-success-step";
 import { Heading } from "@/components/ui/heading";
+import {
+  clearPendingEventDraft,
+  readPendingEventDraft,
+} from "@/lib/organizer/pending-event-draft";
 
 export function OrganizerSubmitPage() {
   return (
@@ -44,10 +49,28 @@ function OrganizerSubmitPageContent() {
       : "package";
   const [step, setStep] = useState<SubmitStep>(initialStep);
   const [selectedPackage, setSelectedPackage] = useState<PackageId>("featured");
+  const [pendingFormState, setPendingFormState] = useState<
+    Partial<EventFormState> | undefined
+  >(undefined);
 
   useEffect(() => {
     if (existingEvent?.isFeatured) setSelectedPackage("featured");
   }, [existingEvent]);
+
+  // Bridges the public, pre-login submit-event form: an anonymous visitor
+  // fills the form, gets bounced through login, and lands back here with
+  // ?prefill=1 — consume the locally-stashed draft once, then discard it so
+  // a later visit here never silently repopulates stale data.
+  useEffect(() => {
+    if (eventId) return;
+    const draft = readPendingEventDraft();
+    if (!draft) return;
+    setPendingFormState(draft.form);
+    setSelectedPackage(draft.packageId);
+    setStep("form");
+    clearPendingEventDraft();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectedPackageLabel =
     selectedPackage === "featured"
@@ -89,6 +112,7 @@ function OrganizerSubmitPageContent() {
           selectedPackageLabel={selectedPackageLabel}
           requestFeatured={selectedPackage === "featured"}
           initialEvent={existingEvent}
+          initialFormState={pendingFormState}
           onChangePackage={() => setStep("package")}
           onSavedDraft={(event) => {
             if (!eventId) {

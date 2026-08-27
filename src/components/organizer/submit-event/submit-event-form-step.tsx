@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { MapPin, Trash2, Video } from "lucide-react";
+import { Trash2, Video } from "lucide-react";
 import { toast } from "sonner";
 import { useGetCategoriesQuery } from "@/features/public/public-api";
 import { useGetIndustriesQuery } from "@/features/public/public-api";
@@ -19,18 +19,11 @@ import {
   useUpdateOrganizerEventMutation,
 } from "@/features/organizer/organizer-api";
 import { uploadToCloudinary } from "@/features/organizer/cloudinary-upload";
-import {
-  detectBrowserTimezone,
-  formatDateInZone,
-  formatTimeInZone,
-} from "@/features/organizer/datetime";
+import { detectBrowserTimezone } from "@/features/organizer/datetime";
 import { getApiErrorMessage, getApiFieldErrors } from "@/lib/store/api-error";
-import { EventLocationPicker } from "@/components/maps/event-location-picker";
-import type { PickedPlace } from "@/components/maps/event-location-picker";
 import { useConfirm } from "@/components/ui/modal-provider";
 import { FeaturedBadge } from "@/components/ui/featured-badge";
-import { Input, inputFieldClassName } from "@/components/ui/input";
-import { Textarea, textareaFieldClassName } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import {
@@ -38,95 +31,19 @@ import {
   isEventFeaturableByOrganizer,
 } from "@/features/events/event-types";
 import type { EventRecord } from "@/features/events/event-types";
-
-type EventFormState = {
-  title: string;
-  description: string;
-  registrationUrl: string;
-  categoryId: string;
-  industryId: string;
-  isFree: boolean;
-  priceFrom: string;
-  startDate: string;
-  startTime: string;
-  endDate: string;
-  endTime: string;
-  isOnline: boolean;
-  city: string;
-  state: string;
-  venueName: string;
-  address: string;
-  latitude: string;
-  longitude: string;
-  contactName: string;
-  contactEmail: string;
-  contactPhone: string;
-  internalNotes: string;
-};
-
-function emptyFormState(): EventFormState {
-  return {
-    title: "",
-    description: "",
-    registrationUrl: "",
-    categoryId: "",
-    industryId: "",
-    isFree: false,
-    priceFrom: "",
-    startDate: "",
-    startTime: "",
-    endDate: "",
-    endTime: "",
-    isOnline: false,
-    city: "",
-    state: "",
-    venueName: "",
-    address: "",
-    latitude: "",
-    longitude: "",
-    contactName: "",
-    contactEmail: "",
-    contactPhone: "",
-    internalNotes: "",
-  };
-}
-
-function formStateFromEvent(event: EventRecord): EventFormState {
-  return {
-    title: event.title,
-    description: event.description,
-    registrationUrl: event.registrationUrl,
-    categoryId: event.categoryId,
-    industryId: event.industryId ?? "",
-    isFree: event.isFree,
-    priceFrom: event.priceFromCents
-      ? (event.priceFromCents / 100).toFixed(2)
-      : "",
-    startDate: formatDateInZone(event.startAt, event.timezone),
-    startTime: formatTimeInZone(event.startAt, event.timezone),
-    endDate: event.endAt ? formatDateInZone(event.endAt, event.timezone) : "",
-    endTime: event.endAt ? formatTimeInZone(event.endAt, event.timezone) : "",
-    isOnline: event.isOnline,
-    city: event.city ?? "",
-    state: event.state ?? "",
-    venueName: event.venueName ?? "",
-    address: event.address ?? "",
-    latitude: event.latitude != null ? String(event.latitude) : "",
-    longitude: event.longitude != null ? String(event.longitude) : "",
-    contactName: event.contactName,
-    contactEmail: event.contactEmail,
-    contactPhone: event.contactPhone ?? "",
-    internalNotes: event.internalNotes ?? "",
-  };
-}
-
-const fieldClassName = inputFieldClassName();
-const textareaClassName = textareaFieldClassName;
+import {
+  emptyFormState,
+  formStateFromEvent,
+  validateEventForm,
+} from "./event-form-state";
+import type { EventFormState } from "./event-form-state";
+import { SubmitEventContactFields, SubmitEventDetailsFields } from "./submit-event-fields";
 
 type SubmitEventFormStepProps = {
   selectedPackageLabel: string;
   requestFeatured: boolean;
   initialEvent?: EventRecord;
+  initialFormState?: Partial<EventFormState>;
   onChangePackage: () => void;
   onSavedDraft: (event: EventRecord) => void;
   onSubmittedForReview: (event: EventRecord, checkoutUrl?: string) => void;
@@ -136,13 +53,16 @@ export function SubmitEventFormStep({
   selectedPackageLabel,
   requestFeatured,
   initialEvent,
+  initialFormState,
   onChangePackage,
   onSavedDraft,
   onSubmittedForReview,
 }: SubmitEventFormStepProps) {
-  const [form, setForm] = useState<EventFormState>(() =>
-    initialEvent ? formStateFromEvent(initialEvent) : emptyFormState(),
-  );
+  const [form, setForm] = useState<EventFormState>(() => {
+    if (initialEvent) return formStateFromEvent(initialEvent);
+    if (initialFormState) return { ...emptyFormState(), ...initialFormState };
+    return emptyFormState();
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [event, setEvent] = useState<EventRecord | undefined>(initialEvent);
 
@@ -181,18 +101,8 @@ export function SubmitEventFormStep({
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  function handlePositionChange(lat: string, lng: string) {
-    setForm((prev) => ({ ...prev, latitude: lat, longitude: lng }));
-  }
-
-  function handlePlaceSelected(place: PickedPlace) {
-    setForm((prev) => ({
-      ...prev,
-      city: place.city ?? prev.city,
-      state: place.state ?? prev.state,
-      address: place.address ?? prev.address,
-      venueName: place.venueName ?? prev.venueName,
-    }));
+  function handleBulkChange(patch: Partial<EventFormState>) {
+    setForm((prev) => ({ ...prev, ...patch }));
   }
 
   function buildPayload() {
@@ -226,71 +136,8 @@ export function SubmitEventFormStep({
     };
   }
 
-  function isValidUrl(value: string) {
-    try {
-      new URL(value);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  const EMAIL_RULE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   function validate(): boolean {
-    const next: Record<string, string> = {};
-    if (form.title.trim().length < 3)
-      next.title = "Title must be at least 3 characters";
-    if (form.description.trim().length < 10)
-      next.description = "Description must be at least 10 characters";
-    if (!form.registrationUrl.trim()) {
-      next.registrationUrl = "Registration URL is required";
-    } else if (!isValidUrl(form.registrationUrl.trim())) {
-      next.registrationUrl =
-        "Enter a valid URL, e.g. https://example.com/register";
-    }
-    if (!form.categoryId) next.categoryId = "Choose a category";
-    if (!form.industryId) next.industryId = "Choose an industry";
-    if (!form.isFree && !form.priceFrom)
-      next.priceFrom = "Enter a starting price, or mark this event free";
-    if (!form.isFree && form.priceFrom && Number(form.priceFrom) <= 0) {
-      next.priceFrom = "Price must be greater than 0";
-    }
-    if (!form.startDate) next.startDate = "Start date is required";
-    if (!form.startTime) next.startTime = "Start time is required";
-
-    // Mirrors two separate backend checks: Zod compares dates only (create/update
-    // schema), the Event model compares the full date+time instant — so a
-    // same-day event with an end time before the start time passes Zod but is
-    // rejected at the database layer. Catch both here before submitting.
-    if (form.endDate && form.startDate) {
-      if (form.endDate < form.startDate) {
-        next.endDate = "End date can't be before the start date";
-      } else if (
-        form.endDate === form.startDate &&
-        form.endTime &&
-        form.startTime &&
-        form.endTime < form.startTime
-      ) {
-        next.endTime =
-          "End time can't be before the start time on the same day";
-      }
-    }
-
-    if (!form.isOnline) {
-      if (!form.city.trim())
-        next.city = "City is required for in-person events";
-      if (!form.state.trim())
-        next.state = "State is required for in-person events";
-    }
-    if (form.contactName.trim().length < 2)
-      next.contactName = "Contact name is required";
-    if (!form.contactEmail.trim()) {
-      next.contactEmail = "Contact email is required";
-    } else if (!EMAIL_RULE.test(form.contactEmail.trim())) {
-      next.contactEmail = "Enter a valid email address";
-    }
-
+    const next = validateEventForm(form);
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -571,199 +418,14 @@ export function SubmitEventFormStep({
 
       <fieldset disabled={!isEditableStatus || isBusy} className="contents">
         <div className="mt-[30px] rounded-[20px] border border-ae-border p-6 md:p-9">
-          <div className="mt-8">
-            <Heading level="card" as="h3">
-              Event details
-            </Heading>
-            <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
-              <Input
-                label="Event name"
-                error={errors.title}
-                wrapperClassName="md:col-span-2"
-                type="text"
-                value={form.title}
-                onChange={(e) => setField("title", e.target.value)}
-              />
-
-              <Field label="Category" error={errors.categoryId}>
-                <select
-                  value={form.categoryId}
-                  onChange={(e) => setField("categoryId", e.target.value)}
-                  className={fieldClassName}
-                >
-                  <option value="">Select a category</option>
-                  {(categories ?? []).map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-
-              <Field label="Industry" error={errors.industryId}>
-                <select
-                  value={form.industryId}
-                  onChange={(e) => setField("industryId", e.target.value)}
-                  className={fieldClassName}
-                >
-                  <option value="">Select an industry</option>
-                  {(industries ?? []).map((industry) => (
-                    <option key={industry.id} value={industry.id}>
-                      {industry.name}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-
-              <Input
-                label="Registration URL"
-                error={errors.registrationUrl}
-                type="url"
-                value={form.registrationUrl}
-                onChange={(e) => setField("registrationUrl", e.target.value)}
-              />
-
-              <div className="block">
-                <span className="mb-[9px] block text-[13.5px] font-semibold">
-                  Pricing
-                </span>
-                <div className="flex h-[52px] items-center gap-4 rounded-[12px] border border-ae-border px-4">
-                  <label className="flex items-center gap-2 text-[14px]">
-                    <input
-                      type="checkbox"
-                      checked={form.isFree}
-                      onChange={(e) => setField("isFree", e.target.checked)}
-                      className="h-[16px] w-[16px] accent-foreground"
-                    />
-                    Free event
-                  </label>
-                  {!form.isFree ? (
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={form.priceFrom}
-                      onChange={(e) => setField("priceFrom", e.target.value)}
-                      placeholder="Starting price, e.g. 49.00"
-                      className="h-full w-full border-0 bg-transparent text-[15px] outline-none"
-                    />
-                  ) : null}
-                </div>
-                {errors.priceFrom ? (
-                  <span className="mt-[7px] block text-[13px] text-[#B3261E]">
-                    {errors.priceFrom}
-                  </span>
-                ) : null}
-              </div>
-
-              <Textarea
-                label="Description"
-                wrapperClassName="md:col-span-2"
-                error={errors.description}
-                rows={5}
-                value={form.description}
-                onChange={(e) => setField("description", e.target.value)}
-              />
-
-              <Input
-                label="Start date"
-                error={errors.startDate}
-                type="date"
-                value={form.startDate}
-                onChange={(e) => setField("startDate", e.target.value)}
-              />
-              <Input
-                label="Start time"
-                error={errors.startTime}
-                type="time"
-                value={form.startTime}
-                onChange={(e) => setField("startTime", e.target.value)}
-              />
-              <Input
-                label="End date (optional)"
-                error={errors.endDate}
-                type="date"
-                value={form.endDate}
-                min={form.startDate || undefined}
-                onChange={(e) => setField("endDate", e.target.value)}
-              />
-              <Input
-                label="End time (optional)"
-                error={errors.endTime}
-                type="time"
-                value={form.endTime}
-                onChange={(e) => setField("endTime", e.target.value)}
-                disabled={!form.endDate}
-                className="disabled:cursor-not-allowed disabled:opacity-50"
-              />
-
-              <div className="md:col-span-2 mt-[14px] border-t border-ae-border pt-7">
-                <h3 className="m-0 text-[15px] font-bold text-foreground">
-                  Location
-                </h3>
-
-                <label className="mt-[16px] inline-flex items-center gap-2 text-[14px] text-[#3A3A3A]">
-                  <input
-                    type="checkbox"
-                    checked={form.isOnline}
-                    onChange={(e) => setField("isOnline", e.target.checked)}
-                    className="h-[16px] w-[16px] accent-foreground"
-                  />
-                  This is an online event
-                </label>
-
-                {!form.isOnline ? (
-                  <div className="mt-[16px] grid gap-[18px] md:grid-cols-2">
-                    <Input
-                      label="City"
-                      error={errors.city}
-                      type="text"
-                      value={form.city}
-                      onChange={(e) => setField("city", e.target.value)}
-                    />
-                    <Input
-                      label="State"
-                      error={errors.state}
-                      type="text"
-                      value={form.state}
-                      onChange={(e) => setField("state", e.target.value)}
-                    />
-                    <Field label="Venue name">
-                      <span className="flex h-[52px] items-center gap-[10px] rounded-[12px] border border-ae-border bg-white px-4">
-                        <MapPin
-                          className="h-4 w-4 flex-none text-ae-muted"
-                          strokeWidth={1.7}
-                        />
-                        <input
-                          type="text"
-                          value={form.venueName}
-                          onChange={(e) =>
-                            setField("venueName", e.target.value)
-                          }
-                          className="w-full border-0 bg-transparent text-[15px] outline-none"
-                        />
-                      </span>
-                    </Field>
-                    <Input
-                      label="Address"
-                      type="text"
-                      value={form.address}
-                      onChange={(e) => setField("address", e.target.value)}
-                    />
-
-                    <div className="md:col-span-2">
-                      <EventLocationPicker
-                        latitude={form.latitude}
-                        longitude={form.longitude}
-                        onPositionChange={handlePositionChange}
-                        onPlaceSelected={handlePlaceSelected}
-                      />
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </div>
+          <SubmitEventDetailsFields
+            form={form}
+            errors={errors}
+            onChange={setField}
+            onBulkChange={handleBulkChange}
+            categories={categories}
+            industries={industries}
+          />
 
           <div className="mt-8 border-t border-ae-border pt-8">
             <h3 className="ae-serif text-[16px] font-semibold tracking-[-0.01em] text-foreground">
@@ -864,33 +526,7 @@ export function SubmitEventFormStep({
             />
           </div>
 
-          <div className="mt-8 border-t border-ae-border pt-8">
-            <Heading level="card" as="h3">
-              Organizer contact
-            </Heading>
-            <div className="mt-[22px] grid gap-[18px] md:grid-cols-2">
-              <Input
-                label="Contact name"
-                error={errors.contactName}
-                type="text"
-                value={form.contactName}
-                onChange={(e) => setField("contactName", e.target.value)}
-              />
-              <Input
-                label="Contact email"
-                error={errors.contactEmail}
-                type="email"
-                value={form.contactEmail}
-                onChange={(e) => setField("contactEmail", e.target.value)}
-              />
-              <Input
-                label="Phone — optional"
-                type="tel"
-                value={form.contactPhone}
-                onChange={(e) => setField("contactPhone", e.target.value)}
-              />
-            </div>
-          </div>
+          <SubmitEventContactFields form={form} errors={errors} onChange={setField} />
 
           <div className="mt-[34px] flex flex-wrap items-center gap-3">
             <Button onClick={handleSubmitForReview} isLoading={isBusy}>
@@ -957,28 +593,5 @@ export function SubmitEventFormStep({
         </div>
       ) : null}
     </>
-  );
-}
-
-type FieldProps = {
-  label: string;
-  children: React.ReactNode;
-  error?: string;
-  className?: string;
-};
-
-function Field({ label, children, error, className }: FieldProps) {
-  return (
-    <label className={`block ${className ?? ""}`}>
-      <span className="mb-[9px] block text-[13.5px] font-semibold">
-        {label}
-      </span>
-      {children}
-      {error ? (
-        <span className="mt-[7px] block text-[13px] text-[#B3261E]">
-          {error}
-        </span>
-      ) : null}
-    </label>
   );
 }
