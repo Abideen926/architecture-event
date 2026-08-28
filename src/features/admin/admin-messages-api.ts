@@ -15,9 +15,31 @@ export type SiteMessage = {
   resolved: boolean;
   repliedAt: string | null;
   repliedBody: string | null;
+  threadToken: string;
+  lastMessageAt: string;
   createdAt: string;
   package?: { id: string; name: string } | null;
   organizer?: { id: string; fullName: string; email: string } | null;
+};
+
+export type SiteMessageEvent = {
+  id: string;
+  threadId: string;
+  direction: "INBOUND" | "OUTBOUND";
+  channel: "FORM" | "EMAIL";
+  senderName: string | null;
+  senderEmail: string | null;
+  body: string;
+  bodyHtml: string | null;
+  adminId: string | null;
+  status: "SENT" | "FAILED" | null;
+  createdAt: string;
+  admin?: { id: string; fullName: string } | null;
+};
+
+export type SiteMessageThread = {
+  message: SiteMessage;
+  events: SiteMessageEvent[];
 };
 
 export type ListAdminMessagesParams = {
@@ -48,6 +70,12 @@ export const adminMessagesApi = baseApi.injectEndpoints({
           : [{ type: "SiteMessage" as const, id: "LIST" }],
     }),
 
+    getAdminMessageThread: builder.query<SiteMessageThread, string>({
+      query: (id) => ({ url: `/admin/messages/${id}` }),
+      transformResponse: (response: ApiEnvelope<SiteMessageThread>) => response.data,
+      providesTags: (_result, _error, id) => [{ type: "SiteMessage", id }],
+    }),
+
     updateAdminMessage: builder.mutation<SiteMessage, { id: string; resolved: boolean }>({
       query: ({ id, resolved }) => ({ url: `/admin/messages/${id}`, method: "PATCH", body: { resolved } }),
       transformResponse: (response: ApiEnvelope<{ message: SiteMessage }>) => response.data.message,
@@ -70,6 +98,7 @@ export const adminMessagesApi = baseApi.injectEndpoints({
 
 export const {
   useListAdminMessagesQuery,
+  useGetAdminMessageThreadQuery,
   useUpdateAdminMessageMutation,
   useReplyToAdminMessageMutation,
 } = adminMessagesApi;

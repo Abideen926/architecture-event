@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import {
+  useGetAdminMessageThreadQuery,
   useListAdminMessagesQuery,
   useReplyToAdminMessageMutation,
   useUpdateAdminMessageMutation,
@@ -15,6 +16,12 @@ const inboxFilters = ["All messages", "Contact Us", "Advertising"] as const;
 type InboxFilter = (typeof inboxFilters)[number];
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
+const threadDateTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+});
 
 export function AdminInboxPage() {
   const [filter, setFilter] = useState<InboxFilter>("All messages");
@@ -165,9 +172,10 @@ export function AdminInboxPage() {
                 {dateFormatter.format(new Date(selectedMessage.createdAt))}
               </p>
 
-              <div className="mt-5 border-t border-ae-border pt-5 text-[15px] leading-[1.95] text-[#5C5C5C]">
-                <p className="whitespace-pre-line">{selectedMessage.body}</p>
-              </div>
+              <MessageThreadView
+                threadId={selectedMessage.id}
+                fromName={selectedMessage.fromName}
+              />
 
               <div className="mt-5 border-t border-ae-border pt-5">
                 <label className="block">
@@ -205,6 +213,69 @@ export function AdminInboxPage() {
           ) : null}
         </section>
       </div>
+    </div>
+  );
+}
+
+type MessageThreadViewProps = {
+  threadId: string;
+  fromName: string;
+};
+
+// Stacks every message in the thread (the original form submission, each
+// admin reply, each user email reply) as chat-style bubbles — same theme
+// tokens already used elsewhere on this page (bg-foreground/text-white for
+// "us", the existing bg-[#F7F3EC] selected-row tint for "them") rather than
+// introducing new colors.
+function MessageThreadView({ threadId, fromName }: MessageThreadViewProps) {
+  const { data, isLoading, isError } = useGetAdminMessageThreadQuery(threadId);
+  const events = data?.events ?? [];
+
+  if (isLoading) {
+    return (
+      <div className="mt-5 h-[160px] animate-pulse rounded-[12px] border-t border-ae-border bg-[#F5F5F5]" />
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="mt-5 border-t border-ae-border pt-5 text-[14px] text-ae-muted">
+        Couldn&apos;t load this conversation.
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-5 max-h-[420px] space-y-4 overflow-y-auto border-t border-ae-border pt-5">
+      {events.map((event) => {
+        const isOutbound = event.direction === "OUTBOUND";
+        return (
+          <div key={event.id} className={`flex ${isOutbound ? "justify-end" : "justify-start"}`}>
+            <div
+              className={`max-w-[85%] rounded-[14px] px-4 py-3 text-[14px] leading-[1.7] ${
+                isOutbound ? "bg-foreground text-white" : "bg-[#F7F3EC] text-[#3A3A3A]"
+              }`}
+            >
+              <div
+                className={`mb-1 flex items-center justify-between gap-3 text-[11px] font-semibold tracking-[0.04em] ${
+                  isOutbound ? "text-white/70" : "text-[#8A8071]"
+                }`}
+              >
+                <span>{isOutbound ? (event.admin?.fullName ?? "Admin") : (event.senderName ?? fromName)}</span>
+                <span className="whitespace-nowrap font-normal">
+                  {threadDateTimeFormatter.format(new Date(event.createdAt))}
+                </span>
+              </div>
+              <p className="whitespace-pre-line">{event.body}</p>
+              {event.status === "FAILED" ? (
+                <p className="mt-1.5 text-[11px] font-medium text-[#FFB4A8]">
+                  Failed to send
+                </p>
+              ) : null}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
